@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # lets the build publish the gh-pages branch
   pages: write
   id-token: write
 
@@ -31,9 +31,22 @@ jobs:
         env:
           BASE_PATH: /${{ github.event.repository.name }}/
           SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
-      - uses: actions/configure-pages@v5
+      - name: Keep Pages from running Jekyll
+        run: touch dist/.nojekyll
+
+      # Path 1 — works with only the built-in token: publish dist/ to the gh-pages branch.
+      # (Pages source: "Deploy from a branch" → gh-pages / root.)
+      - name: Publish to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          enablement: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+
+      # Path 2 — the "GitHub Actions" Pages source, if that is what the repo uses.
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -41,6 +54,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    continue-on-error: true   # only succeeds once Settings → Pages → Source is "GitHub Actions"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
