@@ -12,7 +12,7 @@ import { initSmooth, bindAnchors } from './js/smooth.js';
 import { initCursor, initMagnetic } from './js/cursor.js';
 import { initGrain } from './js/grain.js';
 import { initLazyVideos } from './js/media.js';
-import { initTextFx, heroIntro, initMarquee, initWipes } from './js/textfx.js';
+import { initTextFx, heroIntro, initMarquee, initWipes, initHeroScroll } from './js/textfx.js';
 import { initNav } from './js/nav.js';
 import { initMap } from './js/map.js';
 import { initRice } from './js/rice.js';
@@ -76,6 +76,7 @@ async function boot() {
   initTextFx(reduced);
   initMarquee(lenis, reduced);
   initWipes(reduced);
+  initHeroScroll(reduced);
   initNav(lenis);
   const intro = heroIntro(reduced);
   ScrollTrigger.sort();

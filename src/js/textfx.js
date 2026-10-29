@@ -90,3 +90,23 @@ export function initWipes(reduced) {
     gsap.fromTo(w, { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: sec, start: 'top 98%', end: 'top 45%', scrub: true } });
   });
 }
+
+/** Hero: the wordmark comes apart as you scroll away, and its letters drift with the pointer at different depths. */
+export function initHeroScroll(reduced) {
+  if (reduced) return;
+  const chars = gsap.utils.toArray('.hero-char');
+  const trig = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true };
+  chars.forEach((c, i) => {
+    const d = i - (chars.length - 1) / 2;
+    gsap.to(c, { yPercent: -28 - Math.abs(d) * 14, xPercent: d * 16, rotate: d * 5, ease: 'none', scrollTrigger: trig });
+  });
+  gsap.to('.hero-tag, .hero-meta, .hero-cue', { opacity: 0, y: -40, ease: 'none', scrollTrigger: { ...trig, end: '55% top' } });
+  gsap.to('.hero-glow', { scale: 1.5, opacity: 0.2, ease: 'none', scrollTrigger: trig });
+
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const setters = chars.map((c, i) => ({ x: gsap.quickTo(c, 'x', { duration: 1.1, ease: 'power3.out' }), y: gsap.quickTo(c, 'y', { duration: 1.1, ease: 'power3.out' }), k: (i % 2 ? 1 : -1) * (14 + i * 4) }));
+  addEventListener('pointermove', (e) => {
+    const nx = e.clientX / innerWidth - 0.5, ny = e.clientY / innerHeight - 0.5;
+    setters.forEach((s) => { s.x(nx * s.k); s.y(ny * s.k * 0.6); });
+  }, { passive: true });
+}
