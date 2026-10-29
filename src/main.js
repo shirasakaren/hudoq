@@ -1,6 +1,7 @@
 import './styles/base.css';
 import './styles/sections.css';
 import { gsap } from 'gsap';
+import './js/motion.js';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
@@ -12,7 +13,7 @@ import { initSmooth, bindAnchors } from './js/smooth.js';
 import { initCursor, initMagnetic } from './js/cursor.js';
 import { initGrain } from './js/grain.js';
 import { initLazyVideos } from './js/media.js';
-import { initTextFx, heroIntro, initMarquee, initWipes, initHeroScroll } from './js/textfx.js';
+import { initTextFx, heroIntro, initHeroScroll } from './js/textfx.js';
 import { initNav } from './js/nav.js';
 import { initMap } from './js/map.js';
 import { initRice } from './js/rice.js';
@@ -74,8 +75,6 @@ async function boot() {
   initThen(reduced);
   initNow(gl, reduced);
   initTextFx(reduced);
-  initMarquee(lenis, reduced);
-  initWipes(reduced);
   initHeroScroll(reduced);
   initNav(lenis);
   const intro = heroIntro(reduced);

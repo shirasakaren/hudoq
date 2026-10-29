@@ -35,7 +35,7 @@ export function initLab(gl, lenis, reduced) {
     notes.forEach((n, j) => n.classList.toggle('is-active', j === i));
     dots.forEach((d, j) => d.classList.toggle('is-active', j === i));
     pins.forEach((p, j) => p.classList.toggle('is-active', j === i));
-    if (lab) gsap.to(lab, { yaw: STATIONS[i].yaw, pitch: STATIONS[i].pitch, duration: 1.4, ease: 'expo.inOut', overwrite: true });
+    if (lab) gsap.to(lab, { yaw: STATIONS[i].yaw, pitch: STATIONS[i].pitch, duration: 1.4, ease: 'h.move', overwrite: true });
     audio.pluck(i * 2, 0, 0.6);
   }
   function goTo(i) {
@@ -52,7 +52,7 @@ export function initLab(gl, lenis, reduced) {
   st = ScrollTrigger.create({
     trigger: section, start: 'top top', end: '+=420%', pin: '.lab-pin', scrub: true, anticipatePin: 1,
     onUpdate: (self) => setStation(Math.min(STATIONS.length - 1, Math.floor(self.progress * STATIONS.length))),
-    onToggle: (self) => { if (!self.isActive && lab) gsap.to(lab, { yaw: 0, pitch: 0, duration: 1.2, ease: 'expo.out', overwrite: true }); },
+    onToggle: (self) => { if (!self.isActive && lab) gsap.to(lab, { yaw: 0, pitch: 0, duration: 1.2, ease: 'h.reveal', overwrite: true }); },
   });
 
   // drag to spin (with a little inertia)
@@ -75,7 +75,7 @@ export function initLab(gl, lenis, reduced) {
   stage.addEventListener('keydown', (e) => {
     const k = { ArrowLeft: [-0.25, 0], ArrowRight: [0.25, 0], ArrowUp: [0, -0.15], ArrowDown: [0, 0.15] }[e.key];
     if (!k) return; e.preventDefault();
-    gsap.to(lab, { yaw: lab.yaw + k[0], pitch: Math.max(-0.7, Math.min(0.7, lab.pitch + k[1])), duration: 0.5, ease: 'power3.out', overwrite: true });
+    gsap.to(lab, { yaw: lab.yaw + k[0], pitch: Math.max(-0.7, Math.min(0.7, lab.pitch + k[1])), duration: 0.5, ease: 'h.reveal', overwrite: true });
   });
 
   // keep the pulsing pin glued to the active part of the mask

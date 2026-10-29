@@ -25,8 +25,8 @@ export function initSuit(lenis, reduced) {
     audio.pluck(i * 2 + 1, 0, 0.5);
     if (reduced) return;
     const { y, zoom: z } = PARTS[i];
-    gsap.to(zoom, { scale: z, transformOrigin: `50% ${y}%`, duration: 1.5, ease: 'expo.inOut', overwrite: true });
-    gsap.to(hots, { '--inv': 1 / z, duration: 1.5, ease: 'expo.inOut', overwrite: 'auto' });
+    gsap.to(zoom, { scale: z, transformOrigin: `50% ${y}%`, duration: 1.5, ease: 'h.move', overwrite: true });
+    gsap.to(hots, { '--inv': 1 / z, duration: 1.5, ease: 'h.move', overwrite: 'auto' });
   };
   set(0);
   hots.forEach((h, i) => h.addEventListener('click', () => {

@@ -27,15 +27,26 @@ export function initNav(lenis) {
       trigger: s, start: 'top 55%', end: 'bottom 55%',
       onToggle: (self) => {
         if (!self.isActive) return;
+        const label = document.querySelector('.bar-chapter');
+        gsap.fromTo(label, { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 0.85, duration: 0.6, ease: 'h.reveal', overwrite: 'auto' });
         bn.textContent = s.dataset.chapter; bt.textContent = s.dataset.title;
         links.forEach((l, j) => { l.classList.toggle('is-active', j === i); if (j === i) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); });
       },
     });
   });
 
-  // progress bar + sound-bed breathing
-  const prog = document.querySelector('.progress');
-  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (self) => { prog.style.setProperty('--p', self.progress.toFixed(4)); audio.breathe(self.progress); } });
+  // header: hides while reading downward, returns on scroll-up or after a short idle
+  const bar = document.querySelector('.bar');
+  let idle = 0;
+  lenis.on('scroll', ({ direction, scroll }) => {
+    if (open) return;
+    const hide = direction > 0 && scroll > 240;
+    gsap.to(bar, { yPercent: hide ? -110 : 0, duration: hide ? 0.45 : 0.6, ease: hide ? 'h.exit' : 'h.reveal', overwrite: 'auto' });
+    clearTimeout(idle); idle = setTimeout(() => gsap.to(bar, { yPercent: 0, duration: 0.6, ease: 'h.reveal', overwrite: 'auto' }), 1400);
+  });
+
+  // sound-bed breathing
+  ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (self) => audio.breathe(self.progress) });
 
   // menu
   let open = false;
@@ -46,11 +57,11 @@ export function initNav(lenis) {
     menuBtn.setAttribute('aria-expanded', v);
     if (v) {
       menu.hidden = false; lenis.stop();
-      gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.9, ease: 'expo.inOut' });
-      gsap.fromTo(items(), { yPercent: 110 }, { yPercent: 0, duration: 1, ease: 'expo.out', stagger: 0.04, delay: 0.25 });
+      gsap.fromTo(menu, { clipPath: 'inset(0 0 100% 0)' }, { clipPath: 'inset(0 0 0% 0)', duration: 0.9, ease: 'h.move' });
+      gsap.fromTo(items(), { yPercent: 110 }, { yPercent: 0, duration: 1, ease: 'h.reveal', stagger: 0.04, delay: 0.25 });
       menu.querySelector('a').focus({ preventScroll: true });
     } else {
-      gsap.to(menu, { clipPath: 'inset(0 0 100% 0)', duration: 0.7, ease: 'expo.inOut', onComplete: () => { menu.hidden = true; lenis.start(); } });
+      gsap.to(menu, { clipPath: 'inset(0 0 100% 0)', duration: 0.7, ease: 'h.move', onComplete: () => { menu.hidden = true; lenis.start(); } });
     }
   }
   menuBtn.addEventListener('click', () => setMenu(!open));

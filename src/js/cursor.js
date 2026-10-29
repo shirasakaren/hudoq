@@ -38,8 +38,8 @@ export function initCursor() {
 export function initMagnetic() {
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   document.querySelectorAll('[data-magnetic]').forEach((el) => {
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'elastic.out(1, 0.5)' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'elastic.out(1, 0.5)' });
+    const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'h.reveal' });
+    const yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'h.reveal' });
     el.addEventListener('pointermove', (e) => {
       const r = el.getBoundingClientRect();
       xTo((e.clientX - (r.left + r.width / 2)) * 0.28);

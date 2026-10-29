@@ -15,69 +15,88 @@ export function initFaces(lenis, reduced) {
   initGallery(lenis, reduced);
 }
 
-/* ───────── The dark room: your cursor is the lantern ───────── */
+/* ───────── The dark room: your light is the only light ───────── */
 function initDark(reduced) {
   const room = document.getElementById('dark');
   const list = document.getElementById('darkMasks');
   const countEl = document.getElementById('darkCount');
   const done = room.querySelector('.dark-done');
+  const em = room.querySelector('.display-xl em');
+  const found = document.createElement('ul');
+  found.className = 'dark-found'; found.setAttribute('aria-hidden', 'true');
+  list.after(found);
   const items = masks.map((m, i) => {
     const [x, y, w, r] = SPOTS[i];
     const li = document.createElement('li');
     li.style.cssText = `--x:${x}%;--y:${y}%;--w:${w}vmin;--r:${r}deg`;
-    li.innerHTML = `<img src="${m.small}" alt="" width="${m.w}" height="${m.h}" loading="lazy" decoding="async">`;
+    li.innerHTML = `<img src="${m.small}" alt="" width="${m.w}" height="${m.h}" loading="lazy" decoding="async"><i class="glint"></i>`;
     list.appendChild(li);
-    return { li, found: false, i };
+    return { li, found: false, i, cx: 0, cy: 0, w: 0 };
   });
   const coarse = matchMedia('(hover: none)').matches;
-  let px = -999, py = -999, active = false, count = 0, t0 = 0;
-  const lit = items.map(() => 0);
+  let px = -999, py = -999, active = false, count = 0, hasPointer = false;
 
-  let hasPointer = false;
   room.addEventListener('pointermove', (e) => { hasPointer = true; const r = room.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; });
   room.addEventListener('pointerleave', () => { hasPointer = false; });
   ScrollTrigger.create({ trigger: room, start: 'top bottom', end: 'bottom top', onToggle: (s) => { active = s.isActive; } });
+  const measure = () => { const r = room.getBoundingClientRect(); items.forEach((it) => { const b = it.li.getBoundingClientRect(); it.cx = b.left - r.left + b.width / 2; it.cy = b.top - r.top + b.height / 2; it.w = b.width; }); };
+  ScrollTrigger.addEventListener('refresh', measure); addEventListener('resize', measure);
 
-  if (reduced) { items.forEach((it) => { it.li.classList.add('is-found'); }); countEl.textContent = '11'; done.style.opacity = 1; done.textContent = 'Eleven faces. No two alike.'; return; }
+  if (reduced) {
+    items.forEach((it) => { found.appendChild(it.li); it.li.classList.add('is-lit'); });
+    countEl.textContent = '11'; done.style.opacity = 1; done.textContent = 'Eleven faces. No two alike.';
+    return;
+  }
 
   function foundOne(it) {
-    it.found = true; count++; countEl.textContent = count;
+    it.found = true; count++;
+    found.appendChild(it.li);
+    gsap.fromTo(countEl, { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease: 'h.reveal' });
+    countEl.textContent = count;
+    gsap.fromTo(it.li.querySelector('.glint'), { scale: 0, opacity: 1 }, { scale: 1.6, opacity: 0, duration: 0.7, ease: 'h.reveal' });
     audio.pluck(it.i, 0, 0.8);
-    gsap.fromTo(it.li, { scale: 1 }, { scale: 1.08, duration: 0.5, yoyo: true, repeat: 1, ease: 'power2.out' });
-    if (count === items.length) {
-      audio.gong(98, 1);
-      items.forEach((x) => x.li.classList.add('is-found'));
-      done.textContent = 'Eleven faces. No two alike.';
-      gsap.to(done, { opacity: 1, y: -10, duration: 1.4, ease: 'expo.out' });
-    }
+    if (count === items.length) ignite(it);
+  }
+
+  // all eleven: the room lights from the last find outward, a gong sounds, the line changes
+  function ignite(last) {
+    audio.gong(98, 1);
+    gsap.to(items.map((x) => x.li), { opacity: 1, scale: 1, duration: 1.1, ease: 'h.reveal', stagger: { each: 0.07, from: last.i } });
+    room.classList.add('is-ignited');
+    gsap.timeline().to(em, { yPercent: -110, autoAlpha: 0, duration: 0.45, ease: 'h.exit' })
+      .add(() => { em.textContent = 'they’ve seen you.'; })
+      .fromTo(em, { yPercent: 110, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.9, ease: 'h.reveal' });
+    done.textContent = 'Eleven faces. No two alike.';
+    gsap.to(done, { opacity: 1, y: -10, duration: 1.4, ease: 'h.reveal', delay: 0.5 });
   }
 
   gsap.ticker.add((time) => {
     if (!active) return;
     const r = room.getBoundingClientRect();
     if (!hasPointer) {
-      // touch, or the mouse hasn't entered yet: a lantern that wanders on its own and follows the scroll
-      px = r.width * (0.5 + 0.38 * Math.sin(time * 0.45)); py = -r.top + innerHeight * 0.5 + Math.sin(time * 0.7) * innerHeight * 0.3 + r.height * 0.1 * Math.cos(time * 0.3);
+      // an invitation only: the light wanders by itself, and finds nothing
+      px = r.width * (0.5 + 0.34 * Math.sin(time * 0.45)); py = -r.top + innerHeight * 0.5 + Math.sin(time * 0.7) * innerHeight * 0.28;
     }
-    room.style.setProperty('--mx', px + 'px'); room.style.setProperty('--my', py + 'px');
-    const rad = Math.max(150, Math.min(innerWidth, innerHeight) * 0.27);
-    items.forEach((it, k) => {
-      if (it.found && count === items.length) return;
-      const b = it.li.getBoundingClientRect();
-      const cx = b.left - r.left + b.width / 2, cy = b.top - r.top + b.height / 2;
-      const d = Math.hypot(cx - px, cy - py);
-      const target = it.found ? 0.9 : Math.max(0.09, Math.min(1, 1 - (d - b.width * 0.2) / rad));
-      lit[k] += (target - lit[k]) * 0.18;
-      it.li.style.setProperty('--lit', lit[k].toFixed(3));
-      if (!it.found && lit[k] > 0.62) foundOne(it);
-    });
+    // the lantern flickers a little
+    const lr = 30 + Math.sin(time * 7.3) * 0.6 + Math.sin(time * 13.1) * 0.4;
+    room.style.setProperty('--mx', px + 'px'); room.style.setProperty('--my', py + 'px'); room.style.setProperty('--lr', lr + 'vmin');
+    if (!hasPointer) return;
+    const radius = Math.min(innerWidth, innerHeight) * (lr / 100) * 0.42;
+    for (const it of items) {
+      if (it.found) continue;
+      if (Math.hypot(it.cx - px, it.cy - py) < radius + it.w * 0.15) foundOne(it);
+    }
   });
+  measure();
+  if (coarse) room.querySelector('.dark-hint-t').textContent = 'Drag your light';
 }
 
 /* ───────── The gallery: eleven carved faces ───────── */
 function initGallery(lenis, reduced) {
   const section = document.getElementById('gallery');
   const track = document.getElementById('galleryTrack');
+  const head = section.querySelector('.gallery-head');
+  track.appendChild(head); // the heading is the first thing on the strip, so it scrolls away with the cards
   masks.forEach((m, i) => {
     const b = document.createElement('button');
     b.className = 'mcard'; b.type = 'button';
@@ -86,7 +105,6 @@ function initGallery(lenis, reduced) {
     b.dataset.cursor = 'inspect';
     b.innerHTML = `<span class="mcard-n mono">${String(m.n).padStart(2, '0')}</span><img src="${m.small}" alt="Carved Hudoq mask: ${m.caption}" width="${m.w}" height="${m.h}" loading="lazy" decoding="async"><span class="mcard-t">${m.caption}</span>`;
     track.appendChild(b);
-    // tilt toward the pointer
     b.addEventListener('pointermove', (e) => {
       const r = b.getBoundingClientRect();
       const nx = (e.clientX - r.left) / r.width - 0.5, ny = (e.clientY - r.top) / r.height - 0.5;
@@ -98,26 +116,26 @@ function initGallery(lenis, reduced) {
     b.tabIndex = i === 0 ? 0 : -1; // roving tabindex: one stop for the strip, arrows move inside it
   });
 
-  if (reduced) { section.classList.add('is-static'); return; }
+  if (reduced) { section.classList.add('is-static'); head.style.cssText = 'position:static;width:auto'; return; }
 
   const dist = () => Math.max(0, track.scrollWidth - innerWidth);
-  const imgs = gsap.utils.toArray('.mcard img');
-  const skew = gsap.quickSetter ? null : null;
+  let vel = 0, shown = 0;
   const st = ScrollTrigger.create({
     trigger: section, start: 'top top', end: () => '+=' + dist() * 1.1, pin: true, scrub: 0.7, anticipatePin: 1, invalidateOnRefresh: true,
     animation: gsap.to(track, { x: () => -dist(), ease: 'none' }),
-    onUpdate: (self) => {
-      const v = gsap.utils.clamp(-7, 7, self.getVelocity() / -180);
-      gsap.to(imgs, { skewX: v, duration: 0.5, ease: 'power3.out', overwrite: 'auto' });
-    },
+    onUpdate: (self) => { vel = gsap.utils.clamp(-8, 8, self.getVelocity() / -260); },
+  });
+  // the strip leans into the scroll: cards turn on Y, pictures slide a little against their frames
+  gsap.ticker.add(() => {
+    shown += (vel - shown) * 0.12; vel *= 0.9;
+    track.style.setProperty('--vel', shown.toFixed(3));
   });
 
-  // drag the track like a film strip (maps to page scroll so everything stays in sync)
+  // drag the strip like film (maps to page scroll so everything stays in sync)
   Observer.create({
     target: track, type: 'pointer', dragMinimum: 4,
     onDrag: (self) => { if (self.event.pointerType === 'mouse') lenis.scrollTo(lenis.scroll - self.deltaX * 1.1, { immediate: true, force: true }); },
   });
-  // keyboard: arrows on a focused card nudge along
   track.addEventListener('keydown', (e) => {
     if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) {
       const cards = [...track.querySelectorAll('.mcard')];
@@ -162,8 +180,8 @@ function openInspect(index, opener) {
     img.src = m.large; img.alt = `Carved Hudoq mask: ${m.caption}`;
     dialog.querySelector('.in-n').textContent = String(m.n).padStart(2, '0');
     const t = dialog.querySelector('.in-t'); t.textContent = m.caption;
-    gsap.fromTo(img, { opacity: 0, y: 24, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'expo.out' });
-    gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' });
+    gsap.fromTo(img, { opacity: 0, y: 24, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'h.reveal' });
+    gsap.fromTo(t, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'h.reveal' });
     audio.pluck(i, 0, 0.7);
   };
   const close = () => {

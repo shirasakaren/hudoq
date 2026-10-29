@@ -63,7 +63,6 @@
         <button class="btn btn-solid" id="enterSound" data-magnetic><span>Enter with sound</span></button>
         <button class="btn btn-ghost" id="enterSilent" data-magnetic><span>Enter in silence</span></button>
       </div>
-      <p class="loader-note mono">Best on a big screen. Works everywhere.</p>
     </div>
   </div>
 
@@ -71,7 +70,6 @@
   <canvas id="gl" aria-hidden="true"></canvas>
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"><i class="cursor-dot"></i><i class="cursor-ring"><span class="cursor-label"></span></i></div>
-  <div class="progress" aria-hidden="true"><i></i></div>
 
   <header class="bar">
     <a class="bar-logo" href="#top" aria-label="Hudoq — back to top" data-cursor="">
@@ -125,16 +123,8 @@
       </a>
     </section>
 
-    <div class="marquee" aria-hidden="true" id="marquee">
-      <div class="marquee-track">
-        <div class="marquee-group"><span>Hudoq</span><i></i><span class="o">Topeng</span><i></i><span>Mask</span><i></i><span class="o">Spirit</span><i></i><span>Rice</span><i></i><span class="o">Leaf</span><i></i></div>
-        <div class="marquee-group"><span>Hudoq</span><i></i><span class="o">Topeng</span><i></i><span>Mask</span><i></i><span class="o">Spirit</span><i></i><span>Rice</span><i></i><span class="o">Leaf</span><i></i></div>
-      </div>
-    </div>
-
     <!-- ───────────── 01 · THE WORD ───────────── -->
     <section class="chapter word" id="what" data-chapter="01" data-title="The word" data-theme="paper" aria-labelledby="h-word">
-      <div class="band band-top" aria-hidden="true"></div>
       <div class="word-grid">
         <div class="word-head">
           <p class="kicker"><span>01</span> The word</p>
@@ -166,7 +156,6 @@
     <!-- ───────────── 02 · THE RIVER (map) ───────────── -->
     <section class="chapter where" id="where" data-chapter="02" data-title="The river" data-theme="night" aria-labelledby="h-where">
       <div class="where-pin">
-        <video class="where-video" muted loop playsinline preload="none" poster="/video/doc-river.jpg" data-lazy-video data-src="/video/doc-river.mp4" aria-hidden="true"></video>
         <div class="where-veil" aria-hidden="true"></div>
         <div class="where-copy">
           <p class="kicker"><span>02</span> The river</p>
@@ -189,6 +178,7 @@
               <p>In <b>Samarinda</b>, near the river mouth, Bahau families have held a yearly Hudoq since 2015.</p>
             </li>
           </ol>
+          <p class="where-km mono" aria-hidden="true"><b id="whereKm">000</b> km</p>
           <p class="where-aside mono">Bahau name for the river: <b>Mekam</b> · Hudoq lives in West Kutai too</p>
         </div>
         <figure class="where-map" aria-label="Map of Borneo with East Kalimantan and the Mahakam river highlighted">
@@ -200,7 +190,6 @@
             <g id="mapLayer"></g>
           </svg>
         </figure>
-        <div class="where-dots" aria-hidden="true"><i class="is-active"></i><i></i><i></i><i></i></div>
       </div>
     </section>
 
@@ -220,8 +209,7 @@
 
         <div class="ring" aria-hidden="true">
           <svg viewBox="0 0 400 400">
-            <circle class="ring-track" cx="200" cy="200" r="168"/>
-            <circle class="ring-draw" cx="200" cy="200" r="168" transform="rotate(-90 200 200)"/>
+            <g class="ring-arcs"></g>
             <g class="ring-nodes"></g>
           </svg>
           <div class="ring-core"><span class="mono ring-core-k">Season</span><strong class="ring-core-t">Plant</strong></div>
@@ -254,7 +242,6 @@
             <p class="beat-fact">Both are told. Many dances mix them: guardians, ancestors, clowning pests.</p>
           </li>
         </ol>
-        <div class="rice-progress" aria-hidden="true"><i></i></div>
       </div>
     </section>
 
@@ -263,21 +250,24 @@
       <div class="legend-pin">
         <video class="legend-video" muted loop playsinline preload="none" poster="/video/doc-drone.jpg" data-lazy-video data-src="/video/doc-drone.mp4" aria-hidden="true"></video>
         <div class="legend-veil" aria-hidden="true"></div>
-        <svg class="ripples" viewBox="0 0 800 800" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="400" cy="400" r="30"/><circle cx="400" cy="400" r="30"/><circle cx="400" cy="400" r="30"/><circle cx="400" cy="400" r="30"/></g></svg>
-        <div class="legend-head">
-          <p class="kicker"><span>04</span> The legend</p>
-          <h2 id="h-legend" class="display-xl">A sword.<br>A whirlpool.<br>A hidden kingdom.</h2>
-          <p class="legend-src mono">Where did the masks come from? One Modang &amp; Ga’ay story · spellings vary</p>
+        <div class="legend-depth" aria-hidden="true"></div>
+        <svg class="whirl" viewBox="-420 -420 840 840" aria-hidden="true"><path class="whirl-path" d=""/></svg>
+        <i class="legend-sword" aria-hidden="true"></i>
+        <div class="legend-faces" aria-hidden="true">
+          <img data-img="masks/4" alt="" sizes="22vw" loading="lazy"><img data-img="masks/8" alt="" sizes="22vw" loading="lazy"><img data-img="masks/10" alt="" sizes="22vw" loading="lazy">
         </div>
-        <div class="legend-track">
-          <article class="legend-card"><span class="legend-n mono">i</span><p><b>Halaeng Heboung</b> drops his sword in the Kejin River.</p></article>
-          <article class="legend-card"><span class="legend-n mono">ii</span><p>In a whirlpool he meets <b>Selo Sen Yaeng</b> — a spirit from a kingdom under the riverbed.</p></article>
-          <article class="legend-card"><span class="legend-n mono">iii</span><p>They marry. They have a son, <b>Buaq Selo</b>.</p></article>
-          <article class="legend-card"><span class="legend-n mono">iv</span><p>To please him, she calls her people to dance. Their true faces are <b>terrifying</b>.</p></article>
-          <article class="legend-card"><span class="legend-n mono">v</span><p>Scared, he goes home with their son. He tells the village — and has <b>masks carved</b> like those faces.</p></article>
-          <article class="legend-card legend-card-last"><span class="legend-n mono">vi</span><p>The dance keeps the bond alive: <b>river people</b> and <b>his descendants</b>.</p></article>
-        </div>
-        <img class="legend-cut" data-img="cut/r2" alt="" sizes="40vw" loading="lazy" aria-hidden="true">
+        <p class="kicker legend-kicker"><span>04</span> The legend</p>
+        <h2 id="h-legend" class="sr-only">A sword. A whirlpool. A hidden kingdom.</h2>
+        <ol class="legend-pages">
+          <li class="legend-page legend-page-title"><p class="display-xl" aria-hidden="true">A sword.<br>A whirlpool.<br>A hidden kingdom.</p><span class="legend-src mono">Where did the masks come from? One Modang &amp; Ga’ay story · spellings vary</span></li>
+          <li class="legend-page"><span class="legend-n mono">i</span><p class="display-l"><b>Halaeng Heboung</b> drops his sword in the Kejin River.</p></li>
+          <li class="legend-page"><span class="legend-n mono">ii</span><p class="display-l">In a whirlpool he meets <b>Selo Sen Yaeng</b> — a spirit from a kingdom under the riverbed.</p></li>
+          <li class="legend-page"><span class="legend-n mono">iii</span><p class="display-l">They marry. They have a son, <b>Buaq Selo</b>.</p></li>
+          <li class="legend-page"><span class="legend-n mono">iv</span><p class="display-l">To please him, she calls her people to dance. Their true faces are <b>terrifying</b>.</p></li>
+          <li class="legend-page"><span class="legend-n mono">v</span><p class="display-l">Scared, he goes home with their son. He tells the village — and has <b>masks carved</b> like those faces.</p></li>
+          <li class="legend-page"><span class="legend-n mono">vi</span><p class="display-l">The dance keeps the bond alive: <b>river people</b> and <b>his descendants</b>.</p></li>
+        </ol>
+        <div class="legend-black" aria-hidden="true"></div>
       </div>
     </section>
 
@@ -457,14 +447,17 @@
         <figure class="bento-a"><video muted loop playsinline preload="none" poster="/video/doc-aerial.jpg" data-lazy-video data-src="/video/doc-aerial.mp4" aria-label="Aerial view of a village square full of dancers"></video><figcaption class="mono">From above. A village square, full.</figcaption></figure>
         <figure class="bento-b"><video muted loop playsinline preload="none" poster="/video/stage-2018.jpg" data-lazy-video data-src="/video/stage-2018.mp4" aria-label="Wilda Situngkir on the Miss Supranational 2018 stage in a Hudoq-inspired hornbill costume"></video><figcaption class="mono">2018 · “The Sacred Hudoq” — Best National Costume, Miss Supranational</figcaption></figure>
         <figure class="bento-c"><video muted loop playsinline preload="none" poster="/video/reel-ester.jpg" data-start="8" data-lazy-video data-src="/video/reel-ester.mp4" aria-label="Fashion shoot reel with a Hudoq-inspired costume in green and beadwork"></video><figcaption class="mono">A studio take, in green and beadwork</figcaption></figure>
-        <figure class="bento-e"><p class="mono">Pekayang, step one</p><p class="bento-e-t">Feed the mask.</p><p>Sticky rice and boiled eggs. Then the dancing starts.</p></figure>
+        <figure class="bento-e" aria-label="Hudoq in numbers">
+          <p class="mono">In numbers</p>
+          <dl class="odo-list">
+            <div><dt>dancers at once, 2018 (MURI record)</dt><dd><b class="odo-num" data-odo="2230">2,230</b></dd></div>
+            <div><dt>hours non-stop, 2019 (MURI record)</dt><dd><b class="odo-num" data-odo="25">25</b></dd></div>
+            <div><dt>villages at one festival</dt><dd><b class="odo-num" data-odo="13">13</b></dd></div>
+          </dl>
+        </figure>
         <figure class="bento-d"><img data-img="modern/sup-preliminary" alt="Hudoq-inspired hornbill costume on the Miss Supranational 2018 preliminary stage" sizes="(min-width: 900px) 24vw, 70vw" loading="lazy"></figure>
-      </div>
-
-      <div class="wall" id="wall" aria-label="Photographs of Hudoq performances">
-        <div class="wall-col" data-speed="-60"><img data-img="photo/b3" alt="Two dancers in feather crowns and white masks" sizes="30vw" loading="lazy"><img data-img="photo/d12" alt="Dancers in red cloaks and leaf skirts on a paved court" sizes="30vw" loading="lazy"><img data-img="photo/b8" alt="A man speaks into a mic beside masked dancers" sizes="30vw" loading="lazy"></div>
-        <div class="wall-col" data-speed="80"><img data-img="photo/d4" alt="Three masked dancers with feather crowns against the sky" sizes="30vw" loading="lazy"><img data-img="photo/b4" alt="Dancers in a long boat on the river" sizes="30vw" loading="lazy"><img data-img="photo/c1" alt="A masked dancer with a long beak and green ribbons" sizes="30vw" loading="lazy"></div>
-        <div class="wall-col" data-speed="-40"><img data-img="photo/b2" alt="A long line of masked dancers across a field" sizes="30vw" loading="lazy"><img data-img="photo/d13" alt="A procession of dancers on a village road" sizes="30vw" loading="lazy"><img data-img="photo/c7" alt="Dancers crowded together in red and green" sizes="30vw" loading="lazy"></div>
+        <figure class="bento-f"><img data-img="photo/b2" alt="A long line of masked dancers across a green field" sizes="(min-width: 900px) 56vw, 100vw" loading="lazy"><figcaption class="mono">A field, a line of spirits</figcaption></figure>
+        <figure class="bento-g"><img data-img="photo/b4" alt="Dancers in feather crowns in a long boat on the river" sizes="(min-width: 900px) 40vw, 100vw" loading="lazy"><figcaption class="mono">Arriving by river</figcaption></figure>
       </div>
 
       <div class="timeline" id="timeline">
@@ -481,22 +474,8 @@
       </div>
     </section>
 
-    <!-- ───────────── 11 · THE COUNT ───────────── -->
-    <section class="chapter count" id="count" data-chapter="11" data-title="The count" data-theme="ink" aria-labelledby="h-count">
-      <h2 id="h-count" class="sr-only">Hudoq by the numbers</h2>
-      <div class="count-grid">
-        <div class="stat"><b data-count="2230" data-fmt="int">2,230</b><span>dancers in one performance<small>MURI record · Oct 2018</small></span></div>
-        <div class="stat"><b data-count="25">25</b><span>hours of non-stop dancing<small>MURI record · Oct 2019</small></span></div>
-        <div class="stat"><b data-count="980" data-fmt="int">980</b><span>km of Mahakam river<small>from the highlands to the sea</small></span></div>
-        <div class="stat"><b data-count="88" data-suffix="%">88%</b><span>of Mahakam Ulu is forest<small>a Hudoq heartland</small></span></div>
-        <div class="stat"><b data-count="13">13</b><span>villages at one festival<small>in 2016, and again in 2026</small></span></div>
-        <div class="stat"><b data-count="10" data-suffix=" kg">10 kg</b><span>for a full costume, roughly<small>leaves made fresh each time</small></span></div>
-      </div>
-    </section>
-
     <!-- ───────────── 12 · THE CARE ───────────── -->
     <section class="chapter care" id="care" data-chapter="12" data-title="The care" data-theme="paper" aria-labelledby="h-care">
-      <div class="band band-top" aria-hidden="true"></div>
       <div class="care-grid">
         <div class="care-head">
           <p class="kicker"><span>12</span> The care</p>

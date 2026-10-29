@@ -26,9 +26,9 @@ export function initThen(reduced) {
     cur = i; const r = REELS[i];
     tabs.forEach((t, j) => { t.classList.toggle('is-active', j === i); t.setAttribute('aria-selected', j === i); });
     frame.style.setProperty('--gray', r.gray ?? 1); frame.style.setProperty('--ar', r.ar); frame.style.setProperty('--arw', r.arw);
-    gsap.fromTo(cap, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out' });
+    gsap.fromTo(cap, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.7, ease: 'h.reveal' });
     cap.innerHTML = r.cap;
-    gsap.fromTo(frame, { filter: 'brightness(2.4) contrast(1.4)' }, { filter: 'brightness(1) contrast(1)', duration: 0.9, ease: 'power2.out' });
+    gsap.fromTo(frame, { filter: 'brightness(2.4) contrast(1.4)' }, { filter: 'brightness(1) contrast(1)', duration: 0.9, ease: 'h.reveal' });
     if (r.type === 'photo') {
       video.pause(); video.hidden = true; photo.hidden = false; range.disabled = true; cue.textContent = '● STILL'; timeEl.textContent = '—';
     } else {

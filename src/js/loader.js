@@ -9,7 +9,6 @@ export function initLoader() {
   const line = document.getElementById('loaderLine');
   const rect = document.getElementById('loaderFillRect');
   const actions = root.querySelector('.loader-actions');
-  const note = root.querySelector('.loader-note');
   const svg = root.querySelector('.loader-mask');
 
   // mirror the half-mask template into left/right groups so each path can be drawn on
@@ -29,7 +28,7 @@ export function initLoader() {
 
   const st = { p: 0, shown: 0 };
   let lineI = 0;
-  const draw = gsap.to(paths, { strokeDashoffset: 0, duration: 2.2, ease: 'power2.inOut', stagger: { each: 0.08, from: 'start' } });
+  const draw = gsap.to(paths, { strokeDashoffset: 0, duration: 2.2, ease: 'h.move', stagger: { each: 0.08, from: 'start' } });
 
   function render() {
     const v = Math.round(st.shown * 100);
@@ -49,9 +48,8 @@ export function initLoader() {
         const finish = () => {
           st.p = 1; st.shown = 1; render();
           line.textContent = 'The forest is ready';
-          gsap.to(note, { opacity: 0, duration: 0.3 });
           actions.hidden = false;
-          gsap.from(actions.children, { y: 24, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'expo.out' });
+          gsap.from(actions.children, { y: 24, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'h.reveal' });
           const a = root.querySelector('#enterSound'), b = root.querySelector('#enterSilent');
           a.addEventListener('click', () => resolve({ sound: true }), { once: true });
           b.addEventListener('click', () => resolve({ sound: false }), { once: true });
@@ -64,9 +62,9 @@ export function initLoader() {
     exit() {
       return new Promise((resolve) => {
         gsap.timeline({ onComplete: () => { gsap.ticker.remove(tick); root.remove(); document.body.classList.remove('is-loading'); resolve(); } })
-          .to(root.querySelectorAll('.loader-actions, .loader-count, .loader-line'), { opacity: 0, y: -20, duration: 0.5, stagger: 0.05, ease: 'power3.in' })
-          .to(svg, { scale: 7, opacity: 0, duration: 1.1, ease: 'expo.in' }, 0.1)
-          .to(root, { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' }, 0.45);
+          .to(root.querySelectorAll('.loader-actions, .loader-count, .loader-line'), { opacity: 0, y: -20, duration: 0.5, stagger: 0.05, ease: 'h.exit' })
+          .to(svg, { scale: 7, opacity: 0, duration: 1.1, ease: 'h.exit' }, 0.1)
+          .to(root, { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'h.move' }, 0.45);
       });
     },
   };

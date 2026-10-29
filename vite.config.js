@@ -23,7 +23,7 @@ function mediaImages() {
           const largest = sizes[sizes.length - 1];
           const uniq = [...new Map(sizes.map((s) => [s.w, s])).values()];
           const srcset = uniq.map((s) => `${B}${s.src} ${s.w}w`).join(', ');
-          const style = e.lqip ? ` style="background:${e.color || '#222'} url(${e.lqip}) center/cover"` : '';
+          const style = e.lqip && !/^(masks|cut)\//.test(key) ? ` style="background:${e.color || '#222'} url(${e.lqip}) center/cover"` : '';
           const hasSizes = /\ssizes=/.test(pre + post);
           return `<img${pre}${post} src="${B}${largest.src}" srcset="${srcset}"${hasSizes ? '' : ' sizes="100vw"'} width="${largest.w}" height="${largest.h}"${style} decoding="async">`;
         });

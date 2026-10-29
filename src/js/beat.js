@@ -57,7 +57,7 @@ export function initBeat(reduced) {
     if (happy >= 100 && !celebrated) {
       celebrated = true; say('You kept the beat.');
       audio.gong(82, 1); audio.pluck(4, 1, 1); setTimeout(() => audio.pluck(2, 1, 1), 160); setTimeout(() => audio.pluck(0, 2, 1), 320);
-      btns.forEach((b, i) => gsap.fromTo(b, { rotate: -12 }, { rotate: 0, duration: 1.4, ease: 'elastic.out(1, .35)', delay: i * 0.06 }));
+      btns.forEach((b, i) => gsap.fromTo(b, { rotate: -12 }, { rotate: 0, duration: 1.4, ease: 'h.reveal', delay: i * 0.06 }));
       gsap.fromTo(pad, { scale: 1 }, { scale: 1.04, yoyo: true, repeat: 3, duration: 0.18 });
       setTimeout(() => { celebrated = false; }, 6000);
     }

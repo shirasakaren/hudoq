@@ -100,6 +100,14 @@ class HudoqAudio {
 
   toggle() { return this.enabled ? this.disable() : this.enable(); }
 
+  /** Hold the whole mix down (a deliberate silence) and bring it back. */
+  duck(to = 1, secs = 1) {
+    if (!this.enabled || !this.ctx) return;
+    const t = this.ctx.currentTime;
+    this.master.gain.cancelScheduledValues(t);
+    this.master.gain.setTargetAtTime(0.9 * to, t, Math.max(0.05, secs / 3));
+  }
+
   /** Scroll position → wind brightness, so the bed breathes with the story (0..1). */
   breathe(p) {
     if (!this.enabled) return;

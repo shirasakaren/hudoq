@@ -235,11 +235,11 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
     intro() {
       state.intro = 0; state.introSpin = 0;
       return gsap.timeline()
-        .to(state, { intro: 1, duration: 2.2, ease: 'expo.out' }, 0)
+        .to(state, { intro: 1, duration: 2.2, ease: 'h.reveal' }, 0)
         .fromTo(state, { introSpin: 0.0 }, { introSpin: 0, duration: 0.01 }, 0);
     },
     setIntro(v) { state.intro = v; },
-    pulse() { gsap.fromTo(state, { introSpin: 0 }, { introSpin: Math.PI * 2, duration: 1.6, ease: 'power3.inOut', onComplete: () => { state.introSpin = 0; } }); },
+    pulse() { gsap.fromTo(state, { introSpin: 0 }, { introSpin: Math.PI * 2, duration: 1.6, ease: 'h.move', onComplete: () => { state.introSpin = 0; } }); },
     dispose() { gsap.ticker.remove(frame); renderer.dispose(); },
   };
   return api;
