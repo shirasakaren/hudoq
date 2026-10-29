@@ -7,10 +7,11 @@ import { SplitText } from 'gsap/SplitText';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { Observer } from 'gsap/Observer';
 import { audio } from './audio.js';
+window.__audio = audio;
 import { asset } from './js/url.js';
 import { initLoader } from './js/loader.js';
 import { initSmooth, bindAnchors } from './js/smooth.js';
-import { initCursor, initMagnetic } from './js/cursor.js';
+import { initCursor, initMagnetic, initHoverRoll } from './js/cursor.js';
 import { initGrain } from './js/grain.js';
 import { initLazyVideos } from './js/media.js';
 import { initTextFx, heroIntro, initHero } from './js/textfx.js';
@@ -31,6 +32,10 @@ gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin, Observer);
 document.documentElement.classList.add('js');
 
 const reduced = document.documentElement.dataset.motion === 'reduced';
+const mq = matchMedia('(max-width: 900px)');
+const mobile = mq.matches;
+const L = mobile ? 0.6 : 1; // phones get shorter pins (a different cut, not a shrunken one)
+mq.addEventListener('change', () => location.reload());
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function boot() {
@@ -66,20 +71,31 @@ async function boot() {
   loader.set(0.97);
 
   // ── build every chapter (page order, so pin spacing is computed correctly)
+  initHoverRoll();
   initMagnetic();
   initLazyVideos(reduced);
-  initHero(gl, reduced);
-  initMap(reduced);
-  initRice(reduced);
-  initLegend(reduced);
-  initFaces(lenis, reduced);
-  initLab(gl, lenis, reduced);
-  initSuit(lenis, reduced, gl);
+  initHero(gl, reduced, mobile ? 0.72 : 1);
+  initMap(reduced, L);
+  initRice(reduced, L);
+  initLegend(reduced, L);
+  initFaces(lenis, reduced, mobile);
+  initLab(gl, lenis, reduced, mobile ? 0.55 : 1);
+  initSuit(lenis, reduced, gl, L);
   initBeat(reduced);
-  initThen(reduced);
+  initThen(reduced, L);
   initNow(gl, reduced);
-  initFinale(gl, lenis, reduced);
+  initFinale(gl, lenis, reduced, L);
   initSeams(reduced);
+  // sound-reactive visuals: the rim light on the mask and the sound icon breathe with the mix
+  const bars = [...document.querySelectorAll('#soundBtn .bars rect')];
+  let lo = 0;
+  gsap.ticker.add(() => {
+    if (!audio.enabled) { if (gl) gl.level = null; bars.forEach((r) => { r.style.animation = ''; r.style.transform = ''; }); return; }
+    const l = audio.level();
+    lo += (l.lo - lo) * (l.lo > lo ? 0.5 : 0.08);
+    if (gl) gl.level = { lo, hi: l.hi };
+    if (l.bins) bars.forEach((r, i) => { const v = l.bins[2 + i * 5] / 255; r.style.animation = 'none'; r.style.transform = `scaleY(${0.25 + v * 0.9})`; });
+  });
   initTextFx(reduced);
   initNav(lenis);
   const intro = heroIntro(reduced);

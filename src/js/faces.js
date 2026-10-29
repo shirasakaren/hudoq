@@ -10,9 +10,9 @@ const SPOTS = [
   [48, 78, 16, -3], [80, 66, 15, 7], [64, 92, 12, -12], [24, 40, 11, 9], [92, 88, 11, -5], [8, 58, 10, 6],
 ];
 
-export function initFaces(lenis, reduced) {
+export function initFaces(lenis, reduced, mobile = false) {
   initDark(reduced);
-  initGallery(lenis, reduced);
+  initGallery(lenis, reduced, mobile);
 }
 
 /* ───────── The dark room: your light is the only light ───────── */
@@ -92,7 +92,7 @@ function initDark(reduced) {
 }
 
 /* ───────── The gallery: eleven carved faces ───────── */
-function initGallery(lenis, reduced) {
+function initGallery(lenis, reduced, mobile) {
   const section = document.getElementById('gallery');
   const track = document.getElementById('galleryTrack');
   const head = section.querySelector('.gallery-head');
@@ -117,6 +117,17 @@ function initGallery(lenis, reduced) {
   });
 
   if (reduced) { section.classList.add('is-static'); head.style.cssText = 'position:static;width:auto'; return; }
+
+  // phones: no horizontal pin — the strip is a native swipe with snap, plus a counter
+  if (mobile) {
+    section.classList.add('is-swipe');
+    const cards = [...track.querySelectorAll('.mcard')];
+    const count = document.createElement('p'); count.className = 'gallery-count mono'; count.setAttribute('aria-hidden', 'true'); count.textContent = '01 / 11';
+    section.appendChild(count);
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting && e.intersectionRatio > 0.6) count.textContent = `${String(cards.indexOf(e.target) + 1).padStart(2, '0')} / 11`; }), { root: track, threshold: [0.6] });
+    cards.forEach((c) => io.observe(c));
+    return;
+  }
 
   const dist = () => Math.max(0, track.scrollWidth - innerWidth);
   let vel = 0, shown = 0;

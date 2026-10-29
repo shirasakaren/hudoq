@@ -21,7 +21,7 @@ export function inkLine(el, color = 'var(--vermilion)') {
   return gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 90%', once: true } })
     .fromTo(el, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: D.ui, ease: 'h.reveal' })
     .fromTo(block, { scaleX: 1 }, { scaleX: 0, duration: D.ui, ease: 'h.move' }, D.ui * 0.5)
-    .set(el, { clipPath: 'none' })
+    .set(el, { clearProps: 'clipPath' })
     .add(() => block.remove());
 }
 
@@ -31,7 +31,7 @@ export function imageReveal(fig, { scrub: sc = false, delay = 0 } = {}) {
   const tl = gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top 90%', end: 'top 45%', scrub: sc ? 0.6 : false, once: !sc }, delay });
   tl.fromTo(fig, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: D.move, ease: sc ? 'none' : 'h.move' }, 0);
   if (media && media.tagName === 'IMG') tl.fromTo(media, { scale: 1.22, yPercent: -6 }, { scale: 1, yPercent: 0, duration: D.move * 1.2, ease: sc ? 'none' : 'h.reveal' }, 0);
-  tl.set(fig, { clipPath: 'none' });
+  tl.set(fig, { clearProps: 'clipPath' });
   return tl;
 }
 

@@ -15,10 +15,10 @@ export function initFinale(gl, lenis, reduced, L = 1) {
     const st = gl.state, U = gl.uniforms;
     let gonged = false;
     const tl = gsap.timeline({ defaults: { ease: 'none' } });
-    tl.fromTo(st, { extraYaw: 0.6, extraPitch: 0.15 }, { extraYaw: 0, extraPitch: 0, duration: 0.25 }, 0)
-      .fromTo(st.lab, { rim: 0 }, { rim: 1.1, duration: 0.15 }, 0)
+    tl.fromTo(st, { extraYaw: 0.6, extraPitch: 0.15 }, { extraYaw: 0, extraPitch: 0, duration: 0.25, immediateRender: false }, 0)
+      .fromTo(st.lab, { rim: 0 }, { rim: 1.1, duration: 0.15, immediateRender: false }, 0)
       .to(st.lab, { rim: 0.5, duration: 0.1 }, 0.15)
-      .fromTo(U.uDissolve, { value: 0 }, { value: 1, duration: 0.55 }, 0.35)
+      .fromTo(U.uDissolve, { value: 0 }, { value: 1, duration: 0.55, immediateRender: false }, 0.35)
       .to('.finale-title .still', { opacity: 0.4, duration: 0.1 }, 0.9)
       .to({}, { duration: 0.1 }, 0.9);
     ScrollTrigger.create({

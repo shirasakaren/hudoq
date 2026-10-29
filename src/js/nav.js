@@ -21,6 +21,9 @@ export function initNav(lenis) {
     menuList.appendChild(li);
   });
   const links = [...rail.querySelectorAll('a')];
+  const SCENES = { top: 'hero', what: 'word', where: 'river', why: 'rice', legend: 'legend', faces: 'dark', mask: 'lab', suit: 'lab', dance: 'beat', then: 'then', now: 'now', care: 'care' };
+  let sceneName = 'hero';
+  audio.onChange((on) => { if (on) { audio._scene = null; audio.scene(sceneName); } });
 
   chapters.forEach((s, i) => {
     ScrollTrigger.create({
@@ -30,6 +33,7 @@ export function initNav(lenis) {
         const label = document.querySelector('.bar-chapter');
         gsap.fromTo(label, { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 0.85, duration: 0.6, ease: 'h.reveal', overwrite: 'auto' });
         bn.textContent = s.dataset.chapter; bt.textContent = s.dataset.title;
+        sceneName = SCENES[s.id] || 'hero'; audio.scene(sceneName);
         links.forEach((l, j) => { l.classList.toggle('is-active', j === i); if (j === i) l.setAttribute('aria-current', 'true'); else l.removeAttribute('aria-current'); });
       },
     });

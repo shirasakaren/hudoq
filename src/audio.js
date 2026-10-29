@@ -42,6 +42,9 @@ class HudoqAudio {
     const comp = ctx.createDynamicsCompressor();
     comp.threshold.value = -18; comp.ratio.value = 3;
     this.master.connect(comp).connect(ctx.destination);
+    // analyser: lets visuals breathe with the sound (rim light, sound icon, embers)
+    this.an = ctx.createAnalyser(); this.an.fftSize = 256; this.an.smoothingTimeConstant = 0.55;
+    comp.connect(this.an); this._bins = new Uint8Array(this.an.frequencyBinCount);
 
     // soft room: a short feedback delay used as cheap reverb for the gong and plucks
     this.verb = ctx.createGain(); this.verb.gain.value = 0.35;
@@ -58,7 +61,7 @@ class HudoqAudio {
     const lg = ctx.createGain(); lg.gain.value = 260;
     lfo.connect(lg).connect(wf.frequency); lfo.start();
     wind.connect(wf).connect(wg).connect(this.master); wind.start();
-    this.windFilter = wf;
+    this.windFilter = wf; this.windGain = wg;
 
     const bug = ctx.createBufferSource(); bug.buffer = this._noise(3, 'white'); bug.loop = true;
     const bf = ctx.createBiquadFilter(); bf.type = 'bandpass'; bf.frequency.value = 5200; bf.Q.value = 14;
@@ -67,13 +70,30 @@ class HudoqAudio {
     const tg = ctx.createGain(); tg.gain.value = 0.012;
     trem.connect(tg).connect(bgain.gain); trem.start();
     bug.connect(bf).connect(bgain).connect(this.master); bug.start();
+    this.bugGain = bgain;
 
     // low drone: two detuned sines, very quiet — the "floor" of the forest
-    [55, 55.4, 82.5].forEach((f, i) => {
+    this.drones = [55, 55.4, 82.5].map((f, i) => {
       const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
       const g = ctx.createGain(); g.gain.value = i === 2 ? 0.015 : 0.03;
-      o.connect(g).connect(this.master); o.start();
+      o.connect(g).connect(this.master); o.start(); return o;
     });
+
+    // chapter beds, silent until a scene asks for them: water (river), crowd (now), projector (then)
+    const water = ctx.createBufferSource(); water.buffer = this._noise(5, 'brown'); water.loop = true;
+    const wbp = ctx.createBiquadFilter(); wbp.type = 'bandpass'; wbp.frequency.value = 380; wbp.Q.value = 0.7;
+    this.waterGain = ctx.createGain(); this.waterGain.gain.value = 0;
+    const wl = ctx.createOscillator(); wl.frequency.value = 0.13; const wlg = ctx.createGain(); wlg.gain.value = 0.04; wl.connect(wlg).connect(this.waterGain.gain); wl.start();
+    water.connect(wbp).connect(this.waterGain).connect(this.master); water.start();
+    const crowd = ctx.createBufferSource(); crowd.buffer = this._noise(5, 'pink'); crowd.loop = true;
+    const cbp = ctx.createBiquadFilter(); cbp.type = 'bandpass'; cbp.frequency.value = 1100; cbp.Q.value = 0.5;
+    this.crowdGain = ctx.createGain(); this.crowdGain.gain.value = 0;
+    crowd.connect(cbp).connect(this.crowdGain).connect(this.master); crowd.start();
+    const proj = ctx.createBufferSource(); proj.buffer = this._noise(2, 'white'); proj.loop = true;
+    const pbp = ctx.createBiquadFilter(); pbp.type = 'bandpass'; pbp.frequency.value = 1200; pbp.Q.value = 1.2;
+    this.projGain = ctx.createGain(); this.projGain.gain.value = 0;
+    const am = ctx.createOscillator(); am.type = 'square'; am.frequency.value = 22; const amg = ctx.createGain(); amg.gain.value = 0.5; am.connect(amg).connect(this.projGain.gain); am.start();
+    proj.connect(pbp).connect(this.projGain).connect(this.master); proj.start();
   }
 
   async enable() {
@@ -99,6 +119,41 @@ class HudoqAudio {
   }
 
   toggle() { return this.enabled ? this.disable() : this.enable(); }
+
+  /** Chapters have places, and places have air: each scene ramps the beds over ~1.5 s. */
+  scene(name) {
+    if (!this.enabled || !this.ctx || this._scene === name) return;
+    this._scene = name;
+    const D = { wind: 0.22, bug: 0.012, water: 0, crowd: 0, proj: 0, drone: 55 };
+    const S = {
+      hero: {}, word: { wind: 0.12 },
+      river: { wind: 0.16, water: 0.12 },
+      rice: { bug: 0.024, wind: 0.14 },
+      legend: { drone: 41.2, wind: 0.1, water: 0.09 },
+      dark: { wind: 0.04, bug: 0.014 },
+      lab: { wind: 0.1 },
+      beat: { wind: 0.12 },
+      then: { wind: 0.05, proj: 0.045 },
+      now: { wind: 0.1, crowd: 0.07 },
+      care: { wind: 0.14 },
+    };
+    const v = { ...D, ...(S[name] || {}) };
+    const t = this.ctx.currentTime, k = 0.5;
+    this.windGain.gain.setTargetAtTime(v.wind, t, k); this.bugGain.gain.setTargetAtTime(v.bug, t, k);
+    this.waterGain.gain.setTargetAtTime(v.water, t, k); this.crowdGain.gain.setTargetAtTime(v.crowd, t, k); this.projGain.gain.setTargetAtTime(v.proj, t, k);
+    this.drones.forEach((o, i) => o.frequency.setTargetAtTime([v.drone, v.drone * 1.007, v.drone * 1.5][i], t, 0.8));
+    this.verb.gain.setTargetAtTime(name === 'legend' ? 0.5 : 0.35, t, k);
+  }
+
+  /** Low/high band energy (0..1) for visuals; also fires onHit when the low band spikes (a gong or drum). */
+  level() {
+    if (!this._ready() || !this.an) return { lo: 0, hi: 0 };
+    this.an.getByteFrequencyData(this._bins);
+    let lo = 0, hi = 0;
+    for (let i = 1; i < 8; i++) lo += this._bins[i];
+    for (let i = 30; i < 60; i++) hi += this._bins[i];
+    return { lo: lo / 1785, hi: hi / 7650, bins: this._bins };
+  }
 
   /** Hold the whole mix down (a deliberate silence) and bring it back. */
   duck(to = 1, secs = 1) {

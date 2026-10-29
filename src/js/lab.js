@@ -54,7 +54,7 @@ export function initLab(gl, lenis, reduced, L = 1) {
   // scroll drives the study: notes cross-fade; the camera, key light and rim move on the same labels
   tl = stepper(notes, { hold: 0.9, xf: 0.5 });
   STATIONS.forEach((k, i) => {
-    if (i === 0) { tl.set(lab, { yaw: k.yaw, pitch: k.pitch, zoom: k.zoom, ox: k.ox, oy: k.oy, key: k.key, rim: k.rim }, 0); return; }
+    if (i === 0) { tl.fromTo(lab, { yaw: 0, pitch: 0, zoom: 1, ox: 0, oy: 0, key: 0, rim: 0 }, { yaw: k.yaw, pitch: k.pitch, zoom: k.zoom, ox: k.ox, oy: k.oy, key: k.key, rim: k.rim, duration: 0.5, ease: 'h.move' }, 0); return; }
     tl.to(lab, { yaw: k.yaw, pitch: k.pitch, zoom: k.zoom, ox: k.ox, oy: k.oy, key: k.key, rim: k.rim, duration: 1.1, ease: 'h.move' }, `s${i}-=0.6`);
   });
   st = ScrollTrigger.create({

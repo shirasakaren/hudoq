@@ -17,9 +17,7 @@ SRC=${DOC_SRC:-$M/video/current-era/video.mkv}
 doc() { # name start dur
   enc "$SRC" "doc-$1" "scale=1434:806,crop=1280:720:154:86,scale=1280:-2" 28 -ss "$2" -t "$3"
 }
-doc river    18 10
 doc parade   33 12
 doc aerial   107 7
 doc masks    166 10
 doc drone    237 7
-doc night    264 12

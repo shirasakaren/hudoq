@@ -62,6 +62,14 @@ img { height: auto; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .22em; }
 .btn { text-decoration: none; }
+/* hover: label roll */
+.roll { display: inline-flex; position: relative; overflow: clip; vertical-align: bottom; }
+.roll > span { display: block; transition: transform .45s var(--e-reveal); }
+.roll > span + span { position: absolute; left: 0; top: 100%; }
+.btn:hover .roll > span, .btn:focus-visible .roll > span, .icon-btn:hover .roll > span, .menu-btn:hover .roll > span { transform: translateY(-100%); }
+/* hover: underline draws in, leaves to the right */
+.foot a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 100% 100% / 0 1px no-repeat; transition: background-size .45s var(--e-reveal), color .3s; }
+.foot a:hover, .foot a:focus-visible { background-size: 100% 1px; background-position: 0 100%; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 h1, h2, h3, h4, p, figure { margin: 0; }
 b, strong { font-weight: 600; }
@@ -178,15 +186,19 @@ b, strong { font-weight: 600; }
 .menu-list a small { font-family: var(--f-mono); font-size: .7rem; letter-spacing: .14em; color: var(--ochre); font-weight: 500; }
 .menu-list a:hover, .menu-list a:focus-visible { color: var(--ember); transform: translateX(.6rem); }
 
-/* custom cursor */
+/* custom cursor: a dot by default; a ring appears on interactive things; a labelled disc where an action has a name */
 .cursor { position: fixed; left: 0; top: 0; z-index: 900; pointer-events: none; opacity: 0; transition: opacity .3s; }
 .cursor.is-on { opacity: 1; }
-.cursor-dot { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--vermilion); box-shadow: 0 0 0 1.5px var(--bone); }
-.cursor-ring { position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--bone); box-shadow: 0 0 0 1px rgba(14, 11, 9, .55), inset 0 0 0 1px rgba(14, 11, 9, .35); display: grid; place-items: center; transition: transform .45s var(--e-reveal), width .45s var(--e-reveal), height .45s var(--e-reveal), left .45s var(--e-reveal), top .45s var(--e-reveal), background .3s; }
+.cursor.is-hidden .cursor-dot { opacity: 0; }
+.cursor-dot { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%; background: var(--bone); box-shadow: 0 0 0 1px rgba(14, 11, 9, .7); transition: opacity .25s; }
+.cursor-ring { position: absolute; left: -22px; top: -22px; width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--bone); box-shadow: 0 0 0 1px rgba(14, 11, 9, .55), inset 0 0 0 1px rgba(14, 11, 9, .35); display: grid; place-items: center;
+  transform: var(--sq, none) scale(var(--ring, 0)); transition: width .45s var(--e-reveal), height .45s var(--e-reveal), left .45s var(--e-reveal), top .45s var(--e-reveal), background .3s, --ring .35s var(--e-reveal); }
+.cursor.is-hover .cursor-ring { --ring: 1; }
 .cursor-label { font-family: var(--f-mono); font-size: .6rem; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); font-weight: 700; opacity: 0; transition: opacity .2s; }
-.cursor.is-hover .cursor-ring { transform: scale(1.7); }
-.cursor.has-label .cursor-ring { transform: none; width: 96px; height: 96px; left: -48px; top: -48px; background: var(--ochre); border-color: var(--ochre); }
+.cursor.has-label .cursor-ring { --ring: 1; width: 96px; height: 96px; left: -48px; top: -48px; background: var(--ochre); border-color: var(--ochre); }
 .cursor.has-label .cursor-label { opacity: 1; }
+.cursor.has-label .cursor-dot { opacity: 0; }
+@property --ring { syntax: '<number>'; inherits: true; initial-value: 0; }
 @media (pointer: coarse), (hover: none) { .cursor { display: none; } }
 
 /* ───────────── Loader ("carved, then worn") ───────────── */

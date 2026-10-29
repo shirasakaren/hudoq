@@ -37,7 +37,7 @@ function leafTexture() {
 export async function createGL({ canvas, onProgress, reduced = false }) {
   const isSmall = Math.min(innerWidth, innerHeight) < 700;
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
-  let dprCap = Math.min(window.devicePixelRatio || 1, isSmall ? 1.5 : 1.75);
+  let dprCap = Math.min(window.devicePixelRatio || 1, isSmall ? 1.25 : 1.75);
   renderer.setPixelRatio(dprCap);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
