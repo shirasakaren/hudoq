@@ -32,6 +32,9 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 async function boot() {
   window.scrollTo(0, 0);
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  // while the loader is up, nothing behind it may take focus
+  const behind = [...document.querySelectorAll('.bar, .rail, main, footer')];
+  behind.forEach((n) => n.setAttribute('inert', ''));
   const loader = initLoader();
   initGrain();
   const lenis = initSmooth(reduced);
@@ -79,6 +82,7 @@ async function boot() {
   // ── gate: choose sound or silence
   const choice = await loader.ready();
   if (choice.sound) { await audio.enable(); audio.swell(2.2); setTimeout(() => audio.gong(98, 0.9), 700); }
+  behind.forEach((n) => n.removeAttribute('inert'));
   await loader.exit();
   gl?.intro();
   intro.play();

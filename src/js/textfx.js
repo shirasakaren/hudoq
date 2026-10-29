@@ -10,15 +10,18 @@ export function initTextFx(reduced) {
   gsap.utils.toArray('.display-xxl, .display-xl, .display-l, .display-m, .reel-caption').forEach((el) => {
     if (el.closest('.where-step') || el.closest('.rice-beat') || el.dataset.noSplit != null) return;
     SplitText.create(el, {
-      type: 'lines', mask: 'lines', autoSplit: true, linesClass: 'ln',
+      type: 'lines', mask: 'lines', autoSplit: true, linesClass: 'ln', aria: 'none',
       onSplit: (self) => gsap.from(self.lines, { yPercent: 112, duration: 1.3, ease: 'expo.out', stagger: 0.09, scrollTrigger: { trigger: el, start: 'top 88%', once: true } }),
     });
   });
 
+  // the Beat headline keeps its staggered indents, so its three lines animate directly
+  gsap.from('#h-beat .line', { opacity: 0, yPercent: 30, clipPath: 'inset(0 0 100% 0)', duration: 1.3, ease: 'expo.out', stagger: 0.12, scrollTrigger: { trigger: '#h-beat', start: 'top 85%', once: true } });
+
   // statements: words light up as you read
   gsap.utils.toArray('[data-split="scrub-words"]').forEach((el) => {
     SplitText.create(el, {
-      type: 'words', autoSplit: true,
+      type: 'words', autoSplit: true, aria: 'none',
       onSplit: (self) => {
         gsap.set(self.words, { opacity: 0.13 });
         return gsap.to(self.words, { opacity: 1, ease: 'none', stagger: 0.12, scrollTrigger: { trigger: el, start: 'top 72%', end: 'bottom 52%', scrub: 0.6 } });
@@ -47,7 +50,7 @@ export function heroIntro(reduced) {
   const tag = document.querySelector('.hero-tag');
   const meta = document.querySelectorAll('.hero-meta, .hero-cue');
   if (reduced) return gsap.timeline();
-  const split = SplitText.create(tag, { type: 'lines', mask: 'lines' });
+  const split = SplitText.create(tag, { type: 'lines', mask: 'lines', aria: 'none' });
   gsap.set(chars, { yPercent: 118, rotate: 6 });
   gsap.set(split.lines, { yPercent: 115 });
   gsap.set(meta, { opacity: 0, y: 16 });

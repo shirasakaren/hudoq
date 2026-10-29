@@ -23,5 +23,7 @@ export function bindAnchors(lenis) {
     e.preventDefault();
     lenis.scrollTo(el, { duration: 1.8, easing: (t) => 1 - Math.pow(1 - t, 4), offset: 0 });
     history.replaceState(null, '', id);
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '-1'); // move keyboard focus with the scroll
+    el.focus({ preventScroll: true });
   });
 }

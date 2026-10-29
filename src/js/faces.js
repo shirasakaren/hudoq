@@ -33,8 +33,9 @@ function initDark(reduced) {
   let px = -999, py = -999, active = false, count = 0, t0 = 0;
   const lit = items.map(() => 0);
 
-  room.addEventListener('pointermove', (e) => { const r = room.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; });
-  room.addEventListener('pointerleave', () => { if (!coarse) { px = py = -999; } });
+  let hasPointer = false;
+  room.addEventListener('pointermove', (e) => { hasPointer = true; const r = room.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; });
+  room.addEventListener('pointerleave', () => { hasPointer = false; });
   ScrollTrigger.create({ trigger: room, start: 'top bottom', end: 'bottom top', onToggle: (s) => { active = s.isActive; } });
 
   if (reduced) { items.forEach((it) => { it.li.classList.add('is-found'); }); countEl.textContent = '11'; done.style.opacity = 1; done.textContent = 'Eleven faces. No two alike.'; return; }
@@ -54,11 +55,9 @@ function initDark(reduced) {
   gsap.ticker.add((time) => {
     if (!active) return;
     const r = room.getBoundingClientRect();
-    if (coarse || (px < -500 && py < -500)) {
-      // touch / no pointer yet: a lantern that wanders on its own and follows the scroll
-      t0 = time;
+    if (!hasPointer) {
+      // touch, or the mouse hasn't entered yet: a lantern that wanders on its own and follows the scroll
       px = r.width * (0.5 + 0.38 * Math.sin(time * 0.45)); py = -r.top + innerHeight * 0.5 + Math.sin(time * 0.7) * innerHeight * 0.3 + r.height * 0.1 * Math.cos(time * 0.3);
-      if (!coarse) { px = -999; py = -999; }
     }
     room.style.setProperty('--mx', px + 'px'); room.style.setProperty('--my', py + 'px');
     const rad = Math.max(150, Math.min(innerWidth, innerHeight) * 0.27);
@@ -84,7 +83,6 @@ function initGallery(lenis, reduced) {
     b.className = 'mcard'; b.type = 'button';
     b.style.setProperty('--ratio', Math.max(0.62, Math.min(1.15, m.ratio * 0.95)));
     b.style.setProperty('--tint', m.tint);
-    b.setAttribute('aria-label', `Mask ${m.n}: ${m.caption}. Open to inspect.`);
     b.dataset.cursor = 'inspect';
     b.innerHTML = `<span class="mcard-n mono">${String(m.n).padStart(2, '0')}</span><img src="${m.small}" alt="Carved Hudoq mask: ${m.caption}" width="${m.w}" height="${m.h}" loading="lazy" decoding="async"><span class="mcard-t">${m.caption}</span>`;
     track.appendChild(b);
@@ -97,6 +95,7 @@ function initGallery(lenis, reduced) {
     });
     b.addEventListener('pointerleave', () => ['--ry', '--rx', '--tx', '--ty'].forEach((v) => b.style.removeProperty(v)));
     b.addEventListener('click', () => openInspect(i, b));
+    b.tabIndex = i === 0 ? 0 : -1; // roving tabindex: one stop for the strip, arrows move inside it
   });
 
   if (reduced) { section.classList.add('is-static'); return; }
@@ -120,10 +119,12 @@ function initGallery(lenis, reduced) {
   });
   // keyboard: arrows on a focused card nudge along
   track.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) {
       const cards = [...track.querySelectorAll('.mcard')];
       const i = cards.indexOf(document.activeElement); if (i < 0) return;
-      const n = cards[Math.max(0, Math.min(cards.length - 1, i + (e.key === 'ArrowRight' ? 1 : -1)))];
+      const to = e.key === 'Home' ? 0 : e.key === 'End' ? cards.length - 1 : i + (e.key === 'ArrowRight' ? 1 : -1);
+      const n = cards[Math.max(0, Math.min(cards.length - 1, to))];
+      cards.forEach((c) => { c.tabIndex = -1; }); n.tabIndex = 0;
       n.focus({ preventScroll: true });
       const p = (n.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft)) / dist();
       lenis.scrollTo(st.start + (st.end - st.start) * Math.max(0, Math.min(1, p)), { duration: 0.8 });

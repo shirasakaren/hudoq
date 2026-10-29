@@ -29,6 +29,11 @@ export function initRice(reduced) {
     g.append(c, t); nodesG.appendChild(g); return g;
   });
 
+  // photos 2–5 load when the chapter is near (they're stacked, so lazy-loading alone would fetch them all)
+  photos.slice(1).forEach((p) => { p.dataset.src = p.getAttribute('src'); p.dataset.srcset = p.getAttribute('srcset'); p.removeAttribute('src'); p.removeAttribute('srcset'); });
+  const loadPhotos = () => photos.slice(1).forEach((p) => { if (p.dataset.src) { p.srcset = p.dataset.srcset; p.src = p.dataset.src; delete p.dataset.src; } });
+  ScrollTrigger.create({ trigger: section, start: 'top 250%', once: true, onEnter: loadPhotos });
+  if (reduced) loadPhotos();
   let cur = -1;
   function setBeat(i) {
     if (i === cur) return;
@@ -42,8 +47,10 @@ export function initRice(reduced) {
       } else b.classList.remove('is-active');
     });
     photos.forEach((p, j) => p.classList.toggle('is-on', j === i));
+    section.classList.toggle('is-last', i === beats.length - 1);
     nodes.forEach((n, j) => { n.classList.toggle('is-active', j <= BEAT_NODE[i] && j >= 1 && j <= BEAT_NODE[i]); n.classList.toggle('is-warn', i === 1 && j === 1); });
-    gsap.to(coreT, { opacity: 0, y: -10, duration: 0.2, onComplete: () => { coreT.textContent = BEAT_CORE[i]; gsap.to(coreT, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' }); } });
+    gsap.killTweensOf(coreT);
+    gsap.timeline().to(coreT, { opacity: 0, y: -10, duration: 0.2 }).add(() => { coreT.textContent = BEAT_CORE[i]; }).to(coreT, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' });
   }
   setBeat(0);
   if (reduced) { section.classList.add('is-static'); return; }

@@ -39,10 +39,10 @@ export function initMap(reduced) {
     const [x, y] = map.places[k];
     const g = el('g', { class: 'map-place', opacity: 0 }, pg);
     const pulse = el('circle', { cx: x, cy: y, r: 8, class: 'pulse' }, g);
-    el('circle', { cx: x, cy: y, r: 5, fill: 'var(--ochre)' }, g);
+    const dot = el('circle', { cx: x, cy: y, r: 5, fill: 'var(--ochre)' }, g);
     const t = el('text', { x: x + 14, y: y + 5, 'text-anchor': anchor }, g); t.textContent = name;
-    gsap.to(pulse, { attr: { r: 26 }, opacity: 0, duration: 2.2, repeat: -1, ease: 'power1.out', delay: Math.random() });
-    return { g, step };
+    pulse.style.animationDelay = `${-Math.random() * 2}s`;
+    return { g, step, pulse, dot, t, x, y };
   });
 
   // viewBox targets
@@ -56,7 +56,11 @@ export function initMap(reduced) {
     (() => { const [x, y] = map.places.samarinda; return { x: x - 330, y: y - 190, w: 460, h: 420 }; })(),
   ];
   const vb = { ...full };
-  const applyVB = () => svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+  const applyVB = () => {
+    svg.setAttribute('viewBox', `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+    const k = vb.w / 1000; // keep labels and dots a constant size on screen as the map zooms
+    placeEls.forEach((p) => { p.t.style.fontSize = `${15 * k}px`; p.t.setAttribute('x', p.x + 14 * k); p.t.setAttribute('y', p.y + 5 * k); p.dot.setAttribute('r', 5 * k); p.pulse.setAttribute('r', 8 * k); });
+  };
   applyVB();
 
   let cur = -1;

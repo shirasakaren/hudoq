@@ -90,7 +90,8 @@ export function initBeat(reduced) {
       if (idx > 10 && now - lastTap() > INTERVAL * 8) { running = false; say('The gong waits. Tap to start again.'); }
     }
   });
-  let lastTapT = performance.now() / 1000; gong.addEventListener('pointerdown', () => { lastTapT = performance.now() / 1000; });
+  let lastTapT = performance.now() / 1000; const touchTap = () => { lastTapT = performance.now() / 1000; };
+  gong.addEventListener('pointerdown', touchTap); gong.addEventListener('keydown', touchTap);
   const lastTap = () => lastTapT;
   function pulse(loud) {
     pad.classList.remove('is-beat'); void pad.offsetWidth; pad.classList.add('is-beat');

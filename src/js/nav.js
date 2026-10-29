@@ -55,7 +55,16 @@ export function initNav(lenis) {
   }
   menuBtn.addEventListener('click', () => setMenu(!open));
   menuList.addEventListener('click', (e) => { if (e.target.closest('a')) { lenis.start(); setMenu(false); } });
-  addEventListener('keydown', (e) => { if (e.key === 'Escape' && open) { setMenu(false); menuBtn.focus(); } });
+  addEventListener('keydown', (e) => {
+    if (!open) return;
+    if (e.key === 'Escape') { setMenu(false); menuBtn.focus(); return; }
+    if (e.key === 'Tab') { // keep focus inside the open menu
+      const f = [...menu.querySelectorAll('a'), menuBtn];
+      const i = f.indexOf(document.activeElement);
+      const n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1) : (i === f.length - 1 ? 0 : i + 1);
+      f[n].focus(); e.preventDefault();
+    }
+  });
 
   // sound toggle
   const soundBtn = document.getElementById('soundBtn');

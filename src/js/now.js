@@ -18,6 +18,9 @@ export function initNow(gl, reduced) {
   // counters
   gsap.utils.toArray('[data-count]').forEach((el) => {
     const end = parseFloat(el.dataset.count), suffix = el.dataset.suffix || '', fmt = el.dataset.fmt === 'int';
+    const final = (fmt ? end.toLocaleString('en-US') : end) + suffix;
+    el.setAttribute('aria-hidden', 'true');
+    const sr = document.createElement('span'); sr.className = 'sr-only'; sr.textContent = final; el.after(sr);
     const set = (v) => { const n = Math.round(v); el.textContent = (fmt ? n.toLocaleString('en-US') : n) + suffix; };
     if (reduced) { set(end); return; }
     const o = { v: 0 }; set(0);

@@ -66,7 +66,11 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
   const box = new THREE.Box3().setFromObject(model);
   const ctr = box.getCenter(new THREE.Vector3());
   model.position.sub(ctr);
-  model.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; if (o.material) { o.material.envMapIntensity = 1; o.material.side = THREE.DoubleSide; } } });
+  // front faces keep the painted texture; the inside (seen from behind) is bare, dark wood — the mask is hollow
+  const hollow = new THREE.MeshStandardMaterial({ color: '#3a2616', roughness: 0.92, metalness: 0, side: THREE.BackSide });
+  const backs = [];
+  model.traverse((o) => { if (o.isMesh) { o.frustumCulled = false; if (o.material) { o.material.envMapIntensity = 1; o.material.side = THREE.FrontSide; } backs.push(o); } });
+  backs.forEach((o) => { const b = o.clone(); b.material = hollow; b.frustumCulled = false; o.parent.add(b); });
   head.add(model);
 
   // ── falling leaves + embers
@@ -179,7 +183,8 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
     head.rotation.z = state.lookX * -0.05;
 
     // leaves + embers fade with the active pose
-    const wantLeaf = state.active === 'hero' || state.active === 'finale' ? 1 : state.active === 'lab' ? 0.35 : 0;
+    const centred = a ? clamp(1 - Math.abs(a.r.top + a.r.height / 2 - vh / 2) / (vh * 0.75), 0, 1) : 0; // leaves fade as the anchor drifts off-centre
+    const wantLeaf = (state.active === 'hero' || state.active === 'finale' ? 1 : 0) * centred;
     state.leafA = damp(state.leafA, wantLeaf * state.intro, 2.4, dt);
     leafMat.opacity = state.leafA * 0.92;
     embers.material.opacity = state.leafA * 0.85;

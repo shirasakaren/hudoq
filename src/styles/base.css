@@ -59,6 +59,7 @@ img, video, canvas, svg { display: block; max-width: 100%; }
 img { height: auto; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .22em; }
+.btn { text-decoration: none; }
 ul, ol { margin: 0; padding: 0; list-style: none; }
 h1, h2, h3, h4, p, figure { margin: 0; }
 b, strong { font-weight: 600; }
@@ -92,7 +93,7 @@ b, strong { font-weight: 600; }
 [data-theme] { background: var(--bg); color: var(--fg); }
 [data-theme='ink']   { --bg: var(--ink); --fg: var(--bone); }
 [data-theme='paper'] { --bg: var(--bone); --fg: var(--ink); --accent: var(--vermilion); }
-[data-theme='paper'] .kicker span { color: var(--vermilion); }
+[data-theme='paper'] .kicker span { color: #a8331f; }
 [data-theme='night'] { --bg: var(--night); --fg: var(--mist); }
 [data-theme='moss']  { --bg: var(--moss); --fg: var(--mist); }
 [data-theme='blood'] { --bg: var(--blood); --fg: var(--bone); }
@@ -164,7 +165,7 @@ b, strong { font-weight: 600; }
 .rail a { position: relative; display: flex; justify-content: flex-end; align-items: center; gap: .8rem; padding: .32rem 0; text-decoration: none; }
 .rail a span { font-family: var(--f-mono); font-size: .64rem; letter-spacing: .14em; text-transform: uppercase; opacity: 0; transform: translateX(8px); transition: opacity .3s, transform .4s var(--ease-out); pointer-events: none; white-space: nowrap; }
 .rail a i { width: 14px; height: 2px; background: currentColor; opacity: .45; transition: width .45s var(--ease-out), opacity .3s; }
-.rail a:hover span, .rail a:focus-visible span, .rail a.is-active span { opacity: 1; transform: none; }
+.rail a:hover span, .rail a:focus-visible span { opacity: 1; transform: none; }
 .rail a:hover i, .rail a.is-active i { width: 34px; opacity: 1; }
 
 /* menu overlay */
@@ -207,7 +208,13 @@ html[data-motion='reduced'] *, html[data-motion='reduced'] *::before, html[data-
   .rail { display: none; }
   .bar-chapter { display: none; }
   .bar { grid-template-columns: 1fr auto; }
-  #motionBtn { display: none; }
   .sound-label { display: none; }
   .menu-list { grid-template-columns: 1fr; }
 }
+
+/* focus ring that stays visible on light chapters */
+[data-theme='paper'] :focus-visible, [data-theme='reel'] :focus-visible { outline-color: var(--ink); }
+/* no-JS / pre-JS: show everything as a plain, readable page */
+html:not(.js) .where-step, html:not(.js) .rice-beat, html:not(.js) .lab-note, html:not(.js) .suit-note { position: static; opacity: 1; transform: none; margin-bottom: 1.5rem; }
+html:not(.js) .where-pin, html:not(.js) .rice-pin, html:not(.js) .legend-pin, html:not(.js) .lab-pin, html:not(.js) .suit-pin { height: auto; min-height: 0; }
+html:not(.js) .legend-track { width: auto; flex-wrap: wrap; padding-left: 0; }
