@@ -3,7 +3,14 @@
 A one-page, scroll-driven, interactive story about **Hudoq**, the Dayak mask ritual of East Kalimantan.
 Short words, real facts, a real 3D mask, archive film and a synthesised soundscape.
 
-**Chapters:** Intro · The word · The river (map) · The rice · The legend · The faces (lantern game + gallery) · The mask (3D lab) · The suit · The beat (rhythm game) · Then (archive projector) · Now · The count · The care.
+**Chapters:** Intro ("Through the O") · The word · The river (map journey) · The rice · The legend (a descent) · The faces (lantern room + gallery) · The mask (3D light study) · The suit · The beat (rhythm game) · Then (archive projector → return to colour) · Now · The care · Finale (the spirit leaves).
+
+## Live site & deploy
+
+Pushes to `main` build and publish automatically (`.github/workflows/deploy.yml`):
+the workflow builds with `BASE_PATH=/hudoq/`, publishes `dist/` to the `gh-pages` branch, and also uploads a Pages artifact for the "GitHub Actions" source.
+**One-time setup:** repo **Settings → Pages → Build and deployment → Source: Deploy from a branch → `gh-pages` / `(root)`** (or choose "GitHub Actions" — both paths are wired).
+Live at **https://shirasakaren.github.io/hudoq/**.
 
 ## Run it
 
@@ -21,9 +28,9 @@ Node 20+. The media in `media/` is stored with Git LFS (3D model, one video); th
 | Piece | Tech |
 |---|---|
 | Bundler | Vite |
-| Motion | GSAP (ScrollTrigger, SplitText, DrawSVG, Observer) + Lenis smooth scroll |
-| 3D | three.js — one fixed canvas; the mask follows `[data-mask-anchor]` elements, so it travels with the page |
-| Sound | WebAudio, synthesised in the browser (rainforest bed, gong, drum, plucked string). Off until the visitor chooses. |
+| Motion | GSAP (ScrollTrigger, SplitText, DrawSVG, MotionPath, CustomEase, Observer) + Lenis smooth scroll. One motion grammar (`src/js/motion.js`): `h.reveal` arrives, `h.move` travels, `h.exit` leaves, `h.stomp` lands on the beat |
+| 3D | three.js — one fixed canvas; the mask follows `[data-mask-anchor]` elements, so it travels with the page. A shader patch gives it a gong-reactive rim light and an ember dissolve (loader match-cut, finale); leaves are animated entirely on the GPU |
+| Sound | WebAudio, synthesised in the browser (rainforest bed with per-chapter scenes, gong, drum, plucked string). Off until the visitor chooses; never recordings of Hudoq music. |
 | Type | Fraunces (display), Instrument Sans (text), JetBrains Mono (labels) — all SIL OFL, self-hosted |
 | Map | Real geodata (Natural Earth + Indonesian province boundaries) turned into SVG by `scripts/map.mjs` |
 
