@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 
-const LINES = ['Calling the spirits', 'Cutting the leaves', 'Carving the face', 'Tuning the gong', 'Almost there'];
+const LINES = ['Gathering the leaves', 'Carving the face', 'Tuning the gong', 'Finding the river', 'Almost there'];
 
 /** Loader: the mask carves itself while real assets load, then asks how to enter (sound / silence). */
 export function initLoader() {

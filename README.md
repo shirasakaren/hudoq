@@ -1,4 +1,4 @@
-# Hudoq — the mask dance of Borneo
+# Hudoq — a Dayak mask dance of Borneo
 
 A one-page, scroll-driven, interactive story about **Hudoq**, the Dayak mask ritual of East Kalimantan.
 Short words, real facts, a real 3D mask, archive film and a synthesised soundscape.
