@@ -56,3 +56,21 @@ export function heroIntro(reduced) {
     .to(split.lines, { yPercent: 0, duration: 1.3, stagger: 0.1 }, 0.7)
     .to(meta, { opacity: (i, el) => (el.classList.contains('hero-meta') ? 0.75 : 0.75), y: 0, duration: 1, stagger: 0.1 }, 1.1);
 }
+
+/** Marquee that drifts on its own and surges with scroll velocity (and reverses when you scroll up). */
+export function initMarquee(lenis, reduced) {
+  const track = document.querySelector('#marquee .marquee-track');
+  if (!track) return;
+  const group = track.firstElementChild;
+  let x = 0, dir = -1, boost = 0, w = group.offsetWidth;
+  addEventListener('resize', () => { w = group.offsetWidth; });
+  if (reduced) return;
+  gsap.ticker.add((t, dt) => {
+    const v = lenis.velocity || 0;
+    if (Math.abs(v) > 0.1) dir = v > 0 ? -1 : 1;
+    boost += (Math.min(Math.abs(v), 40) - boost) * 0.08;
+    x += dir * (0.05 + boost * 0.014) * dt;
+    if (x <= -w) x += w; else if (x > 0) x -= w;
+    track.style.transform = `translate3d(${x}px,0,0)`;
+  });
+}

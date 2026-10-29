@@ -434,3 +434,11 @@
 .suit.is-static .suit-notes { min-height: 0; display: grid; gap: 1.4rem; }
 .suit.is-static .suit-note { position: static; opacity: 1; transform: none; }
 html[data-motion='reduced'] .hero-glow, html[data-motion='reduced'] .hero-cue-line { animation: none; }
+
+/* ═════════════ Marquee (scroll-velocity) ═════════════ */
+.marquee { position: relative; z-index: 2; overflow: clip; background: var(--ink); border-block: 1px solid rgba(239, 230, 212, .12); padding: clamp(1.2rem, 3vw, 2.4rem) 0; }
+.marquee-track { display: flex; width: max-content; will-change: transform; }
+.marquee-group { display: flex; align-items: center; flex: none; gap: clamp(1.5rem, 4vw, 4rem); padding-right: clamp(1.5rem, 4vw, 4rem); }
+.marquee span { font-family: var(--f-display); font-weight: 860; font-size: clamp(3.4rem, 10vw, 11rem); line-height: .9; letter-spacing: -.045em; color: var(--bone); font-variation-settings: 'opsz' 144, 'SOFT' 30, 'WONK' 1; white-space: nowrap; }
+.marquee span.o { color: transparent; -webkit-text-stroke: 1.5px var(--ochre); font-style: italic; font-weight: 420; }
+.marquee i { flex: none; width: clamp(1.4rem, 3vw, 3rem); height: clamp(1.4rem, 3vw, 3rem); background: var(--vermilion); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
