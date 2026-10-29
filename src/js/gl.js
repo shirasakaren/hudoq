@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { gsap } from 'gsap';
+import { asset } from './url.js';
 
 const MODEL_W = 1.9, MODEL_H = 1.6;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
@@ -61,7 +62,7 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
   // ── mask model
   const loader = new GLTFLoader();
   loader.setMeshoptDecoder(MeshoptDecoder);
-  const gltf = await new Promise((res, rej) => loader.load('/models/hudoq-mask.glb', res, (e) => e.lengthComputable && onProgress?.(e.loaded / e.total), rej));
+  const gltf = await new Promise((res, rej) => loader.load(asset('/models/hudoq-mask.glb'), res, (e) => e.lengthComputable && onProgress?.(e.loaded / e.total), rej));
   const model = gltf.scene;
   const box = new THREE.Box3().setFromObject(model);
   const ctr = box.getCenter(new THREE.Vector3());

@@ -1,9 +1,10 @@
 import { gsap } from 'gsap';
+import { asset } from './url.js';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const REELS = [
-  { type: 'video', src: '/video/archive-1948.mp4', poster: '/video/archive-1948.jpg', gray: 1, ar: '4 / 3', arw: 1.333, cap: '<b>1948.</b> From “Het Land van de Hoedo”, a Dutch-era film. A gong sounds; masks step out of the forest.' },
-  { type: 'video', src: '/video/archive-1933.mp4', poster: '/video/archive-1933.jpg', gray: 0.45, ar: '16 / 9', arw: 1.778, cap: '<b>c. 1933</b>, the uploader says. Colour added later. Leaf cloaks, tall headdresses, a crowd on the veranda.' },
+  { type: 'video', src: asset('/video/archive-1948.mp4'), poster: asset('/video/archive-1948.jpg'), gray: 1, ar: '4 / 3', arw: 1.333, cap: '<b>1948.</b> From “Het Land van de Hoedo”, a Dutch-era film. A gong sounds; masks step out of the forest.' },
+  { type: 'video', src: asset('/video/archive-1933.mp4'), poster: asset('/video/archive-1933.jpg'), gray: 0.45, ar: '16 / 9', arw: 1.778, cap: '<b>c. 1933</b>, the uploader says. Colour added later. Leaf cloaks, tall headdresses, a crowd on the veranda.' },
   { type: 'photo', ar: '3 / 2', arw: 1.5, cap: '<b>Undated.</b> Leaf-clad dancers stand in front of a wooden house. Photographer unknown.' },
 ];
 

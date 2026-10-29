@@ -1,4 +1,5 @@
 import media from './media.json';
+import { asset } from '../js/url.js';
 
 // Short, purely visual captions (no cultural claims) — what you can actually see in each carved mask.
 const CAPTIONS = [
@@ -19,7 +20,7 @@ export const masks = CAPTIONS.map(([caption, tint], i) => {
   const m = media[`masks/${i + 1}`];
   return {
     n: i + 1, caption, tint, ratio: m.ratio,
-    small: m.sizes[0].src, large: m.sizes[m.sizes.length - 1].src,
+    small: asset(m.sizes[0].src), large: asset(m.sizes[m.sizes.length - 1].src),
     w: m.sizes[0].w, h: m.sizes[0].h,
   };
 });

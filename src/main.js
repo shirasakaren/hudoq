@@ -6,6 +6,7 @@ import { SplitText } from 'gsap/SplitText';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { Observer } from 'gsap/Observer';
 import { audio } from './audio.js';
+import { asset } from './js/url.js';
 import { initLoader } from './js/loader.js';
 import { initSmooth, bindAnchors } from './js/smooth.js';
 import { initCursor, initMagnetic } from './js/cursor.js';
@@ -54,7 +55,7 @@ async function boot() {
     console.warn('WebGL mask unavailable, using the still image instead.', err);
     document.documentElement.classList.add('no-gl');
     const anchor = document.querySelector('.hero-anchor');
-    if (anchor) anchor.innerHTML = '<img src="/img/masks/4-1000.webp" alt="" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6))">';
+    if (anchor) anchor.innerHTML = '<img src="' + asset('/img/masks/4-1000.webp') + '" alt="" style="width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 30px 40px rgba(0,0,0,.6))">';
   }
   loader.set(0.9);
   await fontsReady;
