@@ -426,7 +426,7 @@
 /* ═════════════ Static (reduced-motion) layouts: no pins, no scrubs, everything readable ═════════════ */
 .where.is-static .where-pin { height: auto; min-height: 100svh; padding-block: calc(var(--bar-h) + 2rem) 3rem; }
 .where.is-static .where-steps { min-height: 0; display: grid; gap: 2.2rem; }
-.where.is-static .where-step { position: relative; opacity: 1; transform: none; pointer-events: auto; }
+.where.is-static .where-step { position: relative; grid-area: auto; opacity: 1; transform: none; pointer-events: auto; }
 .where.is-static .where-dots { display: none; }
 .rice.is-static .rice-pin { height: auto; align-items: start; padding-block: calc(var(--bar-h) + 3rem) 4rem; }
 .rice.is-static .rice-beats { min-height: 0; display: grid; gap: 3rem; max-width: 40rem; }
@@ -444,11 +444,11 @@
 .lab.is-static .lab-pin { height: auto; min-height: 100svh; }
 .lab.is-static .lab-ui { position: relative; min-height: 100svh; grid-template-rows: auto auto auto; }
 .lab.is-static .lab-notes { min-height: 0; margin: 2rem 0 0; display: grid; gap: 1.2rem; }
-.lab.is-static .lab-note { position: static; opacity: 1; transform: none; }
+.lab.is-static .lab-note { position: static; grid-area: auto; opacity: 1; transform: none; }
 .lab.is-static .lab-dots, .lab.is-static .lab-pins { display: none; }
 .suit.is-static .suit-pin { height: auto; min-height: 100svh; padding-bottom: 4rem; }
 .suit.is-static .suit-notes { min-height: 0; display: grid; gap: 1.4rem; }
-.suit.is-static .suit-note { position: static; opacity: 1; transform: none; }
+.suit.is-static .suit-note { position: static; grid-area: auto; opacity: 1; transform: none; }
 html[data-motion='reduced'] .hero-glow, html[data-motion='reduced'] .hero-cue-line { animation: none; }
 
 /* ═════════════ Marquee (scroll-velocity) ═════════════ */

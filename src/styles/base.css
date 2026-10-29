@@ -215,6 +215,6 @@ html[data-motion='reduced'] *, html[data-motion='reduced'] *::before, html[data-
 /* focus ring that stays visible on light chapters */
 [data-theme='paper'] :focus-visible, [data-theme='reel'] :focus-visible { outline-color: var(--ink); }
 /* no-JS / pre-JS: show everything as a plain, readable page */
-html:not(.js) .where-step, html:not(.js) .rice-beat, html:not(.js) .lab-note, html:not(.js) .suit-note { position: static; opacity: 1; transform: none; margin-bottom: 1.5rem; }
+html:not(.js) .where-step, html:not(.js) .rice-beat, html:not(.js) .lab-note, html:not(.js) .suit-note { position: static; grid-area: auto; opacity: 1; transform: none; margin-bottom: 1.5rem; }
 html:not(.js) .where-pin, html:not(.js) .rice-pin, html:not(.js) .legend-pin, html:not(.js) .lab-pin, html:not(.js) .suit-pin { height: auto; min-height: 0; }
 html:not(.js) .legend-track { width: auto; flex-wrap: wrap; padding-left: 0; }
