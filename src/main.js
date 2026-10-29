@@ -13,7 +13,7 @@ import { initSmooth, bindAnchors } from './js/smooth.js';
 import { initCursor, initMagnetic } from './js/cursor.js';
 import { initGrain } from './js/grain.js';
 import { initLazyVideos } from './js/media.js';
-import { initTextFx, heroIntro, initHeroScroll } from './js/textfx.js';
+import { initTextFx, heroIntro, initHero } from './js/textfx.js';
 import { initNav } from './js/nav.js';
 import { initMap } from './js/map.js';
 import { initRice } from './js/rice.js';
@@ -24,6 +24,8 @@ import { initSuit } from './js/suit.js';
 import { initBeat } from './js/beat.js';
 import { initThen } from './js/then.js';
 import { initNow } from './js/now.js';
+import { initFinale } from './js/finale.js';
+import { initSeams } from './js/seams.js';
 
 gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin, Observer);
 document.documentElement.classList.add('js');
@@ -52,6 +54,7 @@ async function boot() {
   try {
     const { createGL } = await import('./js/gl.js');
     gl = await createGL({ canvas, reduced, onProgress: (p) => loader.set(0.1 + p * 0.75) });
+    window.__gl = gl;
   } catch (err) {
     console.warn('WebGL mask unavailable, using the still image instead.', err);
     document.documentElement.classList.add('no-gl');
@@ -65,31 +68,38 @@ async function boot() {
   // ── build every chapter (page order, so pin spacing is computed correctly)
   initMagnetic();
   initLazyVideos(reduced);
+  initHero(gl, reduced);
   initMap(reduced);
   initRice(reduced);
   initLegend(reduced);
   initFaces(lenis, reduced);
   initLab(gl, lenis, reduced);
-  initSuit(lenis, reduced);
+  initSuit(lenis, reduced, gl);
   initBeat(reduced);
   initThen(reduced);
   initNow(gl, reduced);
+  initFinale(gl, lenis, reduced);
+  initSeams(reduced);
   initTextFx(reduced);
-  initHeroScroll(reduced);
   initNav(lenis);
   const intro = heroIntro(reduced);
   ScrollTrigger.sort();
   ScrollTrigger.refresh();
 
-  // ── gate: choose sound or silence
+  // ── gate: choose sound or silence, then the match-cut into the hero
   const choice = await loader.ready();
-  if (choice.sound) { await audio.enable(); audio.swell(2.2); setTimeout(() => audio.gong(98, 0.9), 700); }
+  if (choice.sound) await audio.enable();
   behind.forEach((n) => n.removeAttribute('inert'));
-  await loader.exit();
+  const anchor = document.querySelector('.hero-anchor');
+  const exitTl = loader.exit({
+    gl, anchor, reduced,
+    onMatch: () => { if (choice.sound) requestAnimationFrame(() => audio.gong(98, 0.9)); },
+  });
+  if (reduced) gl?.show();
   gl?.intro();
-  intro.play();
-  lenis.start();
-  ScrollTrigger.refresh();
+  gsap.delayedCall(reduced ? 0.2 : 1.3, () => intro.play());   // the wordmark begins before the loader has finished leaving
+  gsap.delayedCall(reduced ? 0.4 : 2.4, () => { lenis.start(); ScrollTrigger.refresh(); });
+  await exitTl;
 
   addEventListener('load', () => ScrollTrigger.refresh());
   document.fonts.ready.then(() => ScrollTrigger.refresh());

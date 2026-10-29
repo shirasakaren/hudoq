@@ -37,10 +37,4 @@ export function initNow(gl, reduced) {
     gsap.utils.toArray('.bento figure').forEach((f, i) => { if (!f.classList.contains('bento-e')) imageReveal(f, { delay: (i % 3) * 0.08 }); });
   }
 
-  // finale: click the mask to make it spin and answer with a gong
-  const fin = document.querySelector('.finale');
-  fin?.addEventListener('click', (e) => {
-    if (e.target.closest('a, button')) return;
-    gl?.pulse(); audio.gong(110, 0.8); audio.pluck(3, 1, 0.8);
-  });
 }

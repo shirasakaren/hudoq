@@ -27,6 +27,7 @@
 
   <!-- ───────────── Loader ───────────── -->
   <div id="loader" role="dialog" aria-label="Loading Hudoq">
+    <p class="loader-meter mono" aria-hidden="true">Loading <b id="loaderNum">000</b> / 100</p>
     <div class="loader-inner">
       <svg class="loader-mask" viewBox="0 0 320 360" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <defs>
@@ -57,12 +58,12 @@
           <path d="M122 246h76" stroke="var(--vermilion)" stroke-width="10"/>
         </g>
       </svg>
-      <p class="loader-count" aria-live="off"><span id="loaderNum">0</span><i>%</i></p>
       <p class="loader-line" id="loaderLine">Gathering the leaves</p>
       <div class="loader-actions" hidden>
         <button class="btn btn-solid" id="enterSound" data-magnetic><span>Enter with sound</span></button>
         <button class="btn btn-ghost" id="enterSilent" data-magnetic><span>Enter in silence</span></button>
       </div>
+      <p class="loader-silent mono" hidden>In 1898 the masked dancers kept silent. Either way is right.</p>
     </div>
   </div>
 
@@ -108,7 +109,7 @@
       <div class="hero-glow" aria-hidden="true"></div>
       <h1 id="h-hero" class="hero-title" aria-label="Hudoq">
         <span class="sr-only">Hudoq — a Dayak mask dance of Borneo</span>
-        <span class="hero-word" aria-hidden="true"><span class="hero-char">H</span><span class="hero-char">U</span><span class="hero-char">D</span><span class="hero-char">O</span><span class="hero-char">Q</span></span>
+        <span class="hero-word" aria-hidden="true"><span class="hero-char">H</span><span class="hero-char">U</span><span class="hero-char">D</span><span class="hero-char hero-o">O<i class="hero-hole" aria-hidden="true"></i></span><span class="hero-char">Q</span></span>
       </h1>
       <div class="hero-anchor" data-mask-anchor data-pose="hero" aria-hidden="true"></div>
       <p class="hero-tag" data-split="lines"><em>When the forest</em> wears a face.</p>
@@ -315,7 +316,6 @@
           </ol>
           <div class="lab-dots" id="labDots" role="group" aria-label="Mask parts"></div>
         </div>
-        <div class="lab-pins" id="labPins" aria-hidden="true"></div>
         <p class="lab-credit mono">An AI-made 3D likeness (Meshy AI), built from one photo of a Hudoq mask. Not a real mask or a scan.</p>
       </div>
     </section>
@@ -371,12 +371,12 @@
           <p>Try the rhythm. Tap the gong <em>on the beat</em> — space, click or touch. Just a game, not the ritual.</p>
           <p class="pad-fact mono">Bahau say the dance must be lively, so the rice spirit is happy to stay in the field.</p>
           <div class="pad-hud">
-            <div class="meter" role="meter" aria-label="How well you keep the beat" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
             <p class="pad-status mono" id="padStatus" aria-live="polite">Waiting for the first beat…</p>
           </div>
         </div>
         <div class="pad" id="pad">
           <div class="pad-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+          <svg class="pad-meter" viewBox="0 0 200 200" role="meter" aria-label="How well you keep the beat" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><circle class="pm-track" cx="100" cy="100" r="92"/><circle class="pm-fill" cx="100" cy="100" r="92" transform="rotate(-90 100 100)"/></svg>
           <div class="pad-masks" id="padMasks"></div>
           <button class="pad-gong" id="padGong" aria-label="Gong. Tap in time with the pulsing ring." data-cursor="tap">
             <span class="pad-gong-disc"></span><span class="pad-gong-label mono">Tap</span>
@@ -393,6 +393,12 @@
         <p class="lede">No one knows how old Hudoq is. These are some early records.</p>
       </div>
 
+      <div class="then-notes">
+        <article><span class="mono">1898</span><p><b>A.W. Nieuwenhuis</b>, a Dutch doctor, sees it at Long Blu’u on the Mahakam. Mirror eyes. Clacking jaws. Leaf cloaks.</p></article>
+        <article><span class="mono">Women, too</span><p>He also saw a women’s masquerade: upside-down rattan baskets on their heads, a face sewn on white cloth.</p></article>
+        <article><span class="mono">Growls, not words</span><p>He counts 23 spirits. When the chief speaks to them, they answer with growls and nods.</p></article>
+      </div>
+
       <div class="projector" id="projector">
         <div class="reel-tabs" role="tablist" aria-label="Archive reels">
           <button role="tab" aria-selected="true" class="reel-tab is-active" data-reel="0"><span class="mono">Reel 01</span><b>1948</b></button>
@@ -406,6 +412,7 @@
             <canvas class="film-grain" id="filmGrain" aria-hidden="true"></canvas>
             <i class="film-scratch" aria-hidden="true"></i><i class="film-scratch s2" aria-hidden="true"></i>
             <div class="film-vig" aria-hidden="true"></div>
+            <i class="burn" aria-hidden="true"></i><i class="cue-dot" aria-hidden="true"></i>
           </div>
           <div class="gate-hud mono"><span id="reelTime">00:00</span><span id="reelCue">●&nbsp;REC</span></div>
         </div>
@@ -413,11 +420,6 @@
         <label class="reel-scrub mono"><span>Scrub the reel</span><input type="range" id="reelRange" min="0" max="1000" value="0" aria-label="Scrub the film"></label>
       </div>
 
-      <div class="then-notes">
-        <article><span class="mono">1898</span><p><b>A.W. Nieuwenhuis</b>, a Dutch doctor, sees it at Long Blu’u on the Mahakam. Mirror eyes. Clacking jaws. Leaf cloaks.</p></article>
-        <article><span class="mono">Women, too</span><p>He also saw a women’s masquerade: upside-down rattan baskets on their heads, a face sewn on white cloth.</p></article>
-        <article><span class="mono">Growls, not words</span><p>He counts 23 spirits. When the chief speaks to them, they answer with growls and nods.</p></article>
-      </div>
     </section>
 
     <!-- ───────────── 10 · NOW ───────────── -->
@@ -498,8 +500,8 @@
     <!-- ───────────── FINALE ───────────── -->
     <section class="chapter finale" id="finale" data-chapter="12" data-title="The care" data-theme="ink" aria-labelledby="h-finale">
       <div class="finale-anchor" data-mask-anchor data-pose="finale" aria-hidden="true"></div>
-      <h2 id="h-finale" class="finale-title"><span>Still</span> <span>danced.</span> <em>Still theirs.</em></h2>
-      <a class="btn btn-solid finale-btn" href="#top" data-scroll data-magnetic><span>Back to the start</span></a>
+      <h2 id="h-finale" class="finale-title"><span class="still">Still danced.</span> <em>Still theirs.</em></h2>
+      <button class="btn btn-ghost finale-again" id="danceAgain" data-magnetic><span>Dance again ↺</span></button>
     </section>
   </main>
 
@@ -532,7 +534,11 @@
     </div>
     <div class="band band-foot" aria-hidden="true"></div>
     <p class="foot-word" aria-hidden="true">HUDOQ</p>
+    <p class="foot-sign mono">Hudoq belongs to the Bahau, Modang and their kin · told here with care · 2026</p>
   </footer>
+
+  <div class="colour-cut" aria-hidden="true"><video muted loop playsinline preload="none" poster="/video/doc-parade.jpg" data-src="/video/doc-parade.mp4"></video></div>
+  <div class="leader" aria-hidden="true"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="84" class="ld-ring"/><path d="M100 16v168M16 100h168" class="ld-cross"/></svg><b class="ld-n">3</b></div>
 
   <script type="module" src="/src/main.js"></script>
   <noscript><style>#loader{display:none}body.is-loading{overflow:auto}</style></noscript>

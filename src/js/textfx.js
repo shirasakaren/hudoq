@@ -15,9 +15,6 @@ export function initTextFx(reduced) {
     });
   });
 
-  // the Beat headline keeps its staggered indents, so its three lines animate directly
-  gsap.from('#h-beat .line', { opacity: 0, yPercent: 30, clipPath: 'inset(0 0 100% 0)', duration: 1.3, ease: 'h.reveal', stagger: 0.12, scrollTrigger: { trigger: '#h-beat', start: 'top 85%', once: true } });
-
   // statements: words light up as you read
   gsap.utils.toArray('[data-split="scrub-words"]').forEach((el) => {
     SplitText.create(el, {
@@ -62,17 +59,29 @@ export function heroIntro(reduced) {
 
 
 
-/** Hero: the wordmark comes apart as you scroll away, and its letters drift with the pointer at different depths. */
-export function initHeroScroll(reduced) {
+/**
+ * Hero: "Through the O". The wordmark is the door. The letters part, the mask rises and turns away,
+ * and the red O swallows the screen, landing on the paper chapter. Letters also drift with the pointer.
+ */
+export function initHero(gl, reduced, L = 1) {
   if (reduced) return;
   const chars = gsap.utils.toArray('.hero-char');
-  const trig = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true };
-  chars.forEach((c, i) => {
-    const d = i - (chars.length - 1) / 2;
-    gsap.to(c, { yPercent: -28 - Math.abs(d) * 14, xPercent: d * 16, rotate: d * 5, ease: 'none', scrollTrigger: trig });
+  const O = chars[3], others = chars.filter((c) => c !== O);
+  const hole = document.querySelector('.hero-hole');
+  const tl = gsap.timeline({
+    defaults: { ease: 'none' },
+    scrollTrigger: { trigger: '#top', start: 'top top', end: () => '+=' + Math.round(innerHeight * 1.1 * L), pin: true, scrub: 0.6, anticipatePin: 1, invalidateOnRefresh: true },
   });
-  gsap.to('.hero-tag, .hero-meta, .hero-cue', { opacity: 0, y: -40, ease: 'none', scrollTrigger: { ...trig, end: '55% top' } });
-  gsap.to('.hero-glow', { scale: 1.5, opacity: 0.2, ease: 'none', scrollTrigger: trig });
+  tl.set('.hero-word', { clipPath: 'none' }, 0)
+    .to('.hero-tag, .hero-meta, .hero-cue', { y: -30, autoAlpha: 0, duration: 0.15 }, 0)
+    .to(others, { xPercent: (i) => [-90, -55, -30, 70][i], autoAlpha: 0, duration: 0.35 }, 0.05)
+    .to('.hero-anchor', { yPercent: -230, scale: 0.7, duration: 0.5 }, 0)
+    .to(gl?.state ?? {}, { extraYaw: 0.9, leafKill: 1, extraScale: 0.55, duration: 0.5 }, 0)
+    .to('.hero-glow', { opacity: 0, duration: 0.5 }, 0.1)
+    .to(hole, { scale: 1, duration: 0.12 }, 0.18)
+    .to(O, { scale: 34, transformOrigin: '50% 56%', ease: 'h.exit', duration: 0.6 }, 0.2)
+    .set('#top', { backgroundColor: '#efe6d4' }, 0.8)
+    .to({}, { duration: 0.1 }, 0.9);
 
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const setters = chars.map((c, i) => ({ x: gsap.quickTo(c, 'x', { duration: 1.1, ease: 'h.reveal' }), y: gsap.quickTo(c, 'y', { duration: 1.1, ease: 'h.reveal' }), k: (i % 2 ? 1 : -1) * (14 + i * 4) }));
