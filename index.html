@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="en" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hudoq — When the forest wears a face</title>
+  <meta name="description" content="Hudoq is a mask dance from Borneo. Dayak men in leaf cloaks and carved faces play the spirits that guard the rice. A short, interactive story.">
+  <meta name="theme-color" content="#0e0b09">
+  <script>try{var m=localStorage.getItem('hudoq-motion');var r=m?m==='reduced':matchMedia('(prefers-reduced-motion: reduce)').matches;document.documentElement.dataset.motion=r?'reduced':'full'}catch(e){}</script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hudoq — When the forest wears a face">
+  <meta property="og:description" content="The mask dance of Borneo, told in short words. Scroll, spin the mask, keep the beat.">
+  <meta property="og:image" content="/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0b09'/%3E%3Cpath d='M32 10c-9 0-13 8-13 17 0 11 6 22 13 27 7-5 13-16 13-27 0-9-4-17-13-17z' fill='%23efe6d4'/%3E%3Ccircle cx='26' cy='27' r='4.5' fill='%230e0b09'/%3E%3Ccircle cx='38' cy='27' r='4.5' fill='%230e0b09'/%3E%3Cpath d='M24 42h16' stroke='%23c8412b' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="preload" href="/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"Hudoq","description":"An interactive one-page story about Hudoq, the Dayak mask dance of East Kalimantan, Borneo.","inLanguage":"en"}
+  </script>
+</head>
+<body class="is-loading">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ───────────── Loader ───────────── -->
+  <div id="loader" role="dialog" aria-label="Loading Hudoq">
+    <div class="loader-inner">
+      <svg class="loader-mask" viewBox="0 0 320 360" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <clipPath id="loaderFill"><rect id="loaderFillRect" x="0" y="360" width="320" height="360"/></clipPath>
+          <g id="lm-half">
+            <path d="M160 36c-26 0-47 20-48 56-1 48 15 112 48 168"/>
+            <path d="M118 112c-22-8-42-24-58-66 0 40 12 86 36 112-12 14-14 34 0 56 14-22 22-40 26-58"/>
+            <path d="M96 214c-10 12-6 30 12 30"/>
+            <circle cx="128" cy="128" r="20"/><circle cx="128" cy="128" r="8"/>
+            <path d="M60 46l-12-30"/>
+            <path d="M126 76l34 30"/>
+          </g>
+        </defs>
+        <g class="lm-lines">
+          <use href="#lm-half"/>
+          <use href="#lm-half" transform="translate(320 0) scale(-1 1)"/>
+          <path d="M160 150l-14 40q14 22 28 0z"/>
+          <path d="M122 246h76"/>
+          <path d="M124 246l8 16 8-16 8 16 8-16 8 16 8-16 8 16 8-16"/>
+        </g>
+        <g clip-path="url(#loaderFill)" class="lm-fill" stroke="none">
+          <path d="M160 36c-26 0-47 20-48 56-1 48 15 112 48 168 33-56 49-120 48-168-1-36-22-56-48-56z" fill="var(--bone)"/>
+          <path d="M118 112c-22-8-42-24-58-66 0 40 12 86 36 112-12 14-14 34 0 56 14-22 22-40 26-58z" fill="var(--vermilion)"/>
+          <path d="M202 112c22-8 42-24 58-66 0 40-12 86-36 112 12 14 14 34 0 56-14-22-22-40-26-58z" fill="var(--vermilion)"/>
+          <circle cx="128" cy="128" r="20" fill="var(--ink)"/><circle cx="192" cy="128" r="20" fill="var(--ink)"/>
+          <circle cx="128" cy="128" r="7" fill="var(--ochre)"/><circle cx="192" cy="128" r="7" fill="var(--ochre)"/>
+          <path d="M160 150l-14 40q14 22 28 0z" fill="var(--ink)"/>
+          <path d="M122 246h76" stroke="var(--vermilion)" stroke-width="10"/>
+        </g>
+      </svg>
+      <p class="loader-count" aria-live="off"><span id="loaderNum">0</span><i>%</i></p>
+      <p class="loader-line" id="loaderLine">Calling the spirits</p>
+      <div class="loader-actions" hidden>
+        <button class="btn btn-solid" id="enterSound" data-magnetic><span>Enter with sound</span></button>
+        <button class="btn btn-ghost" id="enterSilent" data-magnetic><span>Enter in silence</span></button>
+      </div>
+      <p class="loader-note mono">Best on a big screen. Works everywhere.</p>
+    </div>
+  </div>
+
+  <!-- ───────────── Fixed layers ───────────── -->
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><i class="cursor-dot"></i><i class="cursor-ring"><span class="cursor-label"></span></i></div>
+  <div class="progress" aria-hidden="true"><i></i></div>
+
+  <header class="bar">
+    <a class="bar-logo" href="#top" aria-label="Hudoq — back to top" data-cursor="">
+      <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><path d="M32 6c-10 0-15 9-15 19 0 13 7 26 15 32 8-6 15-19 15-32 0-10-5-19-15-19z" fill="currentColor"/><circle cx="25" cy="26" r="5" fill="var(--ink)"/><circle cx="39" cy="26" r="5" fill="var(--ink)"/></svg>
+      <span>Hudoq</span>
+    </a>
+    <p class="bar-chapter mono" aria-hidden="true"><span class="bar-chapter-n">00</span><span class="bar-chapter-t">Intro</span></p>
+    <div class="bar-tools">
+      <button class="icon-btn" id="soundBtn" aria-pressed="false" aria-label="Sound off" data-cursor="sound">
+        <svg viewBox="0 0 28 20" width="28" height="20" aria-hidden="true"><g class="bars" fill="currentColor"><rect x="1" y="8" width="2.4" height="4" rx="1"/><rect x="6" y="5" width="2.4" height="10" rx="1"/><rect x="11" y="2" width="2.4" height="16" rx="1"/><rect x="16" y="6" width="2.4" height="8" rx="1"/><rect x="21" y="8" width="2.4" height="4" rx="1"/></g></svg>
+        <span class="mono sound-label">Sound off</span>
+      </button>
+      <button class="icon-btn" id="motionBtn" aria-pressed="false" aria-label="Reduce motion" data-cursor="">
+        <span class="mono">Motion</span>
+      </button>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" data-cursor="">
+        <span class="menu-btn-lines" aria-hidden="true"><i></i><i></i></span>
+        <span class="mono">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Chapters" id="rail"></nav>
+
+  <div class="menu" id="menu" hidden>
+    <div class="menu-inner">
+      <p class="mono menu-title">Chapters</p>
+      <ol class="menu-list" id="menuList"></ol>
+      <p class="mono menu-foot">Hudoq · the mask dance of Borneo</p>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ───────────── 00 · HERO ───────────── -->
+    <section class="chapter hero" id="top" data-chapter="00" data-title="Intro" data-theme="ink" aria-labelledby="h-hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <h1 id="h-hero" class="hero-title" aria-label="Hudoq">
+        <span class="sr-only">Hudoq — the mask dance of Borneo</span>
+        <span class="hero-word" aria-hidden="true"><span class="hero-char">H</span><span class="hero-char">U</span><span class="hero-char">D</span><span class="hero-char">O</span><span class="hero-char">Q</span></span>
+      </h1>
+      <div class="hero-anchor" data-mask-anchor data-pose="hero" aria-hidden="true"></div>
+      <p class="hero-tag" data-split="lines"><em>When the forest</em> wears a face.</p>
+      <div class="hero-meta hero-meta-l mono">
+        <span>Mask dance</span><span>East Kalimantan · Borneo</span>
+      </div>
+      <div class="hero-meta hero-meta-r">
+        <p class="hero-say"><span class="mono">hu·DOQ</span> — means <em>“mask”</em>.<br>The <em>q</em> is a tiny throat catch.</p>
+      </div>
+      <a class="hero-cue mono" href="#what" data-scroll data-cursor="">
+        <span class="hero-cue-line" aria-hidden="true"></span><span>Scroll. The rice is waiting.</span>
+      </a>
+    </section>
+
+    <!-- ───────────── 01 · THE WORD ───────────── -->
+    <section class="chapter word" id="what" data-chapter="01" data-title="The word" data-theme="paper" aria-labelledby="h-word">
+      <div class="band band-top" aria-hidden="true"></div>
+      <div class="word-grid">
+        <div class="word-head">
+          <p class="kicker"><span>01</span> The word</p>
+          <h2 id="h-word" class="sr-only">What is Hudoq?</h2>
+        </div>
+        <div class="word-statements" data-split="scrub-words">
+          <p class="stmt">Hudoq means <mark>mask</mark>.</p>
+          <p class="stmt">It is also a <mark>dance</mark>.</p>
+          <p class="stmt">Men put on leaf cloaks and carved faces.</p>
+          <p class="stmt">They play the spirits that <mark>guard the rice</mark>.</p>
+        </div>
+        <div class="word-art">
+          <figure class="word-cut word-cut-a" data-parallax="-70">
+            <img data-img="cut/r1" alt="A dancer in a white and red Hudoq mask with a long beak and green and red ribbons" sizes="(min-width: 900px) 30vw, 60vw" loading="lazy">
+          </figure>
+          <figure class="word-cut word-cut-b" data-parallax="50">
+            <img data-img="cut/r4" alt="A Hudoq dancer in a feather crown, mask, bead necklaces and a banana-leaf cloak" sizes="(min-width: 900px) 26vw, 50vw" loading="lazy">
+          </figure>
+        </div>
+        <ul class="word-facts">
+          <li><span class="mono">Who</span><strong>Dayak Bahau, Modang<br>and their kin</strong></li>
+          <li><span class="mono">Where</span><strong>East Kalimantan,<br>Borneo, Indonesia</strong></li>
+          <li><span class="mono">When</span><strong>After the rice is planted.<br>Roughly Sept–Nov.</strong></li>
+        </ul>
+        <p class="word-note">Not the same everywhere. Each community tells it in its own way.</p>
+      </div>
+    </section>
+
+    <!-- ───────────── 02 · THE RIVER (map) ───────────── -->
+    <section class="chapter where" id="where" data-chapter="02" data-title="The river" data-theme="night" aria-labelledby="h-where">
+      <div class="where-pin">
+        <video class="where-video" muted loop playsinline preload="none" poster="/video/doc-river.jpg" data-lazy-video data-src="/video/doc-river.mp4" aria-hidden="true"></video>
+        <div class="where-veil" aria-hidden="true"></div>
+        <div class="where-copy">
+          <p class="kicker"><span>02</span> The river</p>
+          <h2 id="h-where" class="sr-only">Where is Hudoq from?</h2>
+          <ol class="where-steps">
+            <li class="where-step is-active" data-step="0">
+              <h3 class="display-m">Borneo.</h3>
+              <p>The third-largest island on Earth. Old, wide rainforest.</p>
+            </li>
+            <li class="where-step" data-step="1">
+              <h3 class="display-m">East Kalimantan.</h3>
+              <p>Indonesia’s slice of Borneo. One long river runs through it: the <b>Mahakam</b>. 980 km.</p>
+            </li>
+            <li class="where-step" data-step="2">
+              <h3 class="display-m">Upriver.</h3>
+              <p><b>Mahakam Ulu.</b> The newest regency in the province. About 88% forest. The Hudoq heartland.</p>
+            </li>
+            <li class="where-step" data-step="3">
+              <h3 class="display-m">Downriver, too.</h3>
+              <p>In <b>Samarinda</b>, Bahau families keep Hudoq going — far from the upper river.</p>
+            </li>
+          </ol>
+          <p class="where-aside mono">Bahau name for the river: <b>Mekam</b></p>
+        </div>
+        <figure class="where-map" aria-label="Map of Borneo with East Kalimantan and the Mahakam river highlighted">
+          <svg id="mapSvg" viewBox="0 0 1000 1124" role="img" aria-label="Map of Borneo. East Kalimantan is highlighted and the Mahakam river runs from the highlands east to Samarinda.">
+            <defs>
+              <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="9" height="9" fill="var(--vermilion)"/><rect width="3" height="9" fill="#a8331f"/></pattern>
+              <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <g id="mapLayer"></g>
+          </svg>
+        </figure>
+        <div class="where-dots" aria-hidden="true"><i class="is-active"></i><i></i><i></i><i></i></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 03 · THE RICE ───────────── -->
+    <section class="chapter rice" id="why" data-chapter="03" data-title="The rice" data-theme="moss" aria-labelledby="h-rice">
+      <div class="rice-pin">
+        <div class="rice-bg" aria-hidden="true">
+          <img class="rice-photo rp-0 is-on" data-img="photo/c6" alt="" sizes="100vw" loading="lazy">
+          <img class="rice-photo rp-1" data-img="photo/d11" alt="" sizes="100vw" loading="lazy">
+          <img class="rice-photo rp-2" data-img="photo/c4" alt="" sizes="100vw" loading="lazy">
+          <img class="rice-photo rp-3" data-img="photo/b6" alt="" sizes="100vw" loading="lazy">
+          <img class="rice-photo rp-4" data-img="photo/b9" alt="" sizes="100vw" loading="lazy">
+          <div class="rice-shade"></div>
+        </div>
+        <p class="kicker rice-kicker"><span>03</span> The rice</p>
+        <h2 id="h-rice" class="sr-only">Why do they dance?</h2>
+
+        <div class="ring" aria-hidden="true">
+          <svg viewBox="0 0 400 400">
+            <circle class="ring-track" cx="200" cy="200" r="168"/>
+            <circle class="ring-draw" cx="200" cy="200" r="168" transform="rotate(-90 200 200)"/>
+            <g class="ring-nodes"></g>
+          </svg>
+          <div class="ring-core"><span class="mono ring-core-k">Season</span><strong class="ring-core-t">Plant</strong></div>
+        </div>
+
+        <ol class="rice-beats">
+          <li class="rice-beat is-active" data-beat="0">
+            <h3 class="display-l">First, the seeds.</h3>
+            <p>Rice grows in dry fields cut from the forest. Farmers poke holes, drop seeds in, and cover them.</p>
+          </li>
+          <li class="rice-beat" data-beat="1">
+            <h3 class="display-l">Then, the worry.</h3>
+            <p>Pests. Disease. A bad harvest means a hungry year.</p>
+          </li>
+          <li class="rice-beat" data-beat="2">
+            <h3 class="display-l">So the spirits come.</h3>
+            <p>Masked dancers play spirits sent by ancestors, or by gods. Their job: guard the rice till harvest.</p>
+            <p class="beat-fact"><span class="mono">1890s</span> A Dutch explorer saw the lead dancer carry a long carved hook — to pull the rice’s soul home.</p>
+          </li>
+          <li class="rice-beat" data-beat="3">
+            <h3 class="display-l">They don’t speak.</h3>
+            <p>Spirits can’t talk. So the masked dancers keep quiet — one old account says speaking could kill them.</p>
+          </li>
+          <li class="rice-beat rice-beat-last" data-beat="4">
+            <h3 class="display-l">Two tellings.</h3>
+            <div class="tellings">
+              <article class="telling"><span class="mono">Telling A</span><h4>Guardians</h4><p>Spirits from above. Sent to protect the crop.</p></article>
+              <article class="telling"><span class="mono">Telling B</span><h4>Pests</h4><p>The masks <em>are</em> the pests — thirteen of them. Two human hudoqs chase them off.</p></article>
+            </div>
+            <p class="beat-fact">Both are told. Neither is the only truth.</p>
+          </li>
+        </ol>
+        <div class="rice-progress" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 04 · THE LEGEND ───────────── -->
+    <section class="chapter legend" id="legend" data-chapter="04" data-title="The legend" data-theme="night" aria-labelledby="h-legend">
+      <div class="legend-pin">
+        <video class="legend-video" muted loop playsinline preload="none" poster="/video/doc-drone.jpg" data-lazy-video data-src="/video/doc-drone.mp4" aria-hidden="true"></video>
+        <div class="legend-veil" aria-hidden="true"></div>
+        <svg class="ripples" viewBox="0 0 800 800" aria-hidden="true"><g fill="none" stroke="currentColor"><circle cx="400" cy="400" r="30"/><circle cx="400" cy="400" r="30"/><circle cx="400" cy="400" r="30"/><circle cx="400" cy="400" r="30"/></g></svg>
+        <div class="legend-head">
+          <p class="kicker"><span>04</span> The legend</p>
+          <h2 id="h-legend" class="display-xl">A sword.<br>A whirlpool.<br>A hidden kingdom.</h2>
+          <p class="legend-src mono">A Modang &amp; Ga’ay telling · names are spelled several ways</p>
+        </div>
+        <div class="legend-track">
+          <article class="legend-card"><span class="legend-n mono">i</span><p><b>Halaeng Heboung</b> drops his sword in the Kejin River.</p></article>
+          <article class="legend-card"><span class="legend-n mono">ii</span><p>In a whirlpool he meets <b>Selo Sen Yaeng</b> — a spirit from a kingdom under the riverbed.</p></article>
+          <article class="legend-card"><span class="legend-n mono">iii</span><p>They marry. They have a son, <b>Buaq Selo</b>.</p></article>
+          <article class="legend-card"><span class="legend-n mono">iv</span><p>To please him, she calls her people to dance. Their true faces are <b>terrifying</b>.</p></article>
+          <article class="legend-card"><span class="legend-n mono">v</span><p>He gets scared and goes home. He tells the village what he saw — and <b>carves masks</b> to match the faces.</p></article>
+          <article class="legend-card legend-card-last"><span class="legend-n mono">vi</span><p>The masks keep two worlds linked: <b>water people</b> and <b>land people</b>.</p></article>
+        </div>
+        <img class="legend-cut" data-img="cut/r2" alt="" sizes="40vw" loading="lazy" aria-hidden="true">
+      </div>
+    </section>
+
+    <!-- ───────────── 05 · THE FACES ───────────── -->
+    <section class="chapter faces" id="faces" data-chapter="05" data-title="The faces" data-theme="ink" aria-labelledby="h-faces">
+      <div class="dark" id="dark">
+        <div class="dark-text">
+          <p class="kicker"><span>05</span> The faces</p>
+          <h2 id="h-faces" class="display-xl">In the dark,<br><em>they watch.</em></h2>
+          <p class="dark-hint mono"><span class="dark-hint-t">Move your light. Find all eleven.</span> <b id="darkCount">0</b>/11</p>
+        </div>
+        <ul class="dark-masks" id="darkMasks" aria-label="Eleven hidden Hudoq masks"></ul>
+        <div class="dark-done" aria-live="polite"></div>
+      </div>
+
+      <div class="gallery" id="gallery">
+        <div class="gallery-head">
+          <h3 class="display-l">Eleven faces.</h3>
+          <p>Big round eyes. Wide wing ears. Long noses and beaks. Fangs.</p>
+          <ul class="gallery-facts">
+            <li><b>4</b> kinds seen at one 2018 festival: human, dragon, bird, pig.</li>
+            <li><b>Bird</b> masks rank highest. Then reptiles. Then mammals.</li>
+            <li><b>White, black, red, yellow.</b> Often said to mean purity, grandeur, courage, prosperity.</li>
+          </ul>
+        </div>
+        <div class="gallery-track" id="galleryTrack" data-cursor="drag"></div>
+        <p class="gallery-credit mono">Mask photos: Art of the Ancestors · drag, or use ← →</p>
+      </div>
+    </section>
+
+    <!-- ───────────── 06 · THE MASK (3D) ───────────── -->
+    <section class="chapter lab" id="mask" data-chapter="06" data-title="The mask" data-theme="ink" aria-labelledby="h-lab">
+      <div class="lab-pin">
+        <div class="lab-stage" data-mask-anchor data-pose="lab" id="labStage" data-cursor="spin" tabindex="0" aria-label="3D Hudoq mask. Drag to rotate. Arrow keys also rotate."></div>
+        <div class="lab-ui">
+          <p class="kicker"><span>06</span> The mask</p>
+          <h2 id="h-lab" class="display-xl">Turn it<br>around.</h2>
+          <p class="lab-hint mono">Drag to spin · or just scroll</p>
+          <ol class="lab-notes" id="labNotes">
+            <li class="lab-note is-active" data-station="0"><h3>Eyes</h3><p>Big and round. Often shiny. In the 1890s, carvers used the lids of mirror boxes.</p></li>
+            <li class="lab-note" data-station="1"><h3>Beak</h3><p>A long nose, or a beak. Bird shapes are common upriver.</p></li>
+            <li class="lab-note" data-station="2"><h3>Ears</h3><p>Huge wing ears. On old masks they carried leopard teeth.</p></li>
+            <li class="lab-note" data-station="3"><h3>Jaw</h3><p>Hinged, so it clacked when the dancer moved.</p></li>
+            <li class="lab-note" data-station="4"><h3>Hollow</h3><p>Cut from one block of light wood. Hollow at the back — a face to step into.</p></li>
+          </ol>
+          <div class="lab-dots" id="labDots" role="group" aria-label="Mask parts"></div>
+        </div>
+        <div class="lab-pins" id="labPins" aria-hidden="true"></div>
+        <p class="lab-credit mono">3D model made with Meshy AI from a photo of a Hudoq mask — a likeness, not a museum scan.</p>
+      </div>
+    </section>
+
+    <!-- ───────────── 07 · THE SUIT ───────────── -->
+    <section class="chapter suit" id="suit" data-chapter="07" data-title="The suit" data-theme="ink" aria-labelledby="h-suit">
+      <div class="suit-pin">
+        <p class="suit-bg-word" aria-hidden="true">SPIRIT</p>
+        <div class="suit-copy">
+          <p class="kicker"><span>07</span> The suit</p>
+          <h2 id="h-suit" class="display-xl">Dressed as<br>a spirit.</h2>
+          <div class="suit-notes" id="suitNotes">
+            <article class="suit-note is-active" data-part="0"><h3>Crown</h3><p>Long feathers. Hornbill or Argus pheasant.</p></article>
+            <article class="suit-note" data-part="1"><h3>Mask</h3><p>Carved wood. A white face with black and red lines.</p></article>
+            <article class="suit-note" data-part="2"><h3>Chest</h3><p>Beads, and a big round disc that catches the light.</p></article>
+            <article class="suit-note" data-part="3"><h3>Cloak</h3><p>Banana leaves, shredded into fringe. <b>Fresh every time.</b> Old leaves aren’t burned — they rot back into the soil.</p></article>
+          </div>
+          <p class="suit-weight"><b data-count="10">10</b><span class="mono">kg, roughly, for a full costume</span></p>
+        </div>
+        <figure class="suit-fig" id="suitFig">
+          <img data-img="cut/r4" alt="A Hudoq dancer in full costume: feather crown, white and red mask, beads and a leaf cloak" sizes="(min-width: 900px) 40vw, 80vw" loading="lazy">
+          <button class="hot" style="--x:50%;--y:9%" data-part="0" aria-label="Crown"><i></i></button>
+          <button class="hot" style="--x:50%;--y:31%" data-part="1" aria-label="Mask"><i></i></button>
+          <button class="hot" style="--x:50%;--y:57%" data-part="2" aria-label="Chest"><i></i></button>
+          <button class="hot" style="--x:50%;--y:86%" data-part="3" aria-label="Cloak"><i></i></button>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ───────────── 08 · THE BEAT ───────────── -->
+    <section class="chapter beat" id="dance" data-chapter="08" data-title="The beat" data-theme="blood" aria-labelledby="h-beat">
+      <div class="beat-film">
+        <video muted loop playsinline preload="none" poster="/video/doc-masks.jpg" data-lazy-video data-src="/video/doc-masks.mp4" aria-hidden="true"></video>
+        <div class="beat-film-veil"></div>
+      </div>
+      <div class="beat-wrap">
+        <p class="kicker"><span>08</span> The beat</p>
+        <h2 id="h-beat" class="display-xxl"><span class="line">Circle.</span> <span class="line">Stomp.</span> <span class="line">Flap.</span></h2>
+        <ul class="moves">
+          <li><b>Right foot first.</b> To scare off pests.</li>
+          <li><b>Arms flap</b> like wings.</li>
+          <li><b>Turn right</b> to call in good. <b>Turn left</b> to shake off bad luck.</li>
+          <li><b>Three laps</b> around the village, at least.</li>
+          <li><b>The gong</b> keeps time. Miss the beat, risk bad luck.</li>
+        </ul>
+      </div>
+
+      <div class="pad-wrap" id="padWrap">
+        <div class="pad-text">
+          <h3 class="display-l">Your turn.</h3>
+          <p>Keep the rice spirit happy. Tap the gong <em>on the beat</em>. Space, click, or touch.</p>
+          <p class="pad-fact mono">Old Bahau accounts: the dance must be lively, so the rice spirit wants to stay in the field.</p>
+          <div class="pad-hud">
+            <div class="meter" role="meter" aria-label="Rice spirit happiness" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+            <p class="pad-status mono" id="padStatus" aria-live="polite">Waiting for the first beat…</p>
+          </div>
+        </div>
+        <div class="pad" id="pad">
+          <div class="pad-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="pad-masks" id="padMasks"></div>
+          <button class="pad-gong" id="padGong" aria-label="Gong. Tap in time with the pulsing ring." data-cursor="tap">
+            <span class="pad-gong-disc"></span><span class="pad-gong-label mono">Tap</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── 09 · THEN ───────────── -->
+    <section class="chapter then" id="then" data-chapter="09" data-title="Then" data-theme="reel" aria-labelledby="h-then">
+      <div class="then-head">
+        <p class="kicker"><span>09</span> Then</p>
+        <h2 id="h-then" class="display-xl">Written down in the 1890s.<br><em>Filmed later.</em></h2>
+        <p class="lede">Hudoq is much older than any record. These are some of the first we have.</p>
+      </div>
+
+      <div class="projector" id="projector">
+        <div class="reel-tabs" role="tablist" aria-label="Archive reels">
+          <button role="tab" aria-selected="true" class="reel-tab is-active" data-reel="0"><span class="mono">Reel 01</span><b>1948</b></button>
+          <button role="tab" aria-selected="false" class="reel-tab" data-reel="1"><span class="mono">Reel 02</span><b>c. 1933</b></button>
+          <button role="tab" aria-selected="false" class="reel-tab" data-reel="2"><span class="mono">Photo</span><b>Undated</b></button>
+        </div>
+        <div class="gate">
+          <div class="gate-frame">
+            <video class="reel-video" id="reelVideo" muted loop playsinline preload="none" poster="/video/archive-1948.jpg" data-src="/video/archive-1948.mp4" aria-label="Archive film clip of Hudoq dancers"></video>
+            <img class="reel-photo" data-img="photo/bnw1" alt="Old photograph of leaf-clad Hudoq dancers standing in front of a wooden building" sizes="(min-width: 900px) 60vw, 100vw" loading="lazy" hidden>
+            <canvas class="film-grain" id="filmGrain" aria-hidden="true"></canvas>
+            <i class="film-scratch" aria-hidden="true"></i><i class="film-scratch s2" aria-hidden="true"></i>
+            <div class="film-vig" aria-hidden="true"></div>
+          </div>
+          <div class="gate-hud mono"><span id="reelTime">00:00</span><span id="reelCue">●&nbsp;REC</span></div>
+        </div>
+        <p class="reel-caption" id="reelCaption"><b>1948.</b> “Het Land van de Hoedo” — a Dutch film. Masked dancers step out of the forest.</p>
+        <label class="reel-scrub mono"><span>Scrub the reel</span><input type="range" id="reelRange" min="0" max="1000" value="0" aria-label="Scrub the film"></label>
+      </div>
+
+      <div class="then-notes">
+        <article><span class="mono">1890s</span><p>A Dutch explorer, <b>A.W. Nieuwenhuis</b>, describes a Bahau mask dance on the Mahakam. Mirror-lid eyes. Clacking jaws. Frayed banana-leaf cloaks.</p></article>
+        <article><span class="mono">Women, too</span><p>He also saw a women’s masquerade: upside-down rattan baskets on their heads, a face sewn on white cloth.</p></article>
+        <article><span class="mono">Why film it</span><p>Because it was fading in some places, and strong in others. It still is.</p></article>
+      </div>
+    </section>
+
+    <!-- ───────────── 10 · NOW ───────────── -->
+    <section class="chapter now" id="now" data-chapter="10" data-title="Now" data-theme="ink" aria-labelledby="h-now">
+      <div class="now-hero">
+        <video muted loop playsinline preload="none" poster="/video/doc-parade.jpg" data-lazy-video data-src="/video/doc-parade.mp4" aria-hidden="true"></video>
+        <div class="now-hero-veil"></div>
+        <div class="now-hero-copy">
+          <p class="kicker"><span>10</span> Now</p>
+          <h2 id="h-now" class="display-xxl">Still<br><em>dancing.</em></h2>
+          <p class="lede">Colour is back. So are the crowds.</p>
+        </div>
+      </div>
+
+      <div class="now-pekayang">
+        <h3 class="display-l">Hudoq <em>Pekayang</em></h3>
+        <p>“Pekayang” means <b>visiting each other</b>. Villages take turns hosting, and dance for each other in a circle inside the longhouse.</p>
+        <ol class="steps">
+          <li><b>Feed the mask.</b> Sticky rice and boiled eggs.</li>
+          <li><b>Speak to the leaders</b> — in the Hudoq language.</li>
+          <li><b>The host dances first.</b></li>
+          <li><b>Every village takes a turn.</b></li>
+        </ol>
+      </div>
+
+      <div class="bento">
+        <figure class="bento-a"><video muted loop playsinline preload="none" poster="/video/doc-aerial.jpg" data-lazy-video data-src="/video/doc-aerial.mp4" aria-label="Aerial view of a village square full of dancers"></video><figcaption class="mono">From above. A village square, full.</figcaption></figure>
+        <figure class="bento-b"><video muted loop playsinline preload="none" poster="/video/stage-2018.jpg" data-lazy-video data-src="/video/stage-2018.mp4" aria-label="Wilda Situngkir on the Miss Supranational 2018 stage in a hornbill-shaped Hudoq costume"></video><figcaption class="mono">2018 · “The Sacred Hudoq” — Best National Costume, Miss Supranational</figcaption></figure>
+        <figure class="bento-c"><video muted loop playsinline preload="none" poster="/video/reel-ester.jpg" data-lazy-video data-src="/video/reel-ester.mp4" aria-label="Fashion shoot reel with a Hudoq-inspired costume in green and beadwork"></video><figcaption class="mono">A studio take, in green and beadwork</figcaption></figure>
+        <figure class="bento-d"><img data-img="modern/sup-m2" alt="Hornbill-shaped Hudoq costume on the Miss Supranational 2018 preliminary stage" sizes="(min-width: 900px) 24vw, 70vw" loading="lazy"></figure>
+      </div>
+
+      <div class="wall" id="wall" aria-label="Photographs of Hudoq performances">
+        <div class="wall-col" data-speed="-60"><img data-img="photo/b3" alt="Two dancers in feather crowns and white masks" sizes="30vw" loading="lazy"><img data-img="photo/d12" alt="Dancers in red cloaks and leaf skirts on a paved court" sizes="30vw" loading="lazy"><img data-img="photo/b8" alt="A man speaks into a mic beside masked dancers" sizes="30vw" loading="lazy"></div>
+        <div class="wall-col" data-speed="80"><img data-img="photo/d4" alt="Three masked dancers with feather crowns against the sky" sizes="30vw" loading="lazy"><img data-img="photo/b4" alt="Dancers in a long boat on the river" sizes="30vw" loading="lazy"><img data-img="photo/c1" alt="A masked dancer with a long beak and green ribbons" sizes="30vw" loading="lazy"></div>
+        <div class="wall-col" data-speed="-40"><img data-img="photo/b2" alt="A long line of masked dancers across a field" sizes="30vw" loading="lazy"><img data-img="photo/d13" alt="A procession of dancers on a village road" sizes="30vw" loading="lazy"><img data-img="photo/c7" alt="Dancers crowded together in red and green" sizes="30vw" loading="lazy"></div>
+      </div>
+
+      <div class="timeline" id="timeline">
+        <h3 class="display-l">A short timeline</h3>
+        <ol class="tl">
+          <li><b>2013</b><p>Indonesia lists Hudoq as national intangible heritage. (Not on UNESCO’s lists.)</p></li>
+          <li><b>2014</b><p>The visiting festival is renamed <i>Hudoq Pekayang</i>.</p></li>
+          <li><b>2016</b><p>802 dancers from 13 villages.</p></li>
+          <li><b>2018</b><p>2,230 dancers in one show — a MURI record. Same year, a Hudoq costume wins at Miss Supranational.</p></li>
+          <li><b>2019</b><p>25 hours of non-stop Hudoq.</p></li>
+          <li><b>Oct 2026</b><p>About 260 men from 13 villages dance at Long Pahangai II.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ───────────── 11 · THE COUNT ───────────── -->
+    <section class="chapter count" id="count" data-chapter="11" data-title="The count" data-theme="ink" aria-labelledby="h-count">
+      <h2 id="h-count" class="sr-only">Hudoq by the numbers</h2>
+      <div class="count-grid">
+        <div class="stat"><b data-count="2230" data-fmt="int">2,230</b><span>dancers in one performance<small>MURI record · Oct 2018</small></span></div>
+        <div class="stat"><b data-count="25">25</b><span>hours of non-stop dancing<small>MURI record · Oct 2019</small></span></div>
+        <div class="stat"><b data-count="980" data-fmt="int">980</b><span>km of Mahakam river<small>from the highlands to the sea</small></span></div>
+        <div class="stat"><b data-count="88" data-suffix="%">88%</b><span>of Mahakam Ulu is forest<small>the Hudoq heartland</small></span></div>
+        <div class="stat"><b data-count="13">13</b><span>villages danced together<small>2016 and again in 2026</small></span></div>
+        <div class="stat"><b data-count="10" data-suffix=" kg">10 kg</b><span>of fresh leaves, per costume<small>made new each time</small></span></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 12 · THE CARE ───────────── -->
+    <section class="chapter care" id="care" data-chapter="12" data-title="The care" data-theme="paper" aria-labelledby="h-care">
+      <div class="band band-top" aria-hidden="true"></div>
+      <div class="care-grid">
+        <div class="care-head">
+          <p class="kicker"><span>12</span> The care</p>
+          <h2 id="h-care" class="display-xl">Alive.<br><em>But fragile.</em></h2>
+        </div>
+        <ul class="care-list">
+          <li><b>It needs fields.</b> In Tering Baru, farmland is scarce. Elders planted a tiny rice plot in a monastery yard — just so Hudoq could go on.</li>
+          <li><b>Young people drift.</b> Officials say modern life is pulling the art under.</li>
+          <li><b>Some parts are almost gone.</b> The <i>Nebeq</i> dance has not been seen for years. The song <i>Ngaraang Hudoq</i> is rarely sung.</li>
+          <li><b>Festivals help — and bend the rules.</b> They bring pride and money. They also loosen the old timing.</li>
+          <li><b>People are on it.</b> Villages, customary councils, local government, universities, conservation groups.</li>
+        </ul>
+        <aside class="care-rule">
+          <p class="mono">If you watch</p>
+          <p class="care-rule-t">It’s a ritual before it’s a show.<br><em>Ask first. Credit the makers.</em></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ───────────── FINALE ───────────── -->
+    <section class="chapter finale" id="finale" data-chapter="12" data-title="The care" data-theme="ink" aria-labelledby="h-finale">
+      <div class="finale-anchor" data-mask-anchor data-pose="finale" aria-hidden="true"></div>
+      <h2 id="h-finale" class="finale-title"><span>The forest</span> <span>is still</span> <em>dancing.</em></h2>
+      <a class="btn btn-solid finale-btn" href="#top" data-scroll data-magnetic><span>Back to the start</span></a>
+    </section>
+  </main>
+
+  <footer class="foot" id="credits">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h2 class="foot-h">About this page</h2>
+        <p>A short, friendly story about Hudoq. It is an outsider’s summary built from public sources. The people who dance it are the real experts — and their voices should lead. If something here is wrong, please tell us.</p>
+        <p class="mono foot-small">Facts checked against: field notes by A.W. Nieuwenhuis (<i>Quer durch Borneo</i>, 1904–07), Yanti 2019 (<i>Imaji</i>), Max et al. 2025 (<i>Forest and Society</i>), ANTARA Kaltim, WWF-Indonesia, Art of the Ancestors, UNESCO’s Intangible Heritage lists. Where tellings differ, we say so.</p>
+      </div>
+      <div class="foot-col">
+        <h2 class="foot-h">Credits</h2>
+        <ul class="foot-list">
+          <li><b>Mask photos</b> — Art of the Ancestors (Steven G. Alpert), <a href="https://www.artoftheancestors.com/blog/out-of-the-forest-hudoq" rel="noopener">artoftheancestors.com</a></li>
+          <li><b>1948 film</b> — “Het Land van de Hoedo”, via <a href="https://www.youtube.com/watch?v=LROXUgHTf-g" rel="noopener">YouTube</a></li>
+          <li><b>c. 1933 film</b> — Bimo K.A, via <a href="https://www.youtube.com/watch?v=2Kpov1UKJcU" rel="noopener">YouTube</a></li>
+          <li><b>Festival film clips</b> — TVRI World, “The Heritage”, via <a href="https://www.youtube.com/watch?v=VgdwGjEpW3w" rel="noopener">YouTube</a></li>
+          <li><b>Studio reel</b> — Ester Veronika, John Niesugiarto, El John Pageants, Asosiasi Duta Wisata Indonesia Kaltim, Teruna Dara Kutai Kartanegara</li>
+          <li><b>Miss Supranational 2018</b> — Wilda Octaviana Situngkir; costume by Dynand Fariz · Miss &amp; Mister Supranational</li>
+          <li><b>3D mask</b> — generated with Meshy AI from a reference photo</li>
+          <li><b>Festival &amp; portrait photos</b> — gathered from public sources; photographers credited where known. Own one and want credit or removal? Open an issue on the repo.</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2 class="foot-h">Built with</h2>
+        <p>Vite, GSAP, Lenis, three.js. Fraunces, Instrument Sans &amp; JetBrains Mono (SIL OFL). Sound is synthesised in your browser — nothing to download.</p>
+        <p class="mono foot-small">Source &amp; media: <a href="https://github.com/shirasakaren/hudoq" rel="noopener">github.com/shirasakaren/hudoq</a></p>
+        <button class="btn btn-ghost foot-top" data-scroll-top data-magnetic><span>Top ↑</span></button>
+      </div>
+    </div>
+    <div class="band band-foot" aria-hidden="true"></div>
+    <p class="foot-word" aria-hidden="true">HUDOQ</p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+  <noscript><style>#loader{display:none}body.is-loading{overflow:auto}</style></noscript>
+</body>
+</html>
