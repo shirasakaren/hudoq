@@ -470,3 +470,7 @@ html[data-motion='reduced'] .hero-glow, html[data-motion='reduced'] .hero-cue-li
   .reel-tab b { font-size: 1.15rem; }
 }
 @media (max-width: 900px) { .rice.is-last .ring { transform: translateX(-50%) scale(.38); top: calc(var(--bar-h) - .5rem); opacity: .22; } .gallery-credit, .suit-bg-word { display: none; } .where-step p { text-wrap: pretty; } }
+
+.band.wipe { --h: clamp(26px, 4.4vw, 62px); position: absolute; left: 0; top: 0; z-index: 4; transform-origin: 50% 0; pointer-events: none; }
+.then .band.wipe { background: var(--stamp); }
+.count .band.wipe { background: var(--ochre); }

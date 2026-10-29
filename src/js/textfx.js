@@ -77,3 +77,16 @@ export function initMarquee(lenis, reduced) {
     track.style.transform = `translate3d(${x}px,0,0)`;
   });
 }
+
+/** Signature seam: a vermilion tumpal zig-zag grows along the top edge of a chapter as it arrives. */
+export function initWipes(reduced) {
+  ['where', 'why', 'legend', 'faces', 'suit', 'dance', 'then', 'now', 'count'].forEach((id) => {
+    const sec = document.getElementById(id);
+    if (!sec) return;
+    const w = document.createElement('div');
+    w.className = 'band wipe'; w.setAttribute('aria-hidden', 'true');
+    sec.prepend(w);
+    if (reduced) { gsap.set(w, { scaleY: 1 }); return; }
+    gsap.fromTo(w, { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: sec, start: 'top 98%', end: 'top 45%', scrub: true } });
+  });
+}
