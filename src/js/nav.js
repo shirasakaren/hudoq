@@ -97,7 +97,6 @@ export function initNav(lenis) {
   const motionBtn = document.getElementById('motionBtn');
   const reduced = document.documentElement.dataset.motion === 'reduced';
   motionBtn.setAttribute('aria-pressed', reduced);
-  motionBtn.setAttribute('aria-label', reduced ? 'Motion reduced. Click to restore full motion.' : 'Reduce motion');
   motionBtn.addEventListener('click', () => {
     try { localStorage.setItem('hudoq-motion', reduced ? 'full' : 'reduced'); } catch (_) {}
     location.reload();
