@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en" data-motion="full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Hudoq — When the forest wears a face</title>
+  <meta name="description" content="Hudoq is a Dayak mask dance from East Kalimantan, Borneo. Men in leaf cloaks and carved faces play spirits that guard the rice. A short, interactive story.">
+  <meta name="theme-color" content="#0e0b09">
+  <script>try{if("scrollRestoration"in history)history.scrollRestoration="manual";var m=localStorage.getItem('hudoq-motion');var r=m?m==='reduced':matchMedia('(prefers-reduced-motion: reduce)').matches;document.documentElement.dataset.motion=r?'reduced':'full'}catch(e){}</script>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hudoq — When the forest wears a face">
+  <meta property="og:description" content="A Dayak mask dance from East Kalimantan, told in short words. Scroll, spin the mask, keep the beat.">
+  <meta property="og:image" content="https://shirasakaren.github.io/hudoq/og.jpg">
+  <meta property="og:url" content="https://shirasakaren.github.io/hudoq/">
+  <link rel="canonical" href="https://shirasakaren.github.io/hudoq/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://shirasakaren.github.io/hudoq/og.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230e0b09'/%3E%3Cpath d='M32 10c-9 0-13 8-13 17 0 11 6 22 13 27 7-5 13-16 13-27 0-9-4-17-13-17z' fill='%23efe6d4'/%3E%3Ccircle cx='26' cy='27' r='4.5' fill='%230e0b09'/%3E%3Ccircle cx='38' cy='27' r='4.5' fill='%230e0b09'/%3E%3Cpath d='M24 42h16' stroke='%23c8412b' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="preload" href="/hudoq/fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/hudoq/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"WebSite","name":"Hudoq","description":"An interactive one-page story about Hudoq, the Dayak mask dance of East Kalimantan, Borneo.","inLanguage":"en"}
+  </script>
+  <noscript><style>#loader{display:none}body.is-loading{overflow:auto}</style></noscript>
+  <script type="module" crossorigin src="/hudoq/assets/main-D7gmHr5Q.js"></script>
+  <link rel="modulepreload" crossorigin href="/hudoq/assets/gsap-ByxhIhIK.js">
+  <link rel="stylesheet" crossorigin href="/hudoq/assets/main-Cia90OHN.css">
+</head>
+<body class="is-loading">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ───────────── Loader ───────────── -->
+  <div id="loader" role="dialog" aria-label="Loading Hudoq">
+    <p class="loader-meter mono" aria-hidden="true">Loading <b id="loaderNum">000</b> / 100</p>
+    <div class="loader-inner">
+      <svg class="loader-mask" viewBox="0 0 320 360" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <defs>
+          <clipPath id="loaderFill"><rect id="loaderFillRect" x="0" y="360" width="320" height="360"/></clipPath>
+          <g id="lm-half">
+            <path d="M160 36c-26 0-47 20-48 56-1 48 15 112 48 168"/>
+            <path d="M118 112c-22-8-42-24-58-66 0 40 12 86 36 112-12 14-14 34 0 56 14-22 22-40 26-58"/>
+            <path d="M96 214c-10 12-6 30 12 30"/>
+            <circle cx="128" cy="128" r="20"/><circle cx="128" cy="128" r="8"/>
+            <path d="M60 46l-12-30"/>
+            <path d="M126 76l34 30"/>
+          </g>
+        </defs>
+        <g class="lm-lines">
+          <use href="#lm-half"/>
+          <use href="#lm-half" transform="translate(320 0) scale(-1 1)"/>
+          <path d="M160 150l-14 40q14 22 28 0z"/>
+          <path d="M122 246h76"/>
+          <path d="M124 246l8 16 8-16 8 16 8-16 8 16 8-16 8 16 8-16"/>
+        </g>
+        <g clip-path="url(#loaderFill)" class="lm-fill" stroke="none">
+          <path d="M160 36c-26 0-47 20-48 56-1 48 15 112 48 168 33-56 49-120 48-168-1-36-22-56-48-56z" fill="var(--bone)"/>
+          <path d="M118 112c-22-8-42-24-58-66 0 40 12 86 36 112-12 14-14 34 0 56 14-22 22-40 26-58z" fill="var(--vermilion)"/>
+          <path d="M202 112c22-8 42-24 58-66 0 40-12 86-36 112 12 14 14 34 0 56-14-22-22-40-26-58z" fill="var(--vermilion)"/>
+          <circle cx="128" cy="128" r="20" fill="var(--ink)"/><circle cx="192" cy="128" r="20" fill="var(--ink)"/>
+          <circle cx="128" cy="128" r="7" fill="var(--ochre)"/><circle cx="192" cy="128" r="7" fill="var(--ochre)"/>
+          <path d="M160 150l-14 40q14 22 28 0z" fill="var(--ink)"/>
+          <path d="M122 246h76" stroke="var(--vermilion)" stroke-width="10"/>
+        </g>
+      </svg>
+      <p class="loader-line" id="loaderLine">Gathering the leaves</p>
+      <div class="loader-actions">
+        <button type="button" class="btn btn-solid" id="enterSound" data-magnetic><span>Enter with sound</span></button>
+        <button type="button" class="btn btn-ghost" id="enterSilent" data-magnetic><span>Enter in silence</span></button>
+      </div>
+      <p class="loader-silent mono">In 1898 the masked dancers kept silent. Either way is right.</p>
+    </div>
+  </div>
+
+  <!-- ───────────── Fixed layers ───────────── -->
+  <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><i class="cursor-dot"></i><i class="cursor-ring"><span class="cursor-label"></span></i></div>
+
+  <header class="bar">
+    <a class="bar-logo" href="#top" aria-label="Hudoq — back to top" data-cursor="">
+      <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true"><path d="M32 6c-10 0-15 9-15 19 0 13 7 26 15 32 8-6 15-19 15-32 0-10-5-19-15-19z" fill="currentColor"/><circle cx="25" cy="26" r="5" fill="var(--ink)"/><circle cx="39" cy="26" r="5" fill="var(--ink)"/></svg>
+      <span>Hudoq</span>
+    </a>
+    <p class="bar-chapter mono" aria-hidden="true"><span class="bar-chapter-n">00</span><span class="bar-chapter-t">Intro</span></p>
+    <div class="bar-tools">
+      <button type="button" class="icon-btn" id="soundBtn" aria-pressed="false" aria-label="Sound off">
+        <svg viewBox="0 0 28 20" width="28" height="20" aria-hidden="true"><g class="bars" fill="currentColor"><rect x="1" y="8" width="2.4" height="4" rx="1"/><rect x="6" y="5" width="2.4" height="10" rx="1"/><rect x="11" y="2" width="2.4" height="16" rx="1"/><rect x="16" y="6" width="2.4" height="8" rx="1"/><rect x="21" y="8" width="2.4" height="4" rx="1"/></g></svg>
+        <span class="mono sound-label">Sound off</span>
+      </button>
+      <button type="button" class="icon-btn" id="motionBtn" aria-pressed="false">
+        <span class="mono">Motion</span>
+      </button>
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" data-cursor="">
+        <span class="menu-btn-lines" aria-hidden="true"><i></i><i></i></span>
+        <span class="mono">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Chapters" id="rail"></nav>
+
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Chapters" data-lenis-prevent hidden>
+    <div class="menu-inner">
+      <p class="mono menu-title">Chapters</p>
+      <ol class="menu-list" id="menuList"></ol>
+      <p class="mono menu-foot">Hudoq · a mask dance of East Kalimantan</p>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ───────────── 00 · HERO ───────────── -->
+    <section class="chapter hero" id="top" data-chapter="00" data-title="Intro" data-theme="ink" aria-labelledby="h-hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <h1 id="h-hero" class="hero-title" aria-label="Hudoq">
+        <span class="sr-only">Hudoq — a Dayak mask dance of Borneo</span>
+        <span class="hero-word" aria-hidden="true"><span class="hero-char">H</span><span class="hero-char">U</span><span class="hero-char">D</span><span class="hero-char hero-o">O<i class="hero-hole" aria-hidden="true"></i></span><span class="hero-char">Q</span></span>
+      </h1>
+      <div class="hero-anchor" data-mask-anchor data-pose="hero" aria-hidden="true"></div>
+      <p class="hero-tag" data-split="lines"><em>When the forest</em> wears a face.</p>
+      <div class="hero-meta hero-meta-l mono">
+        <span>Mask dance</span><span>East Kalimantan · Borneo</span>
+      </div>
+      <div class="hero-meta hero-meta-r">
+        <p class="hero-say"><span class="mono">hu·doq</span> — means <em>“mask”</em>.<br>End on a soft catch in the throat, not a hard <em>k</em>.</p>
+      </div>
+      <a class="hero-cue mono" href="#what" data-scroll data-cursor="">
+        <span class="hero-cue-line" aria-hidden="true"></span><span>Scroll. The rice is waiting.</span>
+      </a>
+    </section>
+
+    <!-- ───────────── 01 · THE WORD (a procession) ───────────── -->
+    <section class="chapter proc" id="what" data-chapter="01" data-title="The word" data-theme="paper" aria-labelledby="h-word">
+      <div class="proc-pin">
+        <video class="proc-video" muted loop playsinline preload="none" poster="/hudoq/video/doc-parade.jpg" data-lazy-video data-src="/hudoq/video/doc-parade.mp4" aria-hidden="true"></video>
+        <p class="proc-bigword" aria-hidden="true"><span>MASK</span><span>MASK</span><span>MASK</span><span>MASK</span></p>
+        <p class="kicker proc-kicker"><span>01</span> The word</p>
+        <div class="proc-track">
+          <div class="proc-panel proc-intro">
+            <h2 id="h-word" class="display-xl">Hudoq<br>means <em>mask.</em></h2>
+            <p class="proc-line">Leaf cloaks. Carved faces. A dance for the rice.</p>
+          </div>
+        <figure class="proc-fig is-far" style="--k:1.0"><img alt="Two Hudoq dancers in feather crowns, red cloaks and leaf skirts" sizes="40vw" loading="lazy" src="/hudoq/img/cut/b10.webp" srcset="/hudoq/img/cut/b10.webp 882w" width="882" height="1300" decoding="async"></figure>
+        <figure class="proc-fig is-near" style="--k:1.12"><img alt="A dancer in a feather crown, mask, bead necklaces and a banana-leaf cloak" sizes="40vw" loading="lazy" src="/hudoq/img/cut/r4.webp" srcset="/hudoq/img/cut/r4.webp 736w" width="736" height="920" decoding="async"></figure>
+        <figure class="proc-fig is-mid" style="--k:0.9"><img alt="A dancer in a white and red mask with a long beak and green and red ribbons" sizes="40vw" loading="lazy" src="/hudoq/img/cut/r1.webp" srcset="/hudoq/img/cut/r1.webp 733w" width="733" height="1124" decoding="async"></figure>
+        <figure class="proc-fig is-far" style="--k:0.95"><img alt="Two dancers in tall black-and-white feather crowns and masks" sizes="40vw" loading="lazy" src="/hudoq/img/cut/b3.webp" srcset="/hudoq/img/cut/b3.webp 1748w" width="1748" height="1300" decoding="async"></figure>
+        <figure class="proc-fig is-near" style="--k:1.1"><img alt="A dancer in a feather headdress and a red-and-white mask with a long beak" sizes="40vw" loading="lazy" src="/hudoq/img/cut/r2.webp" srcset="/hudoq/img/cut/r2.webp 849w" width="849" height="1300" decoding="async"></figure>
+        <figure class="proc-fig is-far" style="--k:0.8"><img alt="Three masked dancers with feather crowns against the sky" sizes="40vw" loading="lazy" src="/hudoq/img/cut/d4.webp" srcset="/hudoq/img/cut/d4.webp 416w" width="416" height="395" decoding="async"></figure>
+        <figure class="proc-fig is-mid" style="--k:0.85"><img alt="A dancer in a red-and-white mask turned toward the camera" sizes="40vw" loading="lazy" src="/hudoq/img/cut/d7.webp" srcset="/hudoq/img/cut/d7.webp 614w" width="614" height="667" decoding="async"></figure>
+        <figure class="proc-fig is-far" style="--k:0.9"><img alt="Three dancers in feather crowns, red cloaks and bead necklaces" sizes="40vw" loading="lazy" src="/hudoq/img/cut/c4.webp" srcset="/hudoq/img/cut/c4.webp 1265w" width="1265" height="711" decoding="async"></figure>
+        <figure class="proc-fig is-mid" style="--k:0.8"><img alt="A masked dancer with a very long beak and green ribbons" sizes="40vw" loading="lazy" src="/hudoq/img/cut/c5.webp" srcset="/hudoq/img/cut/c5.webp 525w" width="525" height="457" decoding="async"></figure>
+          <div class="proc-panel proc-facts">
+            <ul class="word-facts">
+              <li><span class="mono">Who</span><strong>Dayak Bahau, Modang and kin</strong></li>
+              <li><span class="mono">Where</span><strong>East Kalimantan, Borneo</strong></li>
+              <li><span class="mono">When</span><strong>After the rice is planted</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div class="proc-ground" aria-hidden="true"><div class="band"></div></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 02 · THE RIVER (map) ───────────── -->
+    <section class="chapter where" id="where" data-chapter="02" data-title="The river" data-theme="night" aria-labelledby="h-where">
+      <div class="where-pin">
+        <div class="where-copy">
+          <p class="kicker"><span>02</span> The river</p>
+          <h2 id="h-where" class="sr-only">Where is Hudoq from?</h2>
+          <ol class="where-steps">
+            <li class="where-step is-active" data-step="0">
+              <h3 class="display-m">Borneo.</h3>
+              <p>The third-largest island on Earth. Old, wide rainforest.</p>
+            </li>
+            <li class="where-step" data-step="1">
+              <h3 class="display-m">East Kalimantan.</h3>
+              <p>One of Indonesia’s five provinces on Borneo. Its big river: the <b>Mahakam</b>, 980 km long.</p>
+            </li>
+            <li class="where-step" data-step="2">
+              <h3 class="display-m">Upriver.</h3>
+              <p><b>Mahakam Ulu</b>: East Kalimantan’s youngest regency, about 88% forest. Hudoq is its mascot.</p>
+            </li>
+            <li class="where-step" data-step="3">
+              <h3 class="display-m">Downriver, too.</h3>
+              <p>In <b>Samarinda</b>, near the river mouth, Bahau families have held a yearly Hudoq since 2015.</p>
+            </li>
+          </ol>
+          <p class="where-km mono" aria-hidden="true"><b id="whereKm">000</b> km</p>
+          <figure class="where-window" aria-hidden="true"><video muted loop playsinline preload="none" poster="/hudoq/video/film-river.jpg" data-lazy-video data-src="/hudoq/video/film-river.mp4"></video></figure>
+          <p class="where-aside mono">Bahau name for the river: <b>Mekam</b> · Hudoq lives in West Kutai too</p>
+        </div>
+        <figure class="where-map" aria-label="Map of Borneo with East Kalimantan and the Mahakam river highlighted">
+          <svg id="mapSvg" viewBox="0 0 1000 1124" role="img" aria-label="Map of Borneo. East Kalimantan is highlighted and the Mahakam river runs from the highlands east, past Samarinda, to the sea.">
+            <defs>
+              <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="9" height="9" fill="var(--vermilion)"/><rect width="3" height="9" fill="#a8331f"/></pattern>
+              <filter id="mapGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <g id="mapLayer"></g>
+          </svg>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ───────────── 03 · THE VILLAGE (footage) ───────────── -->
+    <section class="chapter film" id="film" data-chapter="03" data-title="The village" data-theme="ink" aria-labelledby="h-film">
+      <div class="film-pin">
+        <div class="film-stack" aria-hidden="true">
+          <video class="film-clip" muted loop playsinline preload="none" poster="/hudoq/video/film-river.jpg" data-src="/hudoq/video/film-river.mp4"></video>
+          <video class="film-clip" muted loop playsinline preload="none" poster="/hudoq/video/film-march.jpg" data-src="/hudoq/video/film-march.mp4"></video>
+          <video class="film-clip" muted loop playsinline preload="none" poster="/hudoq/video/film-hats.jpg" data-src="/hudoq/video/film-hats.mp4"></video>
+          <video class="film-clip" muted loop playsinline preload="none" poster="/hudoq/video/film-feet.jpg" data-src="/hudoq/video/film-feet.mp4"></video>
+          <video class="film-clip" muted loop playsinline preload="none" poster="/hudoq/video/film-carved.jpg" data-src="/hudoq/video/film-carved.mp4"></video>
+          <video class="film-clip" muted loop playsinline preload="none" poster="/hudoq/video/film-leaves.jpg" data-src="/hudoq/video/film-leaves.mp4"></video>
+          <video class="film-clip" muted loop playsinline preload="none" poster="/hudoq/video/film-night.jpg" data-src="/hudoq/video/film-night.mp4"></video>
+        </div>
+        <div class="film-shade" aria-hidden="true"></div>
+        <p class="kicker film-kicker"><span>03</span> The village</p>
+        <h2 id="h-film" class="sr-only">A day in the village, in footage</h2>
+        <p class="film-words" aria-hidden="true"><span>River</span><span>March</span><span>Faces</span><span>Feet</span><span>Carved</span><span>Leaves</span><span>Night</span></p>
+        <ol class="film-ticks" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+        <p class="film-src mono">Footage: TVRI World, “The Heritage”</p>
+      </div>
+    </section>
+
+    <!-- ───────────── 03 · THE RICE ───────────── -->
+    <section class="chapter rice" id="why" data-chapter="04" data-title="The rice" data-theme="moss" aria-labelledby="h-rice">
+      <div class="rice-pin">
+        <div class="rice-bg" aria-hidden="true">
+          <img class="rice-photo rp-0 is-on" alt="" sizes="100vw" loading="lazy" src="/hudoq/img/photo/c6-1600.webp" srcset="/hudoq/img/photo/c6-720.webp 720w, /hudoq/img/photo/c6-1600.webp 1600w" width="1600" height="1067" style="background:rgb(150,148,147) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoQAAsAA4BaJQBWACIhBazTYtgA/vOrI7qArPRf5nf7asCoLYC0pdElsDbi751LXro7WUJRpS3hlvJjjc3WfrSvJiLG29ik/XYyDL7ikmJMHggA) center/cover" decoding="async">
+          <img class="rice-photo rp-1" alt="" sizes="100vw" loading="lazy" src="/hudoq/img/photo/d1-1600.webp" srcset="/hudoq/img/photo/d1-720.webp 720w, /hudoq/img/photo/d1-1600.webp 1600w" width="1600" height="1200" style="background:rgb(116,111,107) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAwAA4BaJYwC7AEQCSJOduvAAP6jckAAw8K96u6wNF8r8eGd/06bxxbQHRD5JyBVqtLLjkKipG3LybaabCEHz25Ql21g7PCtgSJMGA62qgAA) center/cover" decoding="async">
+          <img class="rice-photo rp-2" alt="" sizes="100vw" loading="lazy" src="/hudoq/img/photo/c2-1600.webp" srcset="/hudoq/img/photo/c2-720.webp 720w, /hudoq/img/photo/c2-1600.webp 1600w" width="1600" height="1067" style="background:rgb(112,103,93) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAwAgCdASoQAAsAA4BaJQBOgCB/+DjVw820AAD8InCkwxWUCFf/0BW4+xC9CJ2IhrMJtnXHIy6VpVaptPxXhHEKwm5vsRQT/Q514DHRV8bex3l348CK3lAA) center/cover" decoding="async">
+          <img class="rice-photo rp-3" alt="" sizes="100vw" loading="lazy" src="/hudoq/img/photo/b6-1600.webp" srcset="/hudoq/img/photo/b6-720.webp 720w, /hudoq/img/photo/b6-1600.webp 1412w" width="1412" height="1059" style="background:rgb(104,113,104) url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAwAA4BaJQBdgCPSxOz8vQAA/vF48MncQ8LeY/9qtquq/jLLbmKB61xbgtWHnwCZUdQMrN2zKHKEuq6/GtYSP1H+xAAA) center/cover" decoding="async">
+          <img class="rice-photo rp-4" alt="" sizes="100vw" loading="lazy" src="/hudoq/img/photo/b9-1600.webp" srcset="/hudoq/img/photo/b9-720.webp 720w, /hudoq/img/photo/b9-1600.webp 1600w" width="1600" height="900" style="background:rgb(168,146,139) url(data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQAgCdASoQAAkAA4BaJZgCdAYul2rBlMeAAP7g2x+tJ/sHyUOFQw8oRxHFL514G7cEOI5ngLkZM02eHPhQ6xDjzzAm+tUlvxqxEt7oOYOSWug2XxuKm0kCWgAAAA==) center/cover" decoding="async">
+          <div class="rice-shade"></div>
+        </div>
+        <p class="kicker rice-kicker"><span>04</span> The rice</p>
+        <h2 id="h-rice" class="sr-only">Why do they dance?</h2>
+
+        <div class="ring" aria-hidden="true">
+          <svg viewBox="0 0 400 400">
+            <g class="ring-arcs"></g>
+            <g class="ring-nodes"></g>
+          </svg>
+          <div class="ring-core"><span class="mono ring-core-k">Season</span><strong class="ring-core-t">Plant</strong></div>
+        </div>
+
+        <ol class="rice-beats">
+          <li class="rice-beat is-active" data-beat="0">
+            <h3 class="display-l">First, the seeds.</h3>
+            <p>Upriver, rice grows in dry hill fields cleared from forest. Farmers poke holes with sticks and drop seeds in.</p>
+          </li>
+          <li class="rice-beat" data-beat="1">
+            <h3 class="display-l">Then, the worry.</h3>
+            <p>Pests. Disease. A bad harvest means a hungry year.</p>
+          </li>
+          <li class="rice-beat" data-beat="2">
+            <h3 class="display-l">So the spirits come.</h3>
+            <p>Masked dancers play spirits sent by ancestors, or by gods. Their job: guard the rice till harvest.</p>
+            <p class="beat-fact"><span class="mono">1898</span> A Dutch explorer saw the lead dancer wave a long carved hook — to pull stray rice souls back.</p>
+          </li>
+          <li class="rice-beat" data-beat="3">
+            <h3 class="display-l">Not a word.</h3>
+            <p>In 1898, masked dancers kept silent. Spirits can’t talk, people said — speaking could strike you dead.</p>
+          </li>
+          <li class="rice-beat rice-beat-last" data-beat="4">
+            <h3 class="display-l">Two tellings.</h3>
+            <div class="tellings">
+              <article class="telling"><span class="mono">Telling A</span><h4>Guardians</h4><p>Spirits from above. Sent to protect the crop.</p></article>
+              <article class="telling"><span class="mono">Telling B</span><h4>Pests</h4><p>In some tellings, the masks <em>are</em> pests — thirteen, one source says. Two human hudoqs chase them off.</p></article>
+            </div>
+            <p class="beat-fact">Both are told. Many dances mix them: guardians, ancestors, clowning pests.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ───────────── 04 · THE LEGEND ───────────── -->
+    <section class="chapter legend" id="legend" data-chapter="05" data-title="The legend" data-theme="night" aria-labelledby="h-legend">
+      <div class="legend-pin">
+        <video class="legend-video" muted loop playsinline preload="none" poster="/hudoq/video/doc-drone.jpg" data-lazy-video data-src="/hudoq/video/doc-drone.mp4" aria-hidden="true"></video>
+        <div class="legend-veil" aria-hidden="true"></div>
+        <div class="legend-depth" aria-hidden="true"></div>
+        <svg class="whirl" viewBox="-420 -420 840 840" aria-hidden="true"><path class="whirl-path" d=""/></svg>
+        <i class="legend-sword" aria-hidden="true"></i>
+        <div class="legend-faces" aria-hidden="true">
+          <img alt="" sizes="22vw" loading="lazy" src="/hudoq/img/masks/4-1000.webp" srcset="/hudoq/img/masks/4-520.webp 644w, /hudoq/img/masks/4-1000.webp 1239w" width="1239" height="1000" decoding="async"><img alt="" sizes="22vw" loading="lazy" src="/hudoq/img/masks/8-1000.webp" srcset="/hudoq/img/masks/8-520.webp 511w, /hudoq/img/masks/8-1000.webp 983w" width="983" height="1000" decoding="async"><img alt="" sizes="22vw" loading="lazy" src="/hudoq/img/masks/10-1000.webp" srcset="/hudoq/img/masks/10-520.webp 359w, /hudoq/img/masks/10-1000.webp 691w" width="691" height="1000" decoding="async">
+        </div>
+        <p class="kicker legend-kicker"><span>05</span> The legend</p>
+        <h2 id="h-legend" class="sr-only">A sword. A whirlpool. A hidden kingdom.</h2>
+        <ol class="legend-pages">
+          <li class="legend-page legend-page-title"><p class="display-xl" aria-hidden="true">A sword.<br>A whirlpool.<br>A hidden kingdom.</p><span class="legend-src mono">Where did the masks come from? One Modang &amp; Ga’ay story · spellings vary</span></li>
+          <li class="legend-page"><span class="legend-n mono">i</span><p class="display-l"><b>Halaeng Heboung</b> drops his sword in the Kejin River.</p></li>
+          <li class="legend-page"><span class="legend-n mono">ii</span><p class="display-l">In a whirlpool he meets <b>Selo Sen Yaeng</b> — a spirit from a kingdom under the riverbed.</p></li>
+          <li class="legend-page"><span class="legend-n mono">iii</span><p class="display-l">They marry. They have a son, <b>Buaq Selo</b>.</p></li>
+          <li class="legend-page"><span class="legend-n mono">iv</span><p class="display-l">To please him, she calls her people to dance. Their true faces are <b>terrifying</b>.</p></li>
+          <li class="legend-page"><span class="legend-n mono">v</span><p class="display-l">Scared, he goes home with their son. He tells the village — and has <b>masks carved</b> like those faces.</p></li>
+          <li class="legend-page"><span class="legend-n mono">vi</span><p class="display-l">The dance keeps the bond alive: <b>river people</b> and <b>his descendants</b>.</p></li>
+        </ol>
+        <div class="legend-black" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 05 · THE FACES ───────────── -->
+    <section class="chapter faces" id="faces" data-chapter="06" data-title="The faces" data-theme="ink" aria-labelledby="h-faces">
+      <div class="dark" id="dark" data-cursor="lantern">
+        <div class="dark-text">
+          <p class="kicker"><span>06</span> The faces</p>
+          <h2 id="h-faces" class="display-xl">In the dark,<br><em>they watch.</em></h2>
+          <p class="dark-hint mono"><span class="dark-hint-t">Those faces, in wood. Move your light — find all eleven.</span> <b id="darkCount">0</b>/11</p>
+        </div>
+        <ul class="dark-masks" id="darkMasks" aria-label="Eleven hidden Hudoq masks"></ul>
+        <div class="dark-done" aria-live="polite"></div>
+      </div>
+
+      <div class="gallery" id="gallery">
+        <div class="gallery-head">
+          <h3 class="display-l">Eleven faces.</h3>
+          <p>Big round eyes. Wide wing ears. Long noses and beaks. Fangs.</p>
+          <ul class="gallery-facts">
+            <li><b>4</b> kinds at one 2018 festival: human, dragon, bird, pig.</li>
+          </ul>
+        </div>
+        <div class="gallery-track" id="galleryTrack" data-cursor="drag"></div>
+        <p class="gallery-credit mono">Mask photos: Art of the Ancestors · drag, or use ← →</p>
+      </div>
+    </section>
+
+    <!-- ───────────── 06 · THE MASK (3D) ───────────── -->
+    <section class="chapter lab" id="mask" data-chapter="07" data-title="The mask" data-theme="ink" aria-labelledby="h-lab">
+      <div class="lab-pin">
+        <div class="lab-stage" data-mask-anchor data-pose="lab" id="labStage" data-cursor="spin" tabindex="0" role="group" aria-label="3D Hudoq mask. Drag to rotate. Arrow keys also rotate."></div>
+        <div class="lab-ui">
+          <p class="kicker"><span>07</span> The mask</p>
+          <h2 id="h-lab" class="display-xl">Turn it<br>around.</h2>
+          <p class="lab-hint mono">Pick one up · drag to spin, or just scroll</p>
+          <ol class="lab-notes" id="labNotes">
+            <li class="lab-note is-active" data-station="0"><h3>Eyes</h3><p>Big, round, often shiny. In 1898, some were lids of mirror boxes or copper betel boxes.</p></li>
+            <li class="lab-note" data-station="1"><h3>Beak</h3><p>A long nose, or a beak. Bird shapes, like the hornbill, are most common upriver.</p></li>
+            <li class="lab-note" data-station="2"><h3>Ears</h3><p>Huge wing ears. In 1898 they were set with leopard teeth — real or carved.</p></li>
+            <li class="lab-note" data-station="3"><h3>Jaw</h3><p>Old masks had a loose lower jaw that clacked as the dancer moved.</p></li>
+            <li class="lab-note" data-station="4"><h3>Hollow</h3><p>Light wood, often jelutung. Hollow behind — a face to step into. In 1898, each young man carved his own.</p></li>
+          </ol>
+          <div class="lab-dots" id="labDots" role="group" aria-label="Mask parts"></div>
+        </div>
+        <p class="lab-credit mono">An AI-made 3D likeness (Meshy AI), built from one photo of a Hudoq mask. Not a real mask or a scan.</p>
+      </div>
+    </section>
+
+    <!-- ───────────── 07 · THE SUIT ───────────── -->
+    <section class="chapter suit" id="suit" data-chapter="08" data-title="The suit" data-theme="ink" aria-labelledby="h-suit">
+      <div class="suit-pin">
+        <p class="suit-bg-word" aria-hidden="true">SPIRIT</p>
+        <div class="suit-copy">
+          <p class="kicker"><span>08</span> The suit</p>
+          <h2 id="h-suit" class="display-xl">Dressed as<br>a spirit.</h2>
+          <p class="lede">A mask is just the face. The rest is feathers, beads and leaves.</p>
+          <div class="suit-notes" id="suitNotes">
+            <article class="suit-note is-active" data-part="0"><h3>Crown</h3><p>Long feathers. Hornbill or Argus pheasant.</p></article>
+            <article class="suit-note" data-part="1"><h3>Mask</h3><p>Carved wood. Often a white face with black and red lines.</p></article>
+            <article class="suit-note" data-part="2"><h3>Chest</h3><p>Beads, and a big round disc that catches the light.</p></article>
+            <article class="suit-note" data-part="3"><h3>Cloak</h3><p>Usually banana leaves, split into fringe. <b>Fresh each time.</b> Old leaves aren’t burned — they rot back into the soil.</p></article>
+          </div>
+          <p class="suit-weight"><b data-count="10">10</b><span class="mono">kg or so for a full costume, a 2018 report says</span></p>
+        </div>
+        <figure class="suit-fig" id="suitFig"><div class="suit-zoom" id="suitZoom">
+          <img alt="A Hudoq dancer in full costume: feather crown, white and red mask, beads and a leaf cloak" sizes="(min-width: 900px) 40vw, 80vw" loading="lazy" src="/hudoq/img/cut/r4.webp" srcset="/hudoq/img/cut/r4.webp 736w" width="736" height="920" decoding="async">
+          <button type="button" class="hot" style="--x:50%;--y:9%" data-part="0" aria-label="Crown"><i></i></button>
+          <button type="button" class="hot" style="--x:50%;--y:31%" data-part="1" aria-label="Mask"><i></i></button>
+          <button type="button" class="hot" style="--x:50%;--y:57%" data-part="2" aria-label="Chest"><i></i></button>
+          <button type="button" class="hot" style="--x:50%;--y:86%" data-part="3" aria-label="Cloak"><i></i></button>
+        </div></figure>
+      </div>
+    </section>
+
+    <!-- ───────────── 08 · THE BEAT ───────────── -->
+    <section class="chapter beat" id="dance" data-chapter="09" data-title="The beat" data-theme="blood" aria-labelledby="h-beat">
+      <div class="beat-film">
+        <video muted loop playsinline preload="none" poster="/hudoq/video/doc-masks.jpg" data-lazy-video data-src="/hudoq/video/doc-masks.mp4" aria-hidden="true"></video>
+        <div class="beat-film-veil"></div>
+      </div>
+      <div class="beat-wrap">
+        <p class="kicker"><span>09</span> The beat</p>
+        <h2 id="h-beat" class="display-xxl" data-no-split><span class="line">Circle.</span> <span class="line">Stomp.</span> <span class="line">Flap.</span></h2>
+        <p class="lede">Dressed? Then the gong starts.</p>
+        <ul class="moves">
+          <li><b>Right foot first.</b> To scare off pests.</li>
+          <li><b>Arms flap</b> like wings.</li>
+          <li><b>Turn right</b> to call in good. <b>Turn left</b> to shed bad luck, a local scholar explains.</li>
+          <li><b>Three laps</b> around the village, some say — at least.</li>
+          <li><b>The gong</b> keeps time. Stray from it, an 1898 account warns, and risk bad luck.</li>
+        </ul>
+      </div>
+
+      <div class="pad-wrap" id="padWrap">
+        <div class="pad-text">
+          <h3 class="display-l">Your turn.</h3>
+          <p>Try the rhythm. Tap the gong <em>on the beat</em> — space, click or touch. Just a game, not the ritual.</p>
+          <p class="pad-fact mono">Bahau say the dance must be lively, so the rice spirit is happy to stay in the field.</p>
+          <div class="pad-hud">
+            <p class="pad-status mono" id="padStatus" aria-live="polite">Waiting for the first beat…</p>
+          </div>
+        </div>
+        <div class="pad" id="pad">
+          <div class="pad-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+          <svg class="pad-meter" viewBox="0 0 200 200" role="meter" aria-label="How well you keep the beat" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><circle class="pm-track" cx="100" cy="100" r="92"/><circle class="pm-fill" cx="100" cy="100" r="92" transform="rotate(-90 100 100)"/></svg>
+          <div class="pad-masks" id="padMasks"></div>
+          <button type="button" class="pad-gong" id="padGong" aria-label="Gong. Tap in time with the pulsing ring." data-cursor="tap">
+            <span class="pad-gong-disc"></span><span class="pad-gong-label mono">Tap</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── 09 · THEN ───────────── -->
+    <section class="chapter then" id="then" data-chapter="10" data-title="Then" data-theme="reel" aria-labelledby="h-then">
+      <div class="then-head">
+        <p class="kicker"><span>10</span> Then</p>
+        <h2 id="h-then" class="display-xl">Written down in the 1890s.<br><em>Filmed later.</em></h2>
+        <p class="lede">No one knows how old Hudoq is. These are some early records.</p>
+      </div>
+
+      <div class="strips">
+        <div class="strip" data-dir="-1" role="group" aria-label="Frames from the 1948 film"><div class="strip-track"><figure class="frame"><img src="/hudoq/img/frames/f48-0.webp" alt="A man sitting with a gong" width="520" height="390" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f48-1.webp" alt="A dancer in a carved mask among leaves" width="520" height="390" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f48-2.webp" alt="A leaf-cloaked dancer with a ringed mask" width="520" height="390" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f48-3.webp" alt="A masked dancer with a cloth over the shoulder" width="520" height="390" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f48-4.webp" alt="Three masked dancers in the undergrowth" width="520" height="390" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f48-5.webp" alt="Two masked dancers side by side" width="520" height="390" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f48-6.webp" alt="A mask and a pale cloth in close-up" width="520" height="390" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f48-7.webp" alt="A carved mask with round eyes and a headcloth" width="520" height="390" loading="lazy" decoding="async"></figure></div></div>
+        <div class="strip" data-dir="1" role="group" aria-label="Frames from the c. 1933 footage"><div class="strip-track"><figure class="frame"><img src="/hudoq/img/frames/f33-0.webp" alt="Dancers climbing the steps of a longhouse" width="520" height="293" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f33-1.webp" alt="Leaf-cloaked dancers on the grass in front of a longhouse" width="520" height="293" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f33-2.webp" alt="Dancers circling on the grass" width="520" height="293" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f33-3.webp" alt="A dancer turning near the longhouse" width="520" height="293" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f33-4.webp" alt="Two masked dancers near the longhouse" width="520" height="293" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f33-5.webp" alt="A dancer in close-up with ring ornaments" width="520" height="293" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f33-6.webp" alt="Two masks in close-up" width="520" height="293" loading="lazy" decoding="async"></figure><figure class="frame"><img src="/hudoq/img/frames/f33-7.webp" alt="A mask with a feather crest" width="520" height="293" loading="lazy" decoding="async"></figure></div></div>
+      </div>
+
+      <div class="then-notes">
+        <article><span class="mono">1898</span><p><b>A.W. Nieuwenhuis</b>, a Dutch doctor, sees it at Long Blu’u on the Mahakam. Mirror eyes. Clacking jaws. Leaf cloaks.</p></article>
+        <article><span class="mono">Women, too</span><p>He also saw a women’s masquerade: upside-down rattan baskets on their heads, a face sewn on white cloth.</p></article>
+        <article><span class="mono">Growls, not words</span><p>He counts 23 spirits. When the chief speaks to them, they answer with growls and nods.</p></article>
+      </div>
+
+      <div class="projector" id="projector">
+        <div class="reel-tabs" role="tablist" aria-label="Archive reels">
+          <button type="button" role="tab" aria-selected="true" class="reel-tab is-active" data-reel="0"><span class="mono">Reel 01</span><b>1948</b></button>
+          <button type="button" role="tab" aria-selected="false" class="reel-tab" data-reel="1"><span class="mono">Reel 02</span><b>c. 1933</b></button>
+          <button type="button" role="tab" aria-selected="false" class="reel-tab" data-reel="2"><span class="mono">Photo</span><b>Undated</b></button>
+        </div>
+        <div class="gate">
+          <div class="gate-frame">
+            <video class="reel-video" id="reelVideo" muted loop playsinline preload="none" poster="/hudoq/video/archive-1948.jpg" data-src="/hudoq/video/archive-1948.mp4" aria-label="Archive film clip of Hudoq dancers"></video>
+            <img class="reel-photo" alt="Old photograph of leaf-clad Hudoq dancers standing in front of a wooden building" sizes="(min-width: 900px) 60vw, 100vw" loading="lazy" hidden src="/hudoq/img/photo/bnw1-1600.webp" srcset="/hudoq/img/photo/bnw1-720.webp 720w, /hudoq/img/photo/bnw1-1600.webp 745w" width="745" height="489" style="background:rgb(107,97,79) url(data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoQAAoAA4BaJYwCdAD576UXxlAAAPkSmFhqQEOMxWcGXV7gFGPaQVPBBoLb0Wf2AGq2SZpdYVMbirhGGfq8AAAA) center/cover" decoding="async">
+            <canvas class="film-grain" id="filmGrain" aria-hidden="true"></canvas>
+            <i class="film-scratch" aria-hidden="true"></i><i class="film-scratch s2" aria-hidden="true"></i>
+            <div class="film-vig" aria-hidden="true"></div>
+            <i class="burn" aria-hidden="true"></i><i class="cue-dot" aria-hidden="true"></i>
+          </div>
+          <div class="gate-hud mono"><span id="reelTime">00:00</span><span id="reelCue">●&nbsp;REC</span></div>
+        </div>
+        <p class="reel-caption" id="reelCaption"><b>1948.</b> From “Het Land van de Hoedo”, a Dutch-era film. A gong sounds; masks step out of the forest.</p>
+        <label class="reel-scrub mono"><span>Scrub the reel</span><input type="range" id="reelRange" min="0" max="1000" value="0" aria-label="Scrub the film"></label>
+      </div>
+
+    </section>
+
+    <!-- ───────────── 10 · NOW ───────────── -->
+    <section class="chapter now" id="now" data-chapter="11" data-title="Now" data-theme="ink" aria-labelledby="h-now">
+      <div class="now-hero">
+        <video muted loop playsinline preload="none" poster="/hudoq/video/doc-parade.jpg" data-lazy-video data-src="/hudoq/video/doc-parade.mp4" aria-hidden="true"></video>
+        <div class="now-hero-veil"></div>
+        <div class="now-hero-copy">
+          <p class="kicker"><span>11</span> Now</p>
+          <h2 id="h-now" class="display-xxl">Still<br><em>dancing.</em></h2>
+          <p class="lede">In colour now. And in crowds.</p>
+        </div>
+      </div>
+
+      <div class="prails" aria-label="Photographs of Hudoq performances">
+        <div class="prail" data-dir="-1"><div class="prail-track"><figure class="prail-item"><img alt="Two dancers in tall feather crowns" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b3-1600.webp" srcset="/hudoq/img/photo/b3-720.webp 720w, /hudoq/img/photo/b3-1600.webp 1600w" width="1600" height="1067" style="background:rgb(112,104,94) url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAQCdASoQAAsAA4BaJagCsAC3typhIoAA/m0hQEnY0q09uDgDA0enciMOZtDbgtmi4gYyKz6DpAowOchTvUiX1TwbQP+s2BOp0hRGBUvOptzz39ayI+PrxwNb0g4Q/xSdJxF/weteAAAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers in red cloaks and leaf skirts on a paved court" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d12-1600.webp" srcset="/hudoq/img/photo/d12-720.webp 720w, /hudoq/img/photo/d12-1600.webp 1080w" width="1080" height="810" style="background:rgb(106,103,101) url(data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADQAQCdASoQAAwAA4BaJQBOgMX1atqIgAD+eIT0VrkGX6HUlSEa2eO15c5lwGURrnrpUAyPV09URkoDz8PpqP68Btwjy9oqbIduGa+9UCnk/KsYcmEUOU4bMgAAAA==) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Three masked dancers with feather crowns against the sky" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d4-1600.webp" srcset="/hudoq/img/photo/d4-1600.webp 700w" width="700" height="395" style="background:rgb(125,104,89) url(data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQAgCdASoQAAkAA4BaJbACdAYtBkn2lIQAAP6GtOkaUthOag2CvyX/M7DNT+fB86SjPokgwFJFHxO6arHzXCx0bNxUD8pHY6xHiM++d+r6aLHqTk6487OQz9/RoV6UUcM/RwG1nzQAAA==) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A masked dancer with a long beak and green ribbons" sizes="50vw" loading="lazy" src="/hudoq/img/photo/c1-1600.webp" srcset="/hudoq/img/photo/c1-1600.webp 700w" width="700" height="465" style="background:rgb(108,96,93) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAQCdASoQAAsAA4BaJYgCdADQnDnHAAD7m1uHpvzGK/cYrhxGyU7AxMTRg6FiBN7wJBIeMVY3hCRTQzqU0NkWRkM7VyiAKDyx1OHLqLTTaHFlMm/2fgAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers crowded together in red and green" sizes="50vw" loading="lazy" src="/hudoq/img/photo/c7-1600.webp" srcset="/hudoq/img/photo/c7-720.webp 720w, /hudoq/img/photo/c7-1600.webp 750w" width="750" height="500" style="background:rgb(134,103,86) url(data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQAgCdASoQAAsAA4BaJaACdAEJa+ZjF6gAAOJ5IgsE6bPJe0JCEXcYLufD6+026SezDUa/bfUnDCXhGdBhM7LVwuuE1S/HmjgahOmS+Y8ELRsudQO82931Uhwl7niUV+IAAA==) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A procession of dancers on a village road" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d13-1600.webp" srcset="/hudoq/img/photo/d13-720.webp 720w, /hudoq/img/photo/d13-1600.webp 1600w" width="1600" height="1067" style="background:rgb(105,105,92) url(data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQAAsAA4BaJQBOgMVkxZKLfxAAAP48gOP5XStt8PGryqwUFmgd2J8QAMGrkJAJgVslWb7ayrRtFV5/+EExUItYPo6woXD1x33jv060TylanEmNaizXjaAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A dancer in a red cloak with beads, other dancers behind" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b9-1600.webp" srcset="/hudoq/img/photo/b9-720.webp 720w, /hudoq/img/photo/b9-1600.webp 1600w" width="1600" height="900" style="background:rgb(168,146,139) url(data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQAgCdASoQAAkAA4BaJZgCdAYul2rBlMeAAP7g2x+tJ/sHyUOFQw8oRxHFL514G7cEOI5ngLkZM02eHPhQ6xDjzzAm+tUlvxqxEt7oOYOSWug2XxuKm0kCWgAAAA==) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Two dancers in red cloaks and feather crowns" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d2-1600.webp" srcset="/hudoq/img/photo/d2-720.webp 720w, /hudoq/img/photo/d2-1600.webp 750w" width="750" height="500" style="background:rgb(174,145,138) url(data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwAgCdASoQAAsAA4BaJbACdAYr7kuHRllwAAD+m+/n5lZE3c+NZmrq+EECpsgEoS/7CRtBtk6HFJ7WQHi4/vzziyDoBleOwhdUKxVmVVSwDpcIaBpI2zhhosdXIIMp5H1aIQ/tELzP8gAAAAA=) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A masked dancer with a very long beak" sizes="50vw" loading="lazy" src="/hudoq/img/photo/c5-1600.webp" srcset="/hudoq/img/photo/c5-1600.webp 720w" width="720" height="457" style="background:rgb(110,98,94) url(data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQAgCdASoQAAoAA4BaJYgCdAEWJ+rUyxGAAM2kjsATnz9RUwzyrhHm0wFTG+ZIi5KyviYpiKIrQKWZAMBcrCrr2DINSKOPgyXQd3iWXhNktLIo/7Euo/2+cF+bXSTmzxgIBc58aAA=) center/cover" decoding="async"></figure></div></div>
+        <div class="prail" data-dir="1"><div class="prail-track"><figure class="prail-item"><img alt="A long line of masked dancers across a green field" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b2-1600.webp" srcset="/hudoq/img/photo/b2-720.webp 720w, /hudoq/img/photo/b2-1600.webp 1170w" width="1170" height="780" style="background:rgb(101,93,71) url(data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAAsAA4BaJaACdAEWSnYHOUIAAP7tHbODUjf8DQjb+X/C3L46FeeXbXwtx1ji66tVNlP9mCEguYLXmPjRi368bkSStVlJbQ9p5AAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers in feather crowns in a long boat on the river" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b4-1600.webp" srcset="/hudoq/img/photo/b4-720.webp 720w, /hudoq/img/photo/b4-1600.webp 1600w" width="1600" height="1067" style="background:rgb(124,108,92) url(data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQAAsAA4BaJbACdADO/fQKtLYAAP7gCRlITq9RXrFacw0Ajtv/SgR4XSJXL+MCU/3sO9Fg+9PM2axbW0ZyF1l+7I98QdxFS1jVmbKsxivCMJJaqBMvAAAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Rows of dancers in leaf cloaks beside the forest" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b6-1600.webp" srcset="/hudoq/img/photo/b6-720.webp 720w, /hudoq/img/photo/b6-1600.webp 1412w" width="1412" height="1059" style="background:rgb(104,113,104) url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAADwAQCdASoQAAwAA4BaJQBdgCPSxOz8vQAA/vF48MncQ8LeY/9qtquq/jLLbmKB61xbgtWHnwCZUdQMrN2zKHKEuq6/GtYSP1H+xAAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers with feather crowns in front of a crowd" sizes="50vw" loading="lazy" src="/hudoq/img/photo/c2-1600.webp" srcset="/hudoq/img/photo/c2-720.webp 720w, /hudoq/img/photo/c2-1600.webp 1600w" width="1600" height="1067" style="background:rgb(112,103,93) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAwAgCdASoQAAsAA4BaJQBOgCB/+DjVw820AAD8InCkwxWUCFf/0BW4+xC9CJ2IhrMJtnXHIy6VpVaptPxXhHEKwm5vsRQT/Q514DHRV8bex3l348CK3lAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers in leaf cloaks standing in a flooded field" sizes="50vw" loading="lazy" src="/hudoq/img/photo/c6-1600.webp" srcset="/hudoq/img/photo/c6-720.webp 720w, /hudoq/img/photo/c6-1600.webp 1600w" width="1600" height="1067" style="background:rgb(150,148,147) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoQAAsAA4BaJQBWACIhBazTYtgA/vOrI7qArPRf5nf7asCoLYC0pdElsDbi751LXro7WUJRpS3hlvJjjc3WfrSvJiLG29ik/XYyDL7ikmJMHggA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers dancing in a ring, with people seated around" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d1-1600.webp" srcset="/hudoq/img/photo/d1-720.webp 720w, /hudoq/img/photo/d1-1600.webp 1600w" width="1600" height="1200" style="background:rgb(116,111,107) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoQAAwAA4BaJYwC7AEQCSJOduvAAP6jckAAw8K96u6wNF8r8eGd/06bxxbQHRD5JyBVqtLLjkKipG3LybaabCEHz25Ql21g7PCtgSJMGA62qgAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A long line of dancers in leaf cloaks" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d3-1600.webp" srcset="/hudoq/img/photo/d3-720.webp 720w, /hudoq/img/photo/d3-1600.webp 1000w" width="1000" height="666" style="background:rgb(142,138,108) url(data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAQCdASoQAAsAA4BaJbACdAD5h7v9H5gA/P/bj3lF3Yxm06IWsCUl3cvRiWYEuRjLscLmJhS9mhAxNgMhzySYveKIBxbbaN9b1i2yTFKywJXd4LAAAA==) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A dancer among tents on a red carpet" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b7-1600.webp" srcset="/hudoq/img/photo/b7-720.webp 720w, /hudoq/img/photo/b7-1600.webp 1200w" width="1200" height="686" style="background:rgb(180,164,159) url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAABQAgCdASoQAAkAA4BaJbACdH8AGKwbfV2NMiAA/urr7lH7T7ZUzWeIsLjPNU5x+bsTgEwsdS5EtPDBRrOQOH2uWYGNXZ6T2Qhm2DAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers in a village street" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d9-1600.webp" srcset="/hudoq/img/photo/d9-720.webp 720w, /hudoq/img/photo/d9-1600.webp 1600w" width="1600" height="1066" style="background:rgb(113,112,105) url(data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAQAgCdASoQAAsAA4BaJYwC06Eembzl7GOQAP6D5cpz0MiREcp5FrK6kZBVyvkhq9QS5+tJtra59kBvzYGlt/jfvX/gFVj9ZdZGFObx14VGyF5UONE8txzDee7viUSIA5MAAA==) center/cover" decoding="async"></figure></div></div>
+        <div class="prail" data-dir="-1"><div class="prail-track"><figure class="prail-item"><img alt="Dancers in leaf cloaks and red capes at a festival" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b1-1600.webp" srcset="/hudoq/img/photo/b1-720.webp 720w, /hudoq/img/photo/b1-1600.webp 1170w" width="1170" height="780" style="background:rgb(114,100,86) url(data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAsAA4BaJQBOgCIi1Lu82AAA/klaw4CYMLI4Rl/o2qtfT5W5E8pU5IQMPtmpLGvuFsHx5aD9LOtGNwU3LayUytqyE2RCrRczigAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers filling an open field" sizes="50vw" loading="lazy" src="/hudoq/img/photo/b5-1600.webp" srcset="/hudoq/img/photo/b5-720.webp 720w, /hudoq/img/photo/b5-1600.webp 1600w" width="1600" height="1067" style="background:rgb(107,93,77) url(data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwAgCdASoQAAsAA4BaJbACdAYwxaq7i35AAAD+7R99h4Fze//fxu+XwJwza8fwmnOh8B+SCGvOrYy2QcJH5KHGsI+X8wxNFGI19w4c8vsFHCgwpLchWDxEC9BpTnF9kAAAAA==) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A field of dancers seen from above" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d5-1600.webp" srcset="/hudoq/img/photo/d5-720.webp 720w, /hudoq/img/photo/d5-1600.webp 960w" width="960" height="1280" style="background:rgb(120,122,120) url(data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAAAwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JYgCdMoM6AEFwE9get4yYkyQA4C3dclf1M1Qg3SWzmkuhll6eIKICsT93Y2J+3CEYfER3MoQ2lj7mNE7r2OyLGn1V3Dl4eZsBkWJwLB9K0Ety0lyvF1ceBfGwcYv/q+BkT3fC915gGpA2+gPxwnOJW7iAgAAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A dancer in a red-and-white mask" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d7-1600.webp" srcset="/hudoq/img/photo/d7-720.webp 720w, /hudoq/img/photo/d7-1600.webp 1000w" width="1000" height="667" style="background:rgb(90,81,69) url(data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABwAgCdASoQAAsAA4BaJbACdAYrxwhvlC2xjnUgAP7B+Sp+o48SuS7lRHf0QP0G64xlejJoyjp4ZBNYLicq4vIBg8UVx/cfMfwODPdNJqWNnLlY45i/MFX0NDHq7I5L/jGk/rlcmB7pWJLAAAA=) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="A man holding a leaf staff beside masked dancers" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d8-jpeg-1600.webp" srcset="/hudoq/img/photo/d8-jpeg-720.webp 720w, /hudoq/img/photo/d8-jpeg-1600.webp 1600w" width="1600" height="1067" style="background:rgb(136,129,123) url(data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAADwAQCdASoQAAsAA4BaJQBWAB4VneKVkgAA/u9kXMSvJ+G4iOAuttiqAqCJX7h60brkAM++TKBP1cqmcqy4Ou1qO3J+qOxV3QzZzTEaxXVTUk97mMLJmFmsoPtAAA==) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers with feather crowns in a crowd" sizes="50vw" loading="lazy" src="/hudoq/img/photo/c3-1600.webp" srcset="/hudoq/img/photo/c3-720.webp 720w, /hudoq/img/photo/c3-1600.webp 996w" width="996" height="480" style="background:rgb(115,92,82) url(data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQAgCdASoQAAgAA4BaJYgCdAYsjWTMK/mAAP7Bh56vjzCXazW2K5u+6P/nczGovO55qokLQ4HTYGA4DQAt9ov4kqVQq0CtkSk6qFht6Bs9UDoIwAA=) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers in red capes in a line" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d10-jpg-1600.webp" srcset="/hudoq/img/photo/d10-jpg-720.webp 720w, /hudoq/img/photo/d10-jpg-1600.webp 996w" width="996" height="480" style="background:rgb(132,118,102) url(data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAAgAA4BaJZACdAD1edAYqhIAAP4BZD/tgvU27cJMAVtF5X9hHjoYkOv5gPFSMS8JoMXDkAIIQoUX4Sklxi6oZmBZuHiWbBDsgAAA) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Three dancers in feather crowns" sizes="50vw" loading="lazy" src="/hudoq/img/photo/c4-1600.webp" srcset="/hudoq/img/photo/c4-720.webp 720w, /hudoq/img/photo/c4-1600.webp 1265w" width="1265" height="711" style="background:rgb(133,108,85) url(data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAQCdASoQAAkAA4BaJbACdAYs3D0/VjgAzfzFD548WHZ4yzE/9eLXKrVOrdOGzVFZbQdihA9SOHUIIbekssMq+QGtRXKDgPI7uLLnw1xdofV5niaFPdUj4AA=) center/cover" decoding="async"></figure><figure class="prail-item"><img alt="Dancers in leaf cloaks lined up in front of a building" sizes="50vw" loading="lazy" src="/hudoq/img/photo/d14-1600.webp" srcset="/hudoq/img/photo/d14-1600.webp 620w" width="620" height="349" style="background:rgb(108,101,91) url(data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAQAgCdASoQAAkAA4BaJYwCdAEPS8G2zv4AAP7KeDbICzDBYq1TN5gAE+F7Hqne3tRzDz5T/n+ADblsPmlBY4bELQRhpSXiX8YRMAAA) center/cover" decoding="async"></figure></div></div>
+      </div>
+
+      <div class="now-pekayang">
+        <h3 class="display-l">Hudoq <em>Pekayang</em></h3>
+        <p>“Pekayang” means <b>visiting each other</b>. Villages take turns as host — then each dances in the longhouse.</p>
+        <ol class="steps">
+          <li><b>Feed the mask.</b> Sticky rice and boiled eggs.</li>
+          <li><b>Words with the leaders</b> — in the Hudoq language.</li>
+          <li><b>The host dances first.</b></li>
+          <li><b>Every village takes a turn.</b></li>
+        </ol>
+      </div>
+
+      <div class="bento">
+        <figure class="bento-a"><video muted loop playsinline preload="none" poster="/hudoq/video/doc-aerial.jpg" data-lazy-video data-src="/hudoq/video/doc-aerial.mp4" aria-label="Aerial view of a village square full of dancers"></video><figcaption class="mono">From above. A village square, full.</figcaption></figure>
+        <figure class="bento-b"><video muted loop playsinline preload="none" poster="/hudoq/video/stage-2018.jpg" data-lazy-video data-src="/hudoq/video/stage-2018.mp4" aria-label="Wilda Situngkir on the Miss Supranational 2018 stage in a Hudoq-inspired hornbill costume"></video><figcaption class="mono">2018 · “The Sacred Hudoq” — Best National Costume, Miss Supranational</figcaption></figure>
+        <figure class="bento-c"><video muted loop playsinline preload="none" poster="/hudoq/video/reel-ester.jpg" data-start="8" data-lazy-video data-src="/hudoq/video/reel-ester.mp4" aria-label="Fashion shoot reel with a Hudoq-inspired costume in green and beadwork"></video><figcaption class="mono">A studio take, in green and beadwork</figcaption></figure>
+        <figure class="bento-e" aria-label="Hudoq in numbers">
+          <p class="mono">In numbers</p>
+          <dl class="odo-list">
+            <div><dt>dancers at once, 2018 (MURI record)</dt><dd><b class="odo-num" data-odo="2230">2,230</b></dd></div>
+            <div><dt>hours non-stop, 2019 (MURI record)</dt><dd><b class="odo-num" data-odo="25">25</b></dd></div>
+            <div><dt>villages at one festival</dt><dd><b class="odo-num" data-odo="13">13</b></dd></div>
+          </dl>
+        </figure>
+        <figure class="bento-d"><img alt="Hudoq-inspired hornbill costume on the Miss Supranational 2018 preliminary stage" sizes="(min-width: 900px) 24vw, 70vw" loading="lazy" src="/hudoq/img/modern/sup-preliminary-1080.webp" srcset="/hudoq/img/modern/sup-preliminary-720.webp 720w, /hudoq/img/modern/sup-preliminary-1080.webp 853w" width="853" height="1280" style="background:rgb(109,133,168) url(data:image/webp;base64,UklGRsQAAABXRUJQVlA4ILgAAACQBACdASoQABgAPu1iqU2ppaOiMAgBMB2JaACdMoR3AdAQcpYLU6opPYi87AAA/qxEO2FfzU6n8lI7Eyja39y3C4RX8OE2otTpsqac/uz4tql2j3Xt/tiZo7ongaiVNvOPXpSC2H+mzha9c3FvVuK2zdb+Fjr8eun+h7KnG70OeUgRB/Sizd/NxTxi4FgtG073UepMc85895cee6n4iQ8bzDiveM8WIzZKENK82lJM73fbk/MozpYA) center/cover" decoding="async"></figure>
+        <figure class="bento-f"><img alt="A long line of masked dancers across a green field" sizes="(min-width: 900px) 56vw, 100vw" loading="lazy" src="/hudoq/img/photo/b2-1600.webp" srcset="/hudoq/img/photo/b2-720.webp 720w, /hudoq/img/photo/b2-1600.webp 1170w" width="1170" height="780" style="background:rgb(101,93,71) url(data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAQAgCdASoQAAsAA4BaJaACdAEWSnYHOUIAAP7tHbODUjf8DQjb+X/C3L46FeeXbXwtx1ji66tVNlP9mCEguYLXmPjRi368bkSStVlJbQ9p5AAA) center/cover" decoding="async"><figcaption class="mono">A field, a line of spirits</figcaption></figure>
+        <figure class="bento-g"><img alt="Dancers in feather crowns in a long boat on the river" sizes="(min-width: 900px) 40vw, 100vw" loading="lazy" src="/hudoq/img/photo/b4-1600.webp" srcset="/hudoq/img/photo/b4-720.webp 720w, /hudoq/img/photo/b4-1600.webp 1600w" width="1600" height="1067" style="background:rgb(124,108,92) url(data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQAAsAA4BaJbACdADO/fQKtLYAAP7gCRlITq9RXrFacw0Ajtv/SgR4XSJXL+MCU/3sO9Fg+9PM2axbW0ZyF1l+7I98QdxFS1jVmbKsxivCMJJaqBMvAAAA) center/cover" decoding="async"><figcaption class="mono">Arriving by river</figcaption></figure>
+      </div>
+
+      <div class="timeline" id="timeline">
+        <h3 class="display-l">A short timeline</h3>
+        <ol class="tl">
+          <li><b>1994</b><p>Hosting gets costly. Villages agree: guests bring their own food. The visits go on.</p></li>
+          <li><b>2013</b><p>Indonesia lists Hudoq as national intangible heritage. (Not on UNESCO’s lists.)</p></li>
+          <li><b>2014</b><p>The visiting festival is renamed <i>Hudoq Pekayang</i>.</p></li>
+          <li><b>2016</b><p>802 dancers from 13 villages at Hudoq Pekayang.</p></li>
+          <li><b>2018</b><p>2,230 dancers at once — a record in Indonesia’s MURI book. A Hudoq-inspired gown wins Best National Costume at Miss Supranational.</p></li>
+          <li><b>2019</b><p>25 hours of non-stop Hudoq — another MURI record.</p></li>
+          <li><b>Oct 2026</b><p>About 260 men from 13 villages dance at Long Pahangai II. Elders also set next year’s planting.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ───────────── 12 · THE CARE ───────────── -->
+    <section class="chapter care" id="care" data-chapter="12" data-title="The care" data-theme="paper" aria-labelledby="h-care">
+      <div class="care-grid">
+        <div class="care-head">
+          <p class="kicker"><span>12</span> The care</p>
+          <h2 id="h-care" class="display-xl">Alive.<br><em>But fragile.</em></h2>
+          <ul class="care-list">
+            <li><b>It needs fields.</b> One village planted a tiny rice plot in a monastery yard to keep it going.</li>
+            <li><b>Parts are fading.</b> The <i>Nebeq</i> dance and the song <i>Ngaraang Hudoq</i> are rarely seen or sung.</li>
+            <li><b>Festivals help — and change it.</b></li>
+          </ul>
+        </div>
+        <div class="care-collage" aria-hidden="false">
+          <figure class="cc cc-a" data-parallax="-60"><img alt="A man speaks into a microphone beside masked dancers in leaf cloaks" sizes="(min-width: 900px) 36vw, 80vw" loading="lazy" src="/hudoq/img/photo/b8-1600.webp" srcset="/hudoq/img/photo/b8-720.webp 720w, /hudoq/img/photo/b8-1600.webp 1600w" width="1600" height="1067" style="background:rgb(121,111,105) url(data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABwAgCdASoQAAsAA4BaJYwCdAYuRa+C2M4P7KAAAPaG0KrjF2E4vH8404uvKC3zHj/hw1U4bi402SAhEiGCn5prsdnTF+1M1ZT6TcrCo2QMnw/Weqxq9Lm46WioWn3mEu79k6AA) center/cover" decoding="async"></figure>
+          <figure class="cc cc-b" data-parallax="40"><img alt="A field full of dancers seen from above" sizes="(min-width: 900px) 24vw, 60vw" loading="lazy" src="/hudoq/img/photo/d5-1600.webp" srcset="/hudoq/img/photo/d5-720.webp 720w, /hudoq/img/photo/d5-1600.webp 960w" width="960" height="1280" style="background:rgb(120,122,120) url(data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAAAwBACdASoQABUAPu1iqU2ppaOiMAgBMB2JYgCdMoM6AEFwE9get4yYkyQA4C3dclf1M1Qg3SWzmkuhll6eIKICsT93Y2J+3CEYfER3MoQ2lj7mNE7r2OyLGn1V3Dl4eZsBkWJwLB9K0Ety0lyvF1ceBfGwcYv/q+BkT3fC915gGpA2+gPxwnOJW7iAgAAA) center/cover" decoding="async"></figure>
+          <figure class="cc cc-c" data-parallax="-20"><img alt="Dancers in leaf cloaks standing in a flooded field" sizes="(min-width: 900px) 28vw, 70vw" loading="lazy" src="/hudoq/img/photo/c6-1600.webp" srcset="/hudoq/img/photo/c6-720.webp 720w, /hudoq/img/photo/c6-1600.webp 1600w" width="1600" height="1067" style="background:rgb(150,148,147) url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoQAAsAA4BaJQBWACIhBazTYtgA/vOrI7qArPRf5nf7asCoLYC0pdElsDbi751LXro7WUJRpS3hlvJjjc3WfrSvJiLG29ik/XYyDL7ikmJMHggA) center/cover" decoding="async"></figure>
+        </div>
+        <aside class="care-rule">
+          <p class="mono">If you watch</p>
+          <p class="care-rule-t">It’s a ritual before it’s a show.<br><em>Ask before you film. Credit dancers and carvers.</em></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ───────────── FINALE ───────────── -->
+    <section class="chapter finale" id="finale" data-chapter="—" data-title="Finale" data-theme="ink" aria-labelledby="h-finale">
+      <div class="finale-anchor" data-mask-anchor data-pose="finale" aria-hidden="true"></div>
+      <h2 id="h-finale" class="finale-title"><span class="still">Still danced.</span> <em>Still theirs.</em></h2>
+      <button type="button" class="btn btn-ghost finale-again" id="danceAgain" data-magnetic><span>Dance again ↺</span></button>
+    </section>
+  </main>
+
+  <footer class="foot" id="credits">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h2 class="foot-h">About this page</h2>
+        <p>A short, friendly story about Hudoq, written by outsiders from public sources. No Hudoq community has reviewed it yet. The people who dance it are the real experts. Spot a mistake? Open an issue on GitHub.</p>
+        <p class="mono foot-small">Facts checked against: field notes by A.W. Nieuwenhuis (<i>Quer durch Borneo</i>, 1904–07), Yanti 2019 (<i>Imaji</i>), Max et al. 2025 (<i>Forest and Society</i>), Facessly et al. 2016, ANTARA Kaltim, kaltimkece.id, setkab.go.id, Indonesia Kaya, WWF-Indonesia, Art of the Ancestors, IGNCA, Wikipedia, UNESCO’s Intangible Heritage lists. Where tellings differ, we say so.</p>
+      </div>
+      <div class="foot-col">
+        <h2 class="foot-h">Credits</h2>
+        <ul class="foot-list">
+          <li><b>Mask photos</b> — Art of the Ancestors (Steven G. Alpert), <a href="https://www.artoftheancestors.com/blog/out-of-the-forest-hudoq" rel="noopener">artoftheancestors.com</a></li>
+          <li><b>1948 film</b> — “Het Land van de Hoedo”, maker unknown; uploaded by Info Itah on <a href="https://www.youtube.com/watch?v=LROXUgHTf-g" rel="noopener">YouTube</a></li>
+          <li><b>“1933” film</b> — maker unknown; date and colour as given by the uploader, Bimo K.A., on <a href="https://www.youtube.com/watch?v=2Kpov1UKJcU" rel="noopener">YouTube</a></li>
+          <li><b>Festival film clips</b> — TVRI World, “The Heritage”, via <a href="https://www.youtube.com/watch?v=VgdwGjEpW3w" rel="noopener">YouTube</a></li>
+          <li><b>Studio reel</b> — Ester Veronika, John Niesugiarto, El John Pageants, Asosiasi Duta Wisata Indonesia Kaltim, Teruna Dara Kutai Kartanegara</li>
+          <li><b>Miss Supranational 2018</b> — Wilda Octaviana Situngkir; costume by Dynand Fariz · Miss &amp; Mister Supranational</li>
+          <li><b>3D mask</b> — an AI-generated likeness (Meshy AI) built from a reference photo; not a real object</li>
+          <li><b>Festival &amp; portrait photos</b> — from public web sources; photographers unknown to us. Some are cut out from their backgrounds. Yours? Open an issue for credit or removal.</li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2 class="foot-h">Built with</h2>
+        <p>Vite, GSAP, Lenis, three.js. Fraunces, Instrument Sans &amp; JetBrains Mono (SIL OFL). Sound is synthesised in your browser — not recordings of Hudoq music.</p>
+        <p class="mono foot-small">Source &amp; media: <a href="https://github.com/shirasakaren/hudoq" rel="noopener">github.com/shirasakaren/hudoq</a></p>
+        <button type="button" class="btn btn-ghost foot-top" data-scroll-top data-magnetic><span>Top ↑</span></button>
+      </div>
+    </div>
+    <div class="band band-foot" aria-hidden="true"></div>
+    <p class="foot-word" aria-hidden="true">HUDOQ</p>
+    <p class="foot-sign mono">Hudoq belongs to the Bahau, Modang and their kin · told here with care · 2026</p>
+  </footer>
+
+  <div class="colour-cut" aria-hidden="true"><video muted loop playsinline preload="none" poster="/hudoq/video/doc-parade.jpg" data-src="/hudoq/video/doc-parade.mp4"></video></div>
+  <div class="leader" aria-hidden="true"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="84" class="ld-ring"/><path d="M100 16v168M16 100h168" class="ld-cross"/></svg><b class="ld-n">3</b></div>
+
+</body>
+</html>
