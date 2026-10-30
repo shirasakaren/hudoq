@@ -46,7 +46,7 @@
 
 /* ───────────── Reset ───────────── */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: auto; background: var(--ink); }
+html { overflow-x: clip; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: auto; background: var(--ink); }
 html.lenis, html.lenis body { height: auto; }
 .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
 .lenis [data-lenis-prevent] { overscroll-behavior: contain; }
@@ -177,7 +177,7 @@ b, strong { font-weight: 600; }
 .rail a:hover i, .rail a.is-active i { width: 34px; opacity: 1; }
 
 /* menu overlay */
-.menu { position: fixed; inset: 0; z-index: 490; background: var(--ink); color: var(--bone); display: grid; padding: calc(var(--bar-h) + 2vh) var(--gutter) var(--gutter); clip-path: inset(0 0 100% 0); }
+.menu { overflow-y: auto; overscroll-behavior: contain; position: fixed; inset: 0; z-index: 490; background: var(--ink); color: var(--bone); display: grid; padding: calc(var(--bar-h) + 2vh) var(--gutter) var(--gutter); clip-path: inset(0 0 100% 0); }
 .menu-inner { display: grid; grid-template-rows: auto 1fr auto; gap: 2vh; max-width: 1500px; width: 100%; margin: 0 auto; }
 .menu-title, .menu-foot { opacity: .5; }
 .menu-list { display: grid; grid-template-columns: repeat(2, 1fr); align-content: center; gap: 0 4vw; counter-reset: m; }
@@ -210,8 +210,8 @@ b, strong { font-weight: 600; }
 .loader-line { font-family: var(--f-display); font-style: italic; font-weight: 420; font-size: clamp(1.6rem, 3.4vw, 3rem); letter-spacing: -.02em; line-height: 1.1; font-variation-settings: 'opsz' 144, 'SOFT' 100, 'WONK' 1; overflow: clip; min-height: 1.2em; }
 .loader-line { display: grid; justify-items: center; }
 .loader-line span { grid-area: 1 / 1; display: block; white-space: nowrap; }
-.loader-actions { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
-.loader-silent { opacity: .5; max-width: 44ch; }
+.loader-actions { min-height: 3.6rem; display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; }
+.loader-silent { opacity: .5; max-width: 44ch; min-height: 2.6rem; }
 .loader-meter { position: absolute; z-index: 2; left: var(--gutter); bottom: clamp(1.2rem, 4vh, 2.4rem); opacity: .6; font-variant-numeric: tabular-nums; }
 .loader-meter b { color: var(--ochre); font-weight: 600; }
 

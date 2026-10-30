@@ -30,6 +30,8 @@ export function initTextFx(reduced) {
   const targets = '.kicker:not(.rice-kicker), .lede, .word-facts li, .word-note, .then-notes article, .tl li, .care-list li, .care-rule, .stat, .steps li, .foot-col, .moves li, .gallery-facts li, .legend-src, .lab-hint, .dark-hint, .pad-text > *, .now-pekayang > p';
   const els = gsap.utils.toArray(targets).filter((e) => !e.closest('.where-pin, .rice-pin, .legend-pin, .lab-pin, .suit-pin'));
   gsap.set(els, { opacity: 0, y: 36 });
+  // a focused link must never sit at opacity 0 waiting for its reveal
+  els.forEach((e) => e.addEventListener('focusin', () => gsap.set(e, { opacity: 1, y: 0 })));
   ScrollTrigger.batch(els, {
     start: 'top 90%', once: true,
     onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: 'h.reveal', stagger: 0.08, overwrite: true }),
@@ -70,18 +72,18 @@ export function initHero(gl, reduced, L = 1) {
   const hole = document.querySelector('.hero-hole');
   const tl = gsap.timeline({
     defaults: { ease: 'none' },
-    scrollTrigger: { trigger: '#top', start: 'top top', end: () => '+=' + Math.round(innerHeight * 1.1 * L), pin: true, scrub: 0.6, anticipatePin: 1, invalidateOnRefresh: true },
+    scrollTrigger: { trigger: '#top', start: 'top top', end: () => '+=' + Math.round(innerHeight * 0.9 * L), pin: true, scrub: 0.6, anticipatePin: 1, invalidateOnRefresh: true },
   });
   tl.set('.hero-word', { clipPath: 'none' }, 0)
     .to('.hero-tag, .hero-meta, .hero-cue', { y: -30, autoAlpha: 0, duration: 0.15 }, 0)
     .to(others, { xPercent: (i) => [-90, -55, -30, 70][i], autoAlpha: 0, duration: 0.35 }, 0.05)
     .to('.hero-anchor', { yPercent: -230, scale: 0.7, duration: 0.5 }, 0)
-    .to(gl?.state ?? {}, { extraYaw: 0.9, leafKill: 1, extraScale: 0.55, duration: 0.5 }, 0)
     .to('.hero-glow', { opacity: 0, duration: 0.5 }, 0.1)
     .to(hole, { scale: 1, duration: 0.12 }, 0.18)
     .to(O, { scale: 34, transformOrigin: '50% 56%', ease: 'h.exit', duration: 0.6 }, 0.2)
     .set('#top', { backgroundColor: '#efe6d4' }, 0.8)
-    .to({}, { duration: 0.1 }, 0.9);
+    .set(O, { autoAlpha: 0 }, 0.97);
+  if (gl) tl.to(gl.state.fx.hero, { yaw: 0.9, scale: 0.55, duration: 0.5 }, 0).to(gl.state, { leafKill: 1, duration: 0.4 }, 0);   // the scaled glyph is hidden once it has done its job (no sideways overflow, one less huge layer)
 
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const setters = chars.map((c, i) => ({ x: gsap.quickTo(c, 'x', { duration: 1.1, ease: 'h.reveal' }), y: gsap.quickTo(c, 'y', { duration: 1.1, ease: 'h.reveal' }), k: (i % 2 ? 1 : -1) * (14 + i * 4) }));

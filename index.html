@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-motion="full">
 <head>
   <meta charset="utf-8">
@@ -6,7 +6,7 @@
   <title>Hudoq — When the forest wears a face</title>
   <meta name="description" content="Hudoq is a Dayak mask dance from East Kalimantan, Borneo. Men in leaf cloaks and carved faces play spirits that guard the rice. A short, interactive story.">
   <meta name="theme-color" content="#0e0b09">
-  <script>try{var m=localStorage.getItem('hudoq-motion');var r=m?m==='reduced':matchMedia('(prefers-reduced-motion: reduce)').matches;document.documentElement.dataset.motion=r?'reduced':'full'}catch(e){}</script>
+  <script>try{if("scrollRestoration"in history)history.scrollRestoration="manual";var m=localStorage.getItem('hudoq-motion');var r=m?m==='reduced':matchMedia('(prefers-reduced-motion: reduce)').matches;document.documentElement.dataset.motion=r?'reduced':'full'}catch(e){}</script>
   <meta property="og:type" content="website">
   <meta property="og:title" content="Hudoq — When the forest wears a face">
   <meta property="og:description" content="A Dayak mask dance from East Kalimantan, told in short words. Scroll, spin the mask, keep the beat.">
@@ -21,6 +21,7 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"WebSite","name":"Hudoq","description":"An interactive one-page story about Hudoq, the Dayak mask dance of East Kalimantan, Borneo.","inLanguage":"en"}
   </script>
+  <noscript><style>#loader{display:none}body.is-loading{overflow:auto}</style></noscript>
 </head>
 <body class="is-loading">
   <a class="skip" href="#main">Skip to content</a>
@@ -59,11 +60,11 @@
         </g>
       </svg>
       <p class="loader-line" id="loaderLine">Gathering the leaves</p>
-      <div class="loader-actions" hidden>
-        <button class="btn btn-solid" id="enterSound" data-magnetic><span>Enter with sound</span></button>
-        <button class="btn btn-ghost" id="enterSilent" data-magnetic><span>Enter in silence</span></button>
+      <div class="loader-actions">
+        <button type="button" class="btn btn-solid" id="enterSound" data-magnetic><span>Enter with sound</span></button>
+        <button type="button" class="btn btn-ghost" id="enterSilent" data-magnetic><span>Enter in silence</span></button>
       </div>
-      <p class="loader-silent mono" hidden>In 1898 the masked dancers kept silent. Either way is right.</p>
+      <p class="loader-silent mono">In 1898 the masked dancers kept silent. Either way is right.</p>
     </div>
   </div>
 
@@ -79,14 +80,14 @@
     </a>
     <p class="bar-chapter mono" aria-hidden="true"><span class="bar-chapter-n">00</span><span class="bar-chapter-t">Intro</span></p>
     <div class="bar-tools">
-      <button class="icon-btn" id="soundBtn" aria-pressed="false" aria-label="Sound off" data-cursor="sound">
+      <button type="button" class="icon-btn" id="soundBtn" aria-pressed="false" aria-label="Sound off">
         <svg viewBox="0 0 28 20" width="28" height="20" aria-hidden="true"><g class="bars" fill="currentColor"><rect x="1" y="8" width="2.4" height="4" rx="1"/><rect x="6" y="5" width="2.4" height="10" rx="1"/><rect x="11" y="2" width="2.4" height="16" rx="1"/><rect x="16" y="6" width="2.4" height="8" rx="1"/><rect x="21" y="8" width="2.4" height="4" rx="1"/></g></svg>
         <span class="mono sound-label">Sound off</span>
       </button>
-      <button class="icon-btn" id="motionBtn" aria-pressed="false" aria-label="Reduce motion" data-cursor="">
+      <button type="button" class="icon-btn" id="motionBtn" aria-pressed="false" aria-label="Motion: reduce animations">
         <span class="mono">Motion</span>
       </button>
-      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" data-cursor="">
+      <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu" data-cursor="">
         <span class="menu-btn-lines" aria-hidden="true"><i></i><i></i></span>
         <span class="mono">Menu</span>
       </button>
@@ -95,7 +96,7 @@
 
   <nav class="rail" aria-label="Chapters" id="rail"></nav>
 
-  <div class="menu" id="menu" hidden>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Chapters" data-lenis-prevent hidden>
     <div class="menu-inner">
       <p class="mono menu-title">Chapters</p>
       <ol class="menu-list" id="menuList"></ol>
@@ -157,7 +158,6 @@
     <!-- ───────────── 02 · THE RIVER (map) ───────────── -->
     <section class="chapter where" id="where" data-chapter="02" data-title="The river" data-theme="night" aria-labelledby="h-where">
       <div class="where-pin">
-        <div class="where-veil" aria-hidden="true"></div>
         <div class="where-copy">
           <p class="kicker"><span>02</span> The river</p>
           <h2 id="h-where" class="sr-only">Where is Hudoq from?</h2>
@@ -338,10 +338,10 @@
         </div>
         <figure class="suit-fig" id="suitFig"><div class="suit-zoom" id="suitZoom">
           <img data-img="cut/r4" alt="A Hudoq dancer in full costume: feather crown, white and red mask, beads and a leaf cloak" sizes="(min-width: 900px) 40vw, 80vw" loading="lazy">
-          <button class="hot" style="--x:50%;--y:9%" data-part="0" aria-label="Crown"><i></i></button>
-          <button class="hot" style="--x:50%;--y:31%" data-part="1" aria-label="Mask"><i></i></button>
-          <button class="hot" style="--x:50%;--y:57%" data-part="2" aria-label="Chest"><i></i></button>
-          <button class="hot" style="--x:50%;--y:86%" data-part="3" aria-label="Cloak"><i></i></button>
+          <button type="button" class="hot" style="--x:50%;--y:9%" data-part="0" aria-label="Crown"><i></i></button>
+          <button type="button" class="hot" style="--x:50%;--y:31%" data-part="1" aria-label="Mask"><i></i></button>
+          <button type="button" class="hot" style="--x:50%;--y:57%" data-part="2" aria-label="Chest"><i></i></button>
+          <button type="button" class="hot" style="--x:50%;--y:86%" data-part="3" aria-label="Cloak"><i></i></button>
         </div></figure>
       </div>
     </section>
@@ -378,7 +378,7 @@
           <div class="pad-rings" aria-hidden="true"><i></i><i></i><i></i></div>
           <svg class="pad-meter" viewBox="0 0 200 200" role="meter" aria-label="How well you keep the beat" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><circle class="pm-track" cx="100" cy="100" r="92"/><circle class="pm-fill" cx="100" cy="100" r="92" transform="rotate(-90 100 100)"/></svg>
           <div class="pad-masks" id="padMasks"></div>
-          <button class="pad-gong" id="padGong" aria-label="Gong. Tap in time with the pulsing ring." data-cursor="tap">
+          <button type="button" class="pad-gong" id="padGong" aria-label="Gong. Tap in time with the pulsing ring." data-cursor="tap">
             <span class="pad-gong-disc"></span><span class="pad-gong-label mono">Tap</span>
           </button>
         </div>
@@ -401,9 +401,9 @@
 
       <div class="projector" id="projector">
         <div class="reel-tabs" role="tablist" aria-label="Archive reels">
-          <button role="tab" aria-selected="true" class="reel-tab is-active" data-reel="0"><span class="mono">Reel 01</span><b>1948</b></button>
-          <button role="tab" aria-selected="false" class="reel-tab" data-reel="1"><span class="mono">Reel 02</span><b>c. 1933</b></button>
-          <button role="tab" aria-selected="false" class="reel-tab" data-reel="2"><span class="mono">Photo</span><b>Undated</b></button>
+          <button type="button" role="tab" aria-selected="true" class="reel-tab is-active" data-reel="0"><span class="mono">Reel 01</span><b>1948</b></button>
+          <button type="button" role="tab" aria-selected="false" class="reel-tab" data-reel="1"><span class="mono">Reel 02</span><b>c. 1933</b></button>
+          <button type="button" role="tab" aria-selected="false" class="reel-tab" data-reel="2"><span class="mono">Photo</span><b>Undated</b></button>
         </div>
         <div class="gate">
           <div class="gate-frame">
@@ -477,10 +477,10 @@
     </section>
 
     <!-- ───────────── 12 · THE CARE ───────────── -->
-    <section class="chapter care" id="care" data-chapter="12" data-title="The care" data-theme="paper" aria-labelledby="h-care">
+    <section class="chapter care" id="care" data-chapter="11" data-title="The care" data-theme="paper" aria-labelledby="h-care">
       <div class="care-grid">
         <div class="care-head">
-          <p class="kicker"><span>12</span> The care</p>
+          <p class="kicker"><span>11</span> The care</p>
           <h2 id="h-care" class="display-xl">Alive.<br><em>But fragile.</em></h2>
         </div>
         <ul class="care-list">
@@ -498,10 +498,10 @@
     </section>
 
     <!-- ───────────── FINALE ───────────── -->
-    <section class="chapter finale" id="finale" data-chapter="12" data-title="The care" data-theme="ink" aria-labelledby="h-finale">
+    <section class="chapter finale" id="finale" data-chapter="—" data-title="Finale" data-theme="ink" aria-labelledby="h-finale">
       <div class="finale-anchor" data-mask-anchor data-pose="finale" aria-hidden="true"></div>
       <h2 id="h-finale" class="finale-title"><span class="still">Still danced.</span> <em>Still theirs.</em></h2>
-      <button class="btn btn-ghost finale-again" id="danceAgain" data-magnetic><span>Dance again ↺</span></button>
+      <button type="button" class="btn btn-ghost finale-again" id="danceAgain" data-magnetic><span>Dance again ↺</span></button>
     </section>
   </main>
 
@@ -529,7 +529,7 @@
         <h2 class="foot-h">Built with</h2>
         <p>Vite, GSAP, Lenis, three.js. Fraunces, Instrument Sans &amp; JetBrains Mono (SIL OFL). Sound is synthesised in your browser — not recordings of Hudoq music.</p>
         <p class="mono foot-small">Source &amp; media: <a href="https://github.com/shirasakaren/hudoq" rel="noopener">github.com/shirasakaren/hudoq</a></p>
-        <button class="btn btn-ghost foot-top" data-scroll-top data-magnetic><span>Top ↑</span></button>
+        <button type="button" class="btn btn-ghost foot-top" data-scroll-top data-magnetic><span>Top ↑</span></button>
       </div>
     </div>
     <div class="band band-foot" aria-hidden="true"></div>
@@ -541,6 +541,5 @@
   <div class="leader" aria-hidden="true"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="84" class="ld-ring"/><path d="M100 16v168M16 100h168" class="ld-cross"/></svg><b class="ld-n">3</b></div>
 
   <script type="module" src="/src/main.js"></script>
-  <noscript><style>#loader{display:none}body.is-loading{overflow:auto}</style></noscript>
 </body>
 </html>

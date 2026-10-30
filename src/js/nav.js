@@ -44,10 +44,15 @@ export function initNav(lenis) {
   let idle = 0;
   lenis.on('scroll', ({ direction, scroll }) => {
     if (open) return;
-    const hide = direction > 0 && scroll > 240;
+    const hide = direction > 0 && scroll > 240 && !bar.contains(document.activeElement);
     gsap.to(bar, { yPercent: hide ? -110 : 0, duration: hide ? 0.45 : 0.6, ease: hide ? 'h.exit' : 'h.reveal', overwrite: 'auto' });
     clearTimeout(idle); idle = setTimeout(() => gsap.to(bar, { yPercent: 0, duration: 0.6, ease: 'h.reveal', overwrite: 'auto' }), 1400);
   });
+
+  bar.addEventListener('focusin', () => gsap.to(bar, { yPercent: 0, duration: 0.4, ease: 'h.reveal', overwrite: 'auto' }));
+  // the finale has its own header label (no rail entry)
+  const fin = document.getElementById('finale');
+  if (fin) ScrollTrigger.create({ trigger: fin, start: 'top 55%', end: 'bottom 55%', onToggle: (s) => { if (s.isActive) { bn.textContent = '—'; bt.textContent = 'Finale'; } } });
 
   // sound-bed breathing
   ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (self) => audio.breathe(self.progress) });

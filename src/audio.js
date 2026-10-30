@@ -10,6 +10,11 @@ class HudoqAudio {
     this.master = null;
     this._birdTimer = 0;
     this._listeners = new Set();
+    // no sound in a hidden tab
+    document.addEventListener('visibilitychange', () => {
+      if (!this.ctx) return;
+      if (document.hidden) this.ctx.suspend(); else if (this.enabled) this.ctx.resume();
+    });
   }
 
   onChange(fn) { this._listeners.add(fn); return () => this._listeners.delete(fn); }
@@ -115,6 +120,7 @@ class HudoqAudio {
     this.master.gain.setTargetAtTime(0, t, 0.25);
     clearTimeout(this._birdTimer);
     this.enabled = false;
+    setTimeout(() => { if (!this.enabled && this.ctx) this.ctx.suspend(); }, 700); // fully stop the context once the fade has finished
     this._emit();
   }
 

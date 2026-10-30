@@ -163,7 +163,9 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
   const state = {
     x: 0, y: 0, s: 0.01, mx: 0, my: 0, lookX: 0, lookY: 0,
     intro: 0, introSpin: 0, leafA: 0, leafKill: 0, burst: 0, emberA: 0, emberMode: 'ambient', active: null,
-    lab: { on: false, yaw: 0, pitch: 0, zoom: 1, ox: 0, oy: 0, key: 0, rim: 0, userYaw: 0, userPitch: 0 }, extraYaw: 0, extraPitch: 0, extraScale: 1, extraY: 0, hold: null,
+    lab: { on: false, yaw: 0, pitch: 0, zoom: 1, ox: 0, oy: 0, key: 0, rim: 0, userYaw: 0, userPitch: 0 }, extraY: 0, hold: null,
+    // per-pose offsets: each chapter tweens only its own, and only the active pose is applied, so nothing leaks between chapters
+    fx: { hero: { yaw: 0, pitch: 0, scale: 1, rim: 0 }, finale: { yaw: 0, pitch: 0, scale: 1, rim: 0 } },
   };
   const target = { x: 0, y: 0, s: 0.01 };
   const pointer = { x: 0, y: 0 };
@@ -205,6 +207,7 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
   let last = performance.now() / 1000, running = true, clock = 0;
   document.addEventListener('visibilitychange', () => { running = !document.hidden; last = performance.now() / 1000; });
   const baseKeyAngle = Math.atan2(-3, 6), keyR = Math.hypot(-3, 6);
+  const NEUTRAL_FX = { yaw: 0, pitch: 0, scale: 1, rim: 0 };
   const spawnBurn = (i) => {
     if (!samples.length || !sampleMesh) return false;
     tmp.copy(samples[Math.floor(Math.random() * samples.length)]);
@@ -227,11 +230,10 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
       target.y = -(r.top + r.height / 2 - vh / 2) * upp;
       target.s = Math.min((r.width * upp) / MODEL_W, (r.height * upp) / MODEL_H);
       state.active = a.pose;
-      canvas.classList.toggle('is-on', true);
     } else {
       state.active = null;
-      canvas.classList.toggle('is-on', false);
     }
+    canvas.classList.toggle('is-on', !!a || state.leafA > 0.02); // stays on while a leaf burst is still falling
     if (state.s < 0.02 && a) { state.x = target.x; state.y = target.y; state.s = target.s * 0.7; }
     const k = a ? 9 : 4;
     state.x = damp(state.x, target.x, k, dt);
@@ -245,24 +247,26 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
 
     const t = now, lab = state.lab;
     const breathe = Math.sin(t * 0.9) * 0.012;
-    const sFinal = state.s * (0.94 + 0.06 * state.intro) * lab.zoom * state.extraScale;
+    const fx = state.fx[state.active] || NEUTRAL_FX;
+    const sFinal = state.s * (0.94 + 0.06 * state.intro) * lab.zoom * fx.scale;
     rig.position.set(state.x + lab.ox * state.s, state.y + breathe * 2 + lab.oy * state.s + state.extraY * state.s, 0);
     rig.scale.setScalar(Math.max(0.0001, sFinal));
-    head.rotation.y = state.lookX * 0.55 + lab.yaw + lab.userYaw + state.extraYaw + state.introSpin + Math.sin(t * 0.5) * 0.04;
-    head.rotation.x = state.lookY * 0.28 + lab.pitch + lab.userPitch + state.extraPitch + (1 - state.intro) * 0.22 + Math.sin(t * 0.7) * 0.015;
+    head.rotation.y = state.lookX * 0.55 + lab.yaw + lab.userYaw + fx.yaw + state.introSpin + Math.sin(t * 0.5) * 0.04;
+    head.rotation.x = state.lookY * 0.28 + lab.pitch + lab.userPitch + fx.pitch + (1 - state.intro) * 0.22 + Math.sin(t * 0.7) * 0.015;
     head.rotation.z = state.lookX * -0.05;
 
     // light study: the key light swings around the mask and the rim lifts per station (lab only)
     const ka = baseKeyAngle + lab.key;
     key.position.set(Math.sin(ka) * keyR, 4, Math.cos(ka) * keyR);
-    rimL.intensity = 1.9 * (1 + lab.rim); rimR.intensity = 3.2 * (1 + lab.rim * 0.6);
-    U.uRim.value = 0.35 + lab.rim * 0.6 + (api.level ? api.level.lo * 0.8 : 0);
+    const rimSum = lab.rim + fx.rim;
+    rimL.intensity = 1.9 * (1 + rimSum); rimR.intensity = 3.2 * (1 + rimSum * 0.6);
+    U.uRim.value = 0.35 + rimSum * 0.6 + (api.level ? api.level.lo * 0.8 : 0);
 
     // leaves: only the hero, the suit's cloak burst and the finale; never over paper
     const centred = a ? clamp(1 - Math.abs(a.r.top + a.r.height / 2 - vh / 2) / (vh * 0.75), 0, 1) : 0;
     let wantLeaf = 0;
     if (state.active === 'hero') wantLeaf = centred * (1 - state.leafKill);
-    else if (state.active === 'finale') wantLeaf = centred;
+    else if (state.active === 'finale') wantLeaf = clamp((centred - 0.45) / 0.35, 0, 1); // never over the paper chapter above
     wantLeaf = Math.max(wantLeaf, state.burst);
     state.leafA = damp(state.leafA, wantLeaf * (state.intro > 0.05 ? 1 : 0), 6, dt);
     leafMat.opacity = state.leafA * 0.92;

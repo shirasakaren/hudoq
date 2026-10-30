@@ -27,21 +27,22 @@ export function initSuit(lenis, reduced, gl, L = 1) {
   let cur = -1, st = null, tl = null;
   const set = (i) => {
     if (i === cur) return; cur = i;
-    notes.forEach((n, j) => n.setAttribute('aria-hidden', j === i ? 'false' : 'true'));
     hots.forEach((h, j) => h.classList.toggle('is-active', j === i));
     gsap.fromTo(line, { drawSVG: '0% 0%' }, { drawSVG: '0% 100%', duration: 0.5, ease: 'h.reveal' });
     audio.pluck(i * 2 + 1, 0, 0.5);
     if (i === 3) gl?.leafBurst(2600); // the cloak is fresh each time: a flurry of leaves earns it
   };
+  gsap.set(hots, { '--inv': 1 });
   set(0);
+  hots.forEach((h, i) => h.addEventListener('focus', () => h.click()));
   hots.forEach((h, i) => h.addEventListener('click', () => {
     if (st) lenis.scrollTo(st.start + (st.end - st.start) * (tl.labels['s' + i] / tl.duration()), { duration: 1.2 }); else set(i);
   }));
-  if (reduced) { section.classList.add('is-static'); notes.forEach((n) => gsap.set([...n.children], { autoAlpha: 1 })); leader.remove(); return; }
+  if (reduced) { section.classList.add('is-static'); notes.forEach((n) => gsap.set([...n.children], { opacity: 1 })); leader.remove(); return; }
 
-  tl = stepper(notes, { hold: 0.9, xf: 0.5 });
+  tl = stepper(notes, { hold: 1, xf: 0.3 });
   PARTS.forEach((p, i) => {
-    const at = i === 0 ? 0 : `s${i}-=0.6`;
+    const at = i === 0 ? 0 : `s${i}-=0.5`;
     const dur = i === 0 ? 0.01 : 1.1;
     tl.to(zoom, { scale: p.zoom, transformOrigin: `50% ${p.y}%`, duration: dur, ease: 'h.move' }, at)
       .to(hots, { '--inv': 1 / p.zoom, duration: dur, ease: 'h.move' }, '<');
@@ -51,8 +52,8 @@ export function initSuit(lenis, reduced, gl, L = 1) {
   st = ScrollTrigger.create({
     trigger: section, start: 'top top', end: () => '+=' + Math.round(innerHeight * 3 * L), pin: '.suit-pin', scrub: 0.8, anticipatePin: 1,
     animation: tl, invalidateOnRefresh: true,
-    onUpdate: () => set(nearestStep(tl, notes.length)),
   });
+  tl.eventCallback('onUpdate', () => set(nearestStep(tl, notes.length)));
 
   gsap.ticker.add(() => {
     if (!st.isActive || cur < 0) return;

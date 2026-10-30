@@ -70,17 +70,18 @@ export function initMap(reduced, L = 1) {
   applyVB();
 
   const len = rivers[1].getTotalLength();
-  const setState = (i) => { steps.forEach((s, j) => { s.classList.toggle('is-active', j === i); s.setAttribute('aria-hidden', j === i ? 'false' : 'true'); }); };
+  const setState = (i) => { steps.forEach((s, j) => s.classList.toggle('is-active', j === i)); };
   setState(0);
 
   if (reduced) {
     section.classList.add('is-static');
     Object.assign(vb, views[1]); applyVB(); gsap.set(kFill, { opacity: 0.5 }); gsap.set(bigLabel, { opacity: 0 }); gsap.set(placeEls.map((p) => p.g), { opacity: 1 });
-    steps.forEach((s) => gsap.set([...s.children], { autoAlpha: 1 }));
+    steps.forEach((s) => gsap.set([...s.children], { opacity: 1 }));
     return;
   }
 
   gsap.set(rivers, { drawSVG: '0% 0%' }); gsap.set(kStroke, { drawSVG: '0% 0%' });
+  const kmWrap = section.querySelector('.where-km'); gsap.set(kmWrap, { opacity: 0 });
   const tl = stepper(steps, { hold: 0.9 });
   tl.to(bigLabel, { opacity: 0, duration: 0.4 }, 's1-=0.5')
     .to(vb, { ...views[1], duration: 1.1, ease: 'h.move', onUpdate: applyVB }, 's1-=0.45')
@@ -90,6 +91,7 @@ export function initMap(reduced, L = 1) {
     .to(vb, { ...views[2], duration: 1.1, ease: 'h.move', onUpdate: applyVB }, 's2-=0.45')
     .to(placeEls.filter((p) => p.step === 2).map((p) => p.g), { opacity: 1, duration: 0.4, stagger: 0.12 }, '<0.5')
     .set(boat, { opacity: 1 }, 's3-=0.9')
+    .to(kmWrap, { opacity: 1, duration: 0.3 }, 's3-=0.9')
     .to(placeEls.filter((p) => p.step === 2).map((p) => p.g), { opacity: 0.35, duration: 0.4 }, 's3-=0.9')
     .to(vb, { ...views[3], duration: 1.5, ease: 'none', onUpdate: applyVB }, 's3-=0.9')
     .fromTo(boat, { motionPath: { path: rivers[1], align: rivers[1], alignOrigin: [0.5, 0.5], start: 0, end: 0 } },
@@ -100,6 +102,6 @@ export function initMap(reduced, L = 1) {
   ScrollTrigger.create({
     trigger: section, start: 'top top', end: () => '+=' + Math.round(innerHeight * 3.4 * L), pin: '.where-pin', scrub: 0.8, anticipatePin: 1,
     animation: tl, invalidateOnRefresh: true,
-    onUpdate: () => setState(nearestStep(tl, steps.length)),
   });
+  tl.eventCallback('onUpdate', () => setState(nearestStep(tl, steps.length)));
 }

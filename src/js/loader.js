@@ -39,10 +39,10 @@ export function initLoader() {
 
   const setLine = (text) => {
     const span = document.createElement('span'); span.textContent = text;
-    const old = line.firstElementChild;
+    const olds = [...line.children];
     line.appendChild(span);
     gsap.fromTo(span, { yPercent: 100 }, { yPercent: 0, duration: D.ui, ease: 'h.reveal' });
-    if (old) gsap.to(old, { yPercent: -100, duration: D.exit, ease: 'h.exit', onComplete: () => old.remove() });
+    olds.forEach((o) => gsap.to(o, { yPercent: -100, duration: D.exit, ease: 'h.exit', overwrite: true, onComplete: () => o.remove() }));
   };
   line.textContent = ''; setLine(LINES[0]); lineI = 0;
 
@@ -62,14 +62,14 @@ export function initLoader() {
     ready() {
       return new Promise((resolve) => {
         const finish = () => {
-          st.p = 1; st.shown = 1; render();
+          root.classList.add('is-ready');
+          lineI = LINES.length; st.p = 1; st.shown = 1; render();
           setLine('The forest is ready');
           actions.hidden = false; silent.hidden = false;
-          gsap.from([...actions.children, silent], { y: 24, autoAlpha: 0, stagger: 0.1, duration: D.reveal, ease: 'h.reveal' });
           const a = root.querySelector('#enterSound'), b = root.querySelector('#enterSilent');
+          gsap.from([...actions.children, silent], { y: 24, autoAlpha: 0, stagger: 0.1, duration: D.reveal, ease: 'h.reveal', onComplete: () => a.focus({ preventScroll: true }) });
           a.addEventListener('click', () => resolve({ sound: true }), { once: true });
           b.addEventListener('click', () => resolve({ sound: false }), { once: true });
-          a.focus({ preventScroll: true });
         };
         const wait = () => (st.shown >= 0.995 ? finish() : requestAnimationFrame(wait));
         st.p = 1; wait();
@@ -80,11 +80,14 @@ export function initLoader() {
      */
     exit({ gl, anchor, onMatch, reduced = false } = {}) {
       try { sessionStorage.setItem('hudoq-seen', '1'); } catch (_) {}
-      const done = () => { gsap.ticker.remove(tick); root.remove(); document.body.classList.remove('is-loading'); };
+      const done = () => { gsap.ticker.remove(tick); svg.remove(); root.remove(); document.body.classList.remove('is-loading'); };
       if (reduced || !anchor) {
         return gsap.timeline({ onComplete: done }).add(() => onMatch?.(), 0).to(root, { autoAlpha: 0, duration: 0.4, ease: 'none' });
       }
       const a = svg.getBoundingClientRect(), b = anchor.getBoundingClientRect();
+      // the drawing moves to its own fixed layer, outside the iris mask, so it stays whole while the page opens around it
+      Object.assign(svg.style, { position: 'fixed', left: a.left + 'px', top: a.top + 'px', width: a.width + 'px', height: a.height + 'px', margin: 0, zIndex: 1001 });
+      document.body.appendChild(svg);
       const sc = Math.min(b.width / a.width, b.height / a.height) * 0.82;
       const dx = b.left + b.width / 2 - (a.left + a.width / 2);
       const dy = b.top + b.height * 0.45 - (a.top + a.height / 2);
@@ -95,8 +98,9 @@ export function initLoader() {
         .to(rect, { attr: { y: 0 }, duration: 0.3, ease: 'h.reveal' }, 0.05)                    // the fill completes: the eyes glint
         .to(svg, { x: dx, y: dy, scale: sc, duration: D.move * 0.85, ease: 'h.move' }, 0.2)     // the drawing travels to where the mask will be
         .to(root, { '--r': '160vmax', duration: 1.5, ease: 'h.move' }, 0.55)                    // the page opens outward from its eyes
-        .add(() => { gl?.dissolveIn(0.9); onMatch?.(); }, 1.05)                                  // the 3D mask burns in on the same beat
-        .to(svg, { autoAlpha: 0, duration: 0.35, ease: 'none' }, 1.2);
+        .add(() => { gl?.dissolveIn(1.0); }, 0.45)                                              // the 3D mask starts burning in before the iris opens
+        .add(() => onMatch?.(), 1.05)
+        .to(svg, { autoAlpha: 0, duration: 0.6, ease: 'none' }, 1.35);
     },
   };
 }

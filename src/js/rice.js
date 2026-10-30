@@ -49,7 +49,7 @@ export function initRice(reduced, L = 1) {
   let cur = -1;
   function setBeat(i) {
     if (i === cur) return; cur = i;
-    beats.forEach((b, j) => { b.classList.toggle('is-active', j === i); b.setAttribute('aria-hidden', j === i ? 'false' : 'true'); });
+    beats.forEach((b, j) => b.classList.toggle('is-active', j === i));
     photos.forEach((p, j) => p.classList.toggle('is-on', j <= i)); // later photos stack above earlier ones, so each wipes over the last
     photos.forEach((p, j) => p.classList.toggle('is-top', j === i));
     labels.forEach((l, j) => l.classList.toggle('is-active', j <= [1, 1, 2, 2, 4][i] && j >= 1));
@@ -63,13 +63,13 @@ export function initRice(reduced, L = 1) {
 
   if (reduced) {
     section.classList.add('is-static');
-    beats.forEach((b) => gsap.set([...b.children], { autoAlpha: 1 }));
+    beats.forEach((b) => gsap.set([...b.children], { opacity: 1 }));
     gsap.set(draws, { opacity: 1 });
     return;
   }
 
   gsap.set(draws, { drawSVG: '0% 0%' });
-  const tl = stepper(beats, { hold: 1, xf: 0.5 });
+  const tl = stepper(beats, { hold: 1, xf: 0.35 });
   // arcs draw on their own plateaus; the silent beat holds longer
   tl.to(draws[0], { drawSVG: '0% 100%', duration: 0.5 }, 's0-=0.05')
     .to(draws[1], { drawSVG: '0% 100%', duration: 0.9 }, 's0+=0.2')
@@ -81,7 +81,7 @@ export function initRice(reduced, L = 1) {
   ScrollTrigger.create({
     trigger: section, start: 'top top', end: () => '+=' + Math.round(innerHeight * 3.4 * L), pin: '.rice-pin', scrub: 0.8, anticipatePin: 1,
     animation: tl, invalidateOnRefresh: true,
-    onUpdate: () => setBeat(nearestStep(tl, beats.length)),
     onLeave: () => audio.duck(1, 1.5), onLeaveBack: () => audio.duck(1, 1.5),
   });
+  tl.eventCallback('onUpdate', () => setBeat(nearestStep(tl, beats.length)));
 }

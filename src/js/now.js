@@ -9,9 +9,8 @@ export function initNow(gl, reduced) {
   // odometer: each digit is a column 0–9 that rolls into place (more tactile than a count-up tween)
   document.querySelectorAll('[data-odo]').forEach((el) => {
     const final = el.textContent.trim();
-    el.setAttribute('aria-label', final);
     if (reduced) return;
-    el.innerHTML = [...final].map((ch) => (/\d/.test(ch) ? `<span class="odo" aria-hidden="true"><span>${'0123456789'.split('').join('<br>')}</span></span>` : `<span aria-hidden="true">${ch}</span>`)).join('');
+    el.innerHTML = `<span class="sr-only">${final}</span>` + [...final].map((ch) => (/\d/.test(ch) ? `<span class="odo" aria-hidden="true"><span>${'0123456789'.split('').join('<br>')}</span></span>` : `<span aria-hidden="true">${ch}</span>`)).join('');
     const digits = [...final.replace(/\D/g, '')].map(Number);
     gsap.set(el.querySelectorAll('.odo > span'), { yPercent: 0 });
     gsap.to(el.querySelectorAll('.odo > span'), {

@@ -48,7 +48,7 @@ export function initLegend(reduced, L = 1) {
     .to(video, { scale: 1, opacity: 0.45, duration: 1.1, ease: 'h.move' }, '<')
     .to(faces, { autoAlpha: 0.25, yPercent: 10, duration: 0.8 }, '<')
     .to(wp, { drawSVG: '0% 100%', duration: 1 }, '<')
-    .to(black, { opacity: 1, duration: 0.9, ease: 'none' }, '>+0.6')   // hand-off: down to black, into the dark room
+    .to(black, { opacity: 1, duration: 0.5, ease: 'none' }, '>+0.15')   // hand-off: down to black, into the dark room
     .to([kicker, pages], { autoAlpha: 0, duration: 0.5 }, '<');
   tl.to(whirl, { rotation: 540, ease: 'none', duration: tl.duration() }, 0);
 
@@ -56,9 +56,9 @@ export function initLegend(reduced, L = 1) {
   ScrollTrigger.create({
     trigger: section, start: 'top top', end: () => '+=' + Math.round(innerHeight * 5.2 * L), pin, scrub: 0.8, anticipatePin: 1,
     animation: tl, invalidateOnRefresh: true,
-    onUpdate: () => {
-      const i = nearestStep(tl, pages.length);
-      if (i !== last) { last = i; pages.forEach((p, j) => p.setAttribute('aria-hidden', j === i ? 'false' : 'true')); if (i > 0) audio.pluck(i - 1, -1, 0.5); }
-    },
+  });
+  tl.eventCallback('onUpdate', () => {
+    const i = nearestStep(tl, pages.length);
+    if (i !== last) { last = i; if (i > 0) audio.pluck(i - 1, -1, 0.5); }
   });
 }

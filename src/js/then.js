@@ -116,21 +116,23 @@ export function initThen(reduced, L = 1) {
   const gate = root.querySelector('.gate-frame');
   const tl = gsap.timeline({ defaults: { ease: 'none' } });
   const rectInset = () => { const r = gate.getBoundingClientRect(); return `inset(${r.top}px ${innerWidth - r.right}px ${innerHeight - r.bottom}px ${r.left}px round 6px)`; };
-  tl.set(cut, { visibility: 'visible', autoAlpha: 0 }, 0)
-    .to(cut, { autoAlpha: 1, duration: 0.08 }, 0.14)                                   // the film holds for a beat, then colour fades in inside the gate
+  // opacity only inside the scrub: visibility is decided separately, from the scroll range, so a fast scroll can never strand the layer on screen
+  tl.fromTo(cut, { opacity: 0 }, { opacity: 1, duration: 0.08 }, 0.14)               // the film holds for a beat, then colour fades in inside the gate
     .fromTo(cut, { clipPath: () => rectInset(), filter: 'grayscale(1) sepia(.25) contrast(1.15)' },
       { clipPath: 'inset(0px 0px 0px 0px round 0px)', filter: 'grayscale(0) sepia(0) contrast(1)', ease: 'h.move', duration: 0.86 }, 0.14)
-    .to('.reel-tabs, .reel-caption, .reel-scrub, .gate-hud', { autoAlpha: 0, duration: 0.2 }, 0.1);
+    .to('.reel-tabs, .reel-caption, .reel-scrub, .gate-hud', { opacity: 0, duration: 0.2, pointerEvents: 'none' }, 0.1);
   const st = ScrollTrigger.create({
     trigger: root, start: 'center center', end: () => '+=' + Math.round(innerHeight * 1.2 * L), pin: root, scrub: 0.6, anticipatePin: 1,
     animation: tl, invalidateOnRefresh: true,
-    onToggle: (s) => { if (s.isActive) { if (!cutVideo.src) { cutVideo.src = cutVideo.dataset.src; cutVideo.load(); } cutVideo.play().catch(() => {}); } },
-    onLeaveBack: () => gsap.set(cut, { visibility: 'hidden' }),
   });
-  // the cut stays up until the Now hero reaches the top of the screen, then hands over on the same frame
-  ScrollTrigger.create({
-    trigger: '.now-hero', start: 'top top',
-    onEnter: () => { try { nowVideo.currentTime = cutVideo.currentTime; } catch (_) {} gsap.set(cut, { visibility: 'hidden' }); },
-    onLeaveBack: () => { if (st.progress >= 1) gsap.set(cut, { visibility: 'visible' }); },
+  // the layer is visible exactly while the scroll position is between the projector pin and the top of the Now hero (it hands over on the same frame)
+  const live = ScrollTrigger.create({
+    trigger: root, start: 'center center', endTrigger: '.now-hero', end: 'top top',
+    onToggle: (s) => {
+      gsap.set(cut, { visibility: s.isActive ? 'visible' : 'hidden' });
+      if (s.isActive) { if (!cutVideo.src) { cutVideo.src = cutVideo.dataset.src; cutVideo.load(); } cutVideo.play().catch(() => {}); }
+      else { try { nowVideo.currentTime = cutVideo.currentTime; } catch (_) {} cutVideo.pause(); }
+    },
   });
+  gsap.ticker.add(() => { if (!live.isActive && cut.style.visibility !== 'hidden') cut.style.visibility = 'hidden'; });
 }

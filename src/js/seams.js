@@ -15,24 +15,25 @@ export function initSeams(reduced) {
   // one shared curtain: 14 strips, each ending in a point
   const curtain = document.createElement('div');
   curtain.className = 'curtain'; curtain.setAttribute('aria-hidden', 'true');
-  curtain.innerHTML = '<i></i>'.repeat(14);
+  curtain.innerHTML = '<i></i>'.repeat(8);
   document.body.appendChild(curtain);
   const strips = [...curtain.children];
 
+  // timed (about a second), not scrubbed: it can never be left half-closed across the text
   const fringe = (toId, color, { from = 'center', tempo = false } = {}) => {
     const sec = document.getElementById(toId);
     if (!sec) return;
-    const each = tempo ? 60 / 88 / 7 : 0.04; // on the beat grid for the Beat's entrance
-    const tl = gsap.timeline({ defaults: { ease: 'h.move', duration: 1 } })
+    const each = tempo ? 60 / 88 / 4 : 0.05;
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'h.move' } })
       .set(curtain, { visibility: 'visible', '--curtain': color })
-      .fromTo(strips, { scaleY: 0, transformOrigin: '50% 0%' }, { scaleY: 1.08, stagger: { each, from } })
-      .add(() => audio.swell(1.1), '>-0.2')
+      .fromTo(strips, { scaleY: 0, transformOrigin: '50% 0%' }, { scaleY: 1.08, duration: 0.45, stagger: { each, from } })
+      .add(() => audio.swell(0.9), '>-0.1')
       .set(strips, { transformOrigin: '50% 100%' })
-      .to(strips, { scaleY: 0, stagger: { each, from: 'edges' } }, '+=0.15')
+      .to(strips, { scaleY: 0, duration: 0.45, stagger: { each, from: 'edges' } }, '+=0.04')
       .set(curtain, { visibility: 'hidden' });
     ScrollTrigger.create({
-      trigger: sec, start: 'top 80%', end: 'top 6%', scrub: 0.5, animation: tl,
-      onLeave: () => gsap.set(curtain, { visibility: 'hidden' }), onLeaveBack: () => gsap.set(curtain, { visibility: 'hidden' }),
+      trigger: sec, start: 'top 78%',
+      onEnter: () => tl.restart(), onEnterBack: () => { if (!tl.isActive()) tl.restart(); },
     });
   };
 

@@ -9,15 +9,16 @@ export function initFinale(gl, lenis, reduced, L = 1) {
   const word = document.querySelector('.foot-word');
   const grid = document.querySelector('.foot-grid');
 
-  again.addEventListener('click', () => lenis.scrollTo(0, { duration: reduced ? 0.01 : 2.6, easing: (t) => 1 - Math.pow(1 - t, 4) }));
+  again.addEventListener('click', () => lenis.scrollTo(0, { duration: reduced ? 0.01 : 2.6, easing: (t) => 1 - Math.pow(1 - t, 4),
+    onComplete: () => { const top = document.getElementById('top'); top.setAttribute('tabindex', '-1'); top.focus({ preventScroll: true }); } }));
 
   if (!reduced && gl) {
     const st = gl.state, U = gl.uniforms;
     let gonged = false;
     const tl = gsap.timeline({ defaults: { ease: 'none' } });
-    tl.fromTo(st, { extraYaw: 0.6, extraPitch: 0.15 }, { extraYaw: 0, extraPitch: 0, duration: 0.25, immediateRender: false }, 0)
-      .fromTo(st.lab, { rim: 0 }, { rim: 1.1, duration: 0.15, immediateRender: false }, 0)
-      .to(st.lab, { rim: 0.5, duration: 0.1 }, 0.15)
+    tl.fromTo(st.fx.finale, { yaw: 0.6, pitch: 0.15 }, { yaw: 0, pitch: 0, duration: 0.25, immediateRender: false }, 0)
+      .fromTo(st.fx.finale, { rim: 0 }, { rim: 1.1, duration: 0.15, immediateRender: false }, 0)
+      .to(st.fx.finale, { rim: 0.5, duration: 0.1 }, 0.15)
       .fromTo(U.uDissolve, { value: 0 }, { value: 1, duration: 0.55, immediateRender: false }, 0.35)
       .to('.finale-title .still', { opacity: 0.4, duration: 0.1 }, 0.9)
       .to({}, { duration: 0.1 }, 0.9);

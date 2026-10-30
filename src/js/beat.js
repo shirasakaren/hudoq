@@ -46,6 +46,7 @@ export function initBeat(reduced) {
     b.style.cssText = `--x:${50 + 38 * Math.cos(a)}%;--y:${50 + 38 * Math.sin(a)}%;--rot:${(i - 2) * 6}deg`;
     b.innerHTML = `<img src="${m.small}" alt="" width="${m.w}" height="${m.h}" loading="lazy" decoding="async">`;
     b.addEventListener('pointerdown', (e) => { e.preventDefault(); hitMask(i, b); });
+    b.addEventListener('click', (e) => { if (e.detail === 0) hitMask(i, b); });
     b.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); hitMask(i, b); } });
     ring.appendChild(b); return b;
   });
@@ -103,6 +104,7 @@ export function initBeat(reduced) {
   }
 
   gong.addEventListener('pointerdown', (e) => { e.preventDefault(); hitGong(); });
+  gong.addEventListener('click', (e) => { if (e.detail === 0) hitGong(); }); // activated without a pointer (screen reader, voice control)
   gong.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); hitGong(); } });
   addEventListener('keydown', (e) => { if (!onScreen) return; const n = '12345'.indexOf(e.key); if (n >= 0) hitMask(n, btns[n]); });
 

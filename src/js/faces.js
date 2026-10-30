@@ -6,8 +6,8 @@ import { audio } from '../audio.js';
 
 // where each hidden mask sits in the dark room: x%, y% (of 150svh), width (vmin), rotation
 const SPOTS = [
-  [74, 14, 17, 8], [90, 36, 13, -10], [58, 30, 15, 4], [34, 62, 14, -6], [14, 86, 13, 12],
-  [48, 78, 16, -3], [80, 66, 15, 7], [64, 92, 12, -12], [24, 40, 11, 9], [92, 88, 11, -5], [8, 58, 10, 6],
+  [74, 14, 17, 8], [90, 36, 13, -10], [58, 30, 15, 4], [50, 66, 14, -6], [14, 86, 13, 12],
+  [48, 78, 16, -3], [80, 66, 15, 7], [64, 92, 12, -12], [78, 50, 11, 9], [92, 88, 11, -5], [30, 94, 10, 6],
 ];
 
 export function initFaces(lenis, reduced, mobile = false) {
@@ -103,7 +103,7 @@ function initGallery(lenis, reduced, mobile) {
     b.style.setProperty('--ratio', Math.max(0.62, Math.min(1.15, m.ratio * 0.95)));
     b.style.setProperty('--tint', m.tint);
     b.dataset.cursor = 'inspect';
-    b.innerHTML = `<span class="mcard-n mono">${String(m.n).padStart(2, '0')}</span><img src="${m.small}" alt="Carved Hudoq mask: ${m.caption}" width="${m.w}" height="${m.h}" loading="lazy" decoding="async"><span class="mcard-t">${m.caption}</span>`;
+    b.innerHTML = `<span class="mcard-n mono">${String(m.n).padStart(2, '0')}</span><img src="${m.small}" alt="" width="${m.w}" height="${m.h}" loading="lazy" decoding="async"><span class="mcard-t">${m.caption}</span>`;
     track.appendChild(b);
     b.addEventListener('pointermove', (e) => {
       const r = b.getBoundingClientRect();
@@ -114,6 +114,24 @@ function initGallery(lenis, reduced, mobile) {
     b.addEventListener('pointerleave', () => ['--ry', '--rx', '--tx', '--ty'].forEach((v) => b.style.removeProperty(v)));
     b.addEventListener('click', () => openInspect(i, b));
     b.tabIndex = i === 0 ? 0 : -1; // roving tabindex: one stop for the strip, arrows move inside it
+  });
+
+  // roving tabindex + arrows/Home/End in every mode (pinned strip, phone swipe, reduced motion)
+  let st = null;
+  const dist = () => Math.max(0, track.scrollWidth - innerWidth);
+  track.addEventListener('keydown', (e) => {
+    if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) return;
+    const cards = [...track.querySelectorAll('.mcard')];
+    const i = cards.indexOf(document.activeElement); if (i < 0) return;
+    const to = e.key === 'Home' ? 0 : e.key === 'End' ? cards.length - 1 : i + (e.key === 'ArrowRight' ? 1 : -1);
+    const n = cards[Math.max(0, Math.min(cards.length - 1, to))];
+    cards.forEach((c) => { c.tabIndex = -1; }); n.tabIndex = 0;
+    n.focus({ preventScroll: true });
+    if (st) {
+      const p = (n.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft)) / dist();
+      lenis.scrollTo(st.start + (st.end - st.start) * Math.max(0, Math.min(1, p)), { duration: 0.8 });
+    } else n.scrollIntoView({ inline: 'center', block: 'nearest' });
+    e.preventDefault();
   });
 
   if (reduced) { section.classList.add('is-static'); head.style.cssText = 'position:static;width:auto'; return; }
@@ -129,9 +147,8 @@ function initGallery(lenis, reduced, mobile) {
     return;
   }
 
-  const dist = () => Math.max(0, track.scrollWidth - innerWidth);
   let vel = 0, shown = 0;
-  const st = ScrollTrigger.create({
+  st = ScrollTrigger.create({
     trigger: section, start: 'top top', end: () => '+=' + dist() * 1.1, pin: true, scrub: 0.7, anticipatePin: 1, invalidateOnRefresh: true,
     animation: gsap.to(track, { x: () => -dist(), ease: 'none' }),
     onUpdate: (self) => { vel = gsap.utils.clamp(-8, 8, self.getVelocity() / -260); },
@@ -146,19 +163,6 @@ function initGallery(lenis, reduced, mobile) {
   Observer.create({
     target: track, type: 'pointer', dragMinimum: 4,
     onDrag: (self) => { if (self.event.pointerType === 'mouse') lenis.scrollTo(lenis.scroll - self.deltaX * 1.1, { immediate: true, force: true }); },
-  });
-  track.addEventListener('keydown', (e) => {
-    if (['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(e.key)) {
-      const cards = [...track.querySelectorAll('.mcard')];
-      const i = cards.indexOf(document.activeElement); if (i < 0) return;
-      const to = e.key === 'Home' ? 0 : e.key === 'End' ? cards.length - 1 : i + (e.key === 'ArrowRight' ? 1 : -1);
-      const n = cards[Math.max(0, Math.min(cards.length - 1, to))];
-      cards.forEach((c) => { c.tabIndex = -1; }); n.tabIndex = 0;
-      n.focus({ preventScroll: true });
-      const p = (n.offsetLeft - parseFloat(getComputedStyle(track).paddingLeft)) / dist();
-      lenis.scrollTo(st.start + (st.end - st.start) * Math.max(0, Math.min(1, p)), { duration: 0.8 });
-      e.preventDefault();
-    }
   });
 }
 

@@ -7,7 +7,6 @@ import { SplitText } from 'gsap/SplitText';
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { Observer } from 'gsap/Observer';
 import { audio } from './audio.js';
-window.__audio = audio;
 import { asset } from './js/url.js';
 import { initLoader } from './js/loader.js';
 import { initSmooth, bindAnchors } from './js/smooth.js';
@@ -36,10 +35,13 @@ const mq = matchMedia('(max-width: 900px)');
 const mobile = mq.matches;
 const L = mobile ? 0.6 : 1; // phones get shorter pins (a different cut, not a shrunken one)
 mq.addEventListener('change', () => location.reload());
+const DEBUG = new URLSearchParams(location.search).has('debug');
+const deepLink = location.hash;
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function boot() {
   window.scrollTo(0, 0);
+  if (deepLink) history.replaceState(null, '', location.pathname + location.search); // restored after the page is built, so pinned chapters land correctly
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   // while the loader is up, nothing behind it may take focus
   const behind = [...document.querySelectorAll('.bar, .rail, main, footer')];
@@ -47,7 +49,7 @@ async function boot() {
   const loader = initLoader();
   initGrain();
   const lenis = initSmooth(reduced);
-  window.__lenis = lenis;
+  if (DEBUG) { window.__lenis = lenis; window.__audio = audio; }
   lenis.stop();
   bindAnchors(lenis);
   initCursor();
@@ -59,7 +61,7 @@ async function boot() {
   try {
     const { createGL } = await import('./js/gl.js');
     gl = await createGL({ canvas, reduced, onProgress: (p) => loader.set(0.1 + p * 0.75) });
-    window.__gl = gl;
+    if (DEBUG) window.__gl = gl;
   } catch (err) {
     console.warn('WebGL mask unavailable, using the still image instead.', err);
     document.documentElement.classList.add('no-gl');
@@ -114,7 +116,12 @@ async function boot() {
   if (reduced) gl?.show();
   gl?.intro();
   gsap.delayedCall(reduced ? 0.2 : 1.3, () => intro.play());   // the wordmark begins before the loader has finished leaving
-  gsap.delayedCall(reduced ? 0.4 : 2.4, () => { lenis.start(); ScrollTrigger.refresh(); });
+  gsap.delayedCall(reduced ? 0.4 : 2.4, () => {
+    lenis.start(); ScrollTrigger.refresh();
+    const target = deepLink && deepLink.length > 1 ? document.querySelector(deepLink) : null;
+    if (target) { lenis.scrollTo(target, { immediate: true, force: true }); target.setAttribute('tabindex', '-1'); target.focus({ preventScroll: true }); history.replaceState(null, '', deepLink); }
+    else { const main = document.getElementById('main'); main.setAttribute('tabindex', '-1'); main.focus({ preventScroll: true }); }
+  });
   await exitTl;
 
   addEventListener('load', () => ScrollTrigger.refresh());

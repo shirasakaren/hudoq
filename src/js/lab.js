@@ -37,7 +37,6 @@ export function initLab(gl, lenis, reduced, L = 1) {
   let cur = -1, st = null, tl = null, dragging = false, idleAt = 0;
   function setStation(i) {
     if (i === cur) return; cur = i;
-    notes.forEach((n, j) => n.setAttribute('aria-hidden', j === i ? 'false' : 'true'));
     dots.forEach((d, j) => d.classList.toggle('is-active', j === i));
     gsap.fromTo(line, { drawSVG: '0% 0%' }, { drawSVG: '0% 100%', duration: 0.5, ease: 'h.reveal' });
     audio.tick(1400, 0.3);
@@ -49,20 +48,19 @@ export function initLab(gl, lenis, reduced, L = 1) {
   }
   setStation(0);
 
-  if (reduced || !gl) { section.classList.add('is-static'); notes.forEach((n) => gsap.set([...n.children], { autoAlpha: 1 })); leader.remove(); return; }
+  if (reduced || !gl) { section.classList.add('is-static'); notes.forEach((n) => gsap.set([...n.children], { opacity: 1 })); leader.remove(); return; }
 
   // scroll drives the study: notes cross-fade; the camera, key light and rim move on the same labels
-  tl = stepper(notes, { hold: 0.9, xf: 0.5 });
+  tl = stepper(notes, { hold: 1, xf: 0.3 });
   STATIONS.forEach((k, i) => {
     if (i === 0) { tl.fromTo(lab, { yaw: 0, pitch: 0, zoom: 1, ox: 0, oy: 0, key: 0, rim: 0 }, { yaw: k.yaw, pitch: k.pitch, zoom: k.zoom, ox: k.ox, oy: k.oy, key: k.key, rim: k.rim, duration: 0.5, ease: 'h.move' }, 0); return; }
-    tl.to(lab, { yaw: k.yaw, pitch: k.pitch, zoom: k.zoom, ox: k.ox, oy: k.oy, key: k.key, rim: k.rim, duration: 1.1, ease: 'h.move' }, `s${i}-=0.6`);
+    tl.to(lab, { yaw: k.yaw, pitch: k.pitch, zoom: k.zoom, ox: k.ox, oy: k.oy, key: k.key, rim: k.rim, duration: 1.1, ease: 'h.move' }, `s${i}-=0.5`);
   });
   st = ScrollTrigger.create({
     trigger: section, start: 'top top', end: () => '+=' + Math.round(innerHeight * 3.6 * L), pin: '.lab-pin', scrub: 0.8, anticipatePin: 1,
     animation: tl, invalidateOnRefresh: true,
-    onUpdate: () => setStation(nearestStep(tl, notes.length)),
-    onToggle: (self) => { if (!self.isActive) gsap.to(lab, { yaw: 0, pitch: 0, zoom: 1, ox: 0, oy: 0, key: 0, rim: 0, userYaw: 0, userPitch: 0, duration: 1.2, ease: 'h.reveal', overwrite: true }); },
   });
+  tl.eventCallback('onUpdate', () => setStation(nearestStep(tl, notes.length))); // state follows the timeline itself, not the lagging scroll
 
   // drag to turn: your turn is added on top of the scripted one, then eases away
   let lx = 0, ly = 0, vx = 0, vy = 0;
@@ -81,14 +79,17 @@ export function initLab(gl, lenis, reduced, L = 1) {
     gsap.to(lab, { userYaw: lab.userYaw + k[0], userPitch: Math.max(-0.7, Math.min(0.7, lab.userPitch + k[1])), duration: 0.5, ease: 'h.reveal', overwrite: 'auto' });
   });
 
+  // and the study ends where it began, so scrolling past (either way) leaves the mask neutral
+  tl.to(lab, { yaw: 0, pitch: 0, zoom: 1, ox: 0, oy: 0, key: 0, rim: 0, duration: 0.6, ease: 'h.move' }, '>-0.25');
+
   gsap.ticker.add(() => {
-    if (!st.isActive) return;
+    if (!st.isActive) { lab.userYaw *= 0.9; lab.userPitch *= 0.9; return; }
     if (!dragging) {
       if (Math.abs(vx) > 0.0004 || Math.abs(vy) > 0.0004) { lab.userYaw += vx; lab.userPitch = Math.max(-0.7, Math.min(0.7, lab.userPitch + vy)); vx *= 0.93; vy *= 0.93; }
       else if (performance.now() > idleAt) { lab.userYaw *= 0.97; lab.userPitch *= 0.97; }
     }
     // backlight follows the key light; the leader line joins the part to its note
-    pin.style.setProperty('--kx', (50 + Math.sin(lab.key) * 26).toFixed(1) + '%');
+    section.style.setProperty('--kx', (50 + Math.sin(lab.key) * 26).toFixed(1) + '%');
     const s = STATIONS[Math.max(0, cur)];
     const p = gl.project(s.pt), f = gl.facing(s.pt);
     const nr = notes[cur]?.getBoundingClientRect();

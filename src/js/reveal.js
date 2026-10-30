@@ -43,16 +43,16 @@ export const cutoutRise = (img) => gsap.timeline({ scrollTrigger: { trigger: img
  * Steps with plateaus. Each step's children cross-fade with overlap and the timeline carries labels s0..sn.
  * Chapters add their spatial tweens (map zoom, ring arcs, camera) on the same labels, so something is always moving.
  */
-export function stepper(steps, { hold = 1, xf = 0.45 } = {}) {
+export function stepper(steps, { hold = 1, xf = 0.3 } = {}) {
   const tl = gsap.timeline({ defaults: { ease: 'none' } });
   const kids = steps.map((s) => [...s.children]);
-  gsap.set(kids.flat(), { autoAlpha: 0 });
-  gsap.set(steps, { autoAlpha: 1 });
-  gsap.set(kids[0], { autoAlpha: 1 });
+  gsap.set(kids.flat(), { opacity: 0 });
+  gsap.set(kids[0], { opacity: 1 });
   steps.forEach((_, i) => {
     if (i) {
-      tl.to(kids[i - 1], { yPercent: -30, autoAlpha: 0, stagger: 0.03, duration: xf * 0.5, ease: 'h.exit' });
-      tl.fromTo(kids[i], { yPercent: 40, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, stagger: 0.06, duration: xf, ease: 'h.reveal' }, '<0.15');
+      // sequential, not overlapped: the old text is gone before the new one reads, so no resting frame shows two texts at once
+      tl.to(kids[i - 1], { yPercent: -30, opacity: 0, stagger: 0.02, duration: xf * 0.5, ease: 'h.exit' });
+      tl.fromTo(kids[i], { yPercent: 40, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.04, duration: xf, ease: 'h.reveal' }, '>-0.02');
     }
     tl.addLabel('s' + i).to({}, { duration: hold });
   });
