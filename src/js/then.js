@@ -95,6 +95,13 @@ export function initThen(reduced, L = 1) {
 
   if (reduced) return;
 
+  // contact strips: two rows of stills slide against each other as you scroll
+  gsap.utils.toArray('.strip').forEach((el) => {
+    const tr = el.firstElementChild, dir = +el.dataset.dir;
+    const dist = () => Math.max(0, tr.scrollWidth - innerWidth);
+    gsap.fromTo(tr, { x: () => (dir < 0 ? 0 : -dist()) }, { x: () => (dir < 0 ? -dist() : 0), ease: 'none', scrollTrigger: { trigger: '.strips', start: 'top bottom', end: 'bottom top', scrub: 0.6, invalidateOnRefresh: true } });
+  });
+
   // ── projector cut: a film leader counts 3·2·1 on the way into this chapter (once per visit)
   const leader = document.querySelector('.leader'), ldN = leader.querySelector('.ld-n'), ldRing = leader.querySelector('.ld-ring');
   ScrollTrigger.create({

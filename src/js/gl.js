@@ -234,6 +234,7 @@ export async function createGL({ canvas, onProgress, reduced = false }) {
       state.active = null;
     }
     canvas.classList.toggle('is-on', !!a || state.leafA > 0.02); // stays on while a leaf burst is still falling
+    rig.visible = !!a; // the mask is only drawn while it has an anchor; leaves and embers can outlive it
     if (state.s < 0.02 && a) { state.x = target.x; state.y = target.y; state.s = target.s * 0.7; }
     const k = a ? 9 : 4;
     state.x = damp(state.x, target.x, k, dt);

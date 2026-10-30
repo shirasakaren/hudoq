@@ -16,6 +16,8 @@ import { initLazyVideos } from './js/media.js';
 import { initTextFx, heroIntro, initHero } from './js/textfx.js';
 import { initNav } from './js/nav.js';
 import { initMap } from './js/map.js';
+import { initProcession } from './js/procession.js';
+import { initFilm } from './js/film.js';
 import { initRice } from './js/rice.js';
 import { initLegend } from './js/legend.js';
 import { initFaces } from './js/faces.js';
@@ -77,7 +79,9 @@ async function boot() {
   initMagnetic();
   initLazyVideos(reduced);
   initHero(gl, reduced, mobile ? 0.72 : 1);
+  initProcession(reduced, L);
   initMap(reduced, L);
+  initFilm(reduced, L);
   initRice(reduced, L);
   initLegend(reduced, L);
   initFaces(lenis, reduced, mobile);

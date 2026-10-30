@@ -27,6 +27,15 @@ export function initNow(gl, reduced) {
     ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => gsap.to(o, { v: end, duration: 2, ease: 'h.reveal', onUpdate: () => { el.textContent = Math.round(o.v) + suffix; } }) });
   });
 
+  // photo rails: three rows of festival photographs slide against each other as you scroll
+  if (!reduced) {
+    gsap.utils.toArray('.prail').forEach((r) => {
+      const t = r.firstElementChild, dir = +r.dataset.dir;
+      const dist = () => Math.max(0, t.scrollWidth - innerWidth);
+      gsap.fromTo(t, { x: () => (dir < 0 ? 0 : -dist()) }, { x: () => (dir < 0 ? -dist() : 0), ease: 'none', scrollTrigger: { trigger: '.prails', start: 'top bottom', end: 'bottom top', scrub: 0.6, invalidateOnRefresh: true } });
+    });
+  }
+
   if (!reduced) {
     // timeline: big outlined years fill when they arrive
     gsap.utils.toArray('.tl b').forEach((b) => {

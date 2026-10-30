@@ -4,7 +4,7 @@ import sharp from 'sharp';
 import { readdir, mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 const dir = process.argv[2];
-const keep = ['r4', 'r1', 'r2', 'r5', 'c1', 'c5', 'b3', 'c4', 'b10', 'd2', 'd4', 'd7'];
+const keep = ['r4', 'r1', 'r2', 'c1', 'c5', 'b3', 'c4', 'b10', 'd2', 'd4', 'd7', 'd11', 'd6'];
 const out = 'public/img/cut';
 await mkdir(out, { recursive: true });
 const manifest = JSON.parse(await readFile('src/data/media.json', 'utf8'));

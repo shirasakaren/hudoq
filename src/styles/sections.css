@@ -66,15 +66,15 @@
 .rice { --bg: var(--moss); }
 .rice-pin { position: relative; height: 100svh; overflow: clip; display: grid; align-items: center; padding: 0 var(--gutter); }
 .rice-bg { position: absolute; inset: 0; z-index: 0; isolation: isolate; }
-.rice-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; clip-path: inset(100% 0 0 0); transition: clip-path 1.3s var(--e-move); filter: grayscale(1) contrast(1.15) brightness(.92); }
+.rice-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; clip-path: inset(100% 0 0 0); transition: clip-path 1.3s var(--e-move); filter: saturate(1.08) contrast(1.06) brightness(.98); }
 .rice-photo.rp-0 { clip-path: inset(0); }
 .rice-photo.rp-1 { z-index: 2; } .rice-photo.rp-2 { z-index: 3; } .rice-photo.rp-3 { z-index: 4; } .rice-photo.rp-4 { z-index: 5; }
 .rice-photo.is-on { clip-path: inset(0); }
-.rice-bg::before, .rice-bg::after { content: ''; position: absolute; inset: 0; z-index: 6; pointer-events: none; }
-.rice-bg::before { background: var(--moss); mix-blend-mode: multiply; }
+.rice-bg::before, .rice-bg::after { display: none; }
+.rice-bg::before { display: none; }
 .rice-bg::after { background: #c9c08a; mix-blend-mode: screen; opacity: .2; }
 .rice.is-silent .rice-photo { opacity: .18; transition: clip-path 1.3s var(--e-move), opacity .8s; }
-.rice-shade { position: absolute; inset: 0; z-index: 7; background: linear-gradient(90deg, rgba(20, 40, 30, .93) 0 28%, rgba(20, 40, 30, .35) 62%, rgba(20, 40, 30, .2)), linear-gradient(0deg, var(--moss), transparent 24%, transparent 78%, var(--moss)); }
+.rice-shade { position: absolute; inset: 0; z-index: 7; background: linear-gradient(90deg, rgba(14, 30, 22, .9) 0 22%, rgba(14, 30, 22, .35) 52%, rgba(14, 30, 22, .05) 80%), linear-gradient(0deg, rgba(14, 30, 22, .7), transparent 22%); }
 .rice-kicker { position: absolute; z-index: 3; left: var(--gutter); top: calc(var(--bar-h) + 1.5vh); }
 .ring { position: absolute; z-index: 2; right: clamp(4.5rem, 9vw, 10rem); top: 50%; transform: translateY(-50%); width: min(44vh, 34vw); aspect-ratio: 1; display: grid; place-items: center; transition: transform .8s var(--e-reveal), opacity .8s; }
 .rice.is-last .ring { transform: translateY(-50%) scale(.55); opacity: .3; }
@@ -222,7 +222,7 @@
 /* ═════════════ 08 · THE BEAT ═════════════ */
 .beat { --bg: var(--blood); padding: clamp(8rem, 18vh, 14rem) var(--gutter) clamp(6rem, 12vh, 10rem); overflow: clip; }
 .beat-film { position: absolute; inset: 0; height: 120svh; z-index: 0; }
-.beat-film video { width: 100%; height: 100%; object-fit: cover; opacity: .34; filter: saturate(1.1) contrast(1.1); }
+.beat-film video { width: 100%; height: 100%; object-fit: cover; opacity: .55; filter: saturate(1.1) contrast(1.1); }
 .beat-film-veil { position: absolute; inset: 0; background: linear-gradient(180deg, var(--blood), transparent 25%, transparent 55%, var(--blood)); }
 .beat-wrap { position: relative; z-index: 2; max-width: 1500px; margin: 0 auto; display: grid; gap: 2.5rem; }
 .beat-wrap .display-xxl { display: grid; }
@@ -512,3 +512,89 @@ html[data-motion='reduced'] .hero-glow, html[data-motion='reduced'] .hero-cue-li
 .suit.is-static .suit-pin, .lab.is-static .lab-ui { padding-top: calc(var(--bar-h) + 1rem); }
 .loader-actions, .loader-silent { visibility: hidden; }
 #loader.is-ready .loader-actions, #loader.is-ready .loader-silent { visibility: visible; }
+
+/* ═════════════ 01 · THE WORD — a procession ═════════════ */
+.proc { --bg: var(--bone); }
+.proc-pin { position: relative; height: 100svh; overflow: clip; background: var(--bone); }
+.proc-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .18; mix-blend-mode: multiply; filter: grayscale(1) contrast(1.1); }
+.proc-bigword { position: absolute; inset: 0; display: grid; align-content: center; margin: 0; pointer-events: none; font-family: var(--f-display); font-weight: 900; font-size: clamp(9rem, 30vw, 32rem); line-height: .78; letter-spacing: -.06em; color: transparent; -webkit-text-stroke: 1.5px rgba(14, 11, 9, .2); white-space: nowrap; font-variation-settings: 'opsz' 144, 'SOFT' 0; }
+.proc-bigword span { display: block; }
+.proc-kicker { position: absolute; z-index: 4; left: var(--gutter); top: calc(var(--bar-h) + 1.5vh); }
+.proc-track { position: absolute; left: 0; top: var(--bar-h); bottom: 6svh; display: flex; align-items: flex-end; width: max-content; padding: 0 var(--gutter); z-index: 2; will-change: transform; }
+.proc-panel { flex: none; }
+.proc-intro { width: min(58vw, 56rem); padding-right: 2vw; align-self: flex-start; padding-top: 10svh; position: relative; z-index: 2; display: grid; gap: 1.6rem; }
+.proc-intro .display-xl { font-size: clamp(3.4rem, 10vw, 11rem); color: var(--ink); }
+.proc-intro em { color: var(--vermilion); }
+.proc-line { font-family: var(--f-display); font-style: italic; font-size: clamp(1.3rem, 2.2vw, 2.2rem); max-width: 20ch; line-height: 1.1; }
+.proc-fig { flex: none; position: relative; margin: 0 0 0 -5vw; }
+.proc-fig img { display: block; height: calc(var(--k) * 74svh); width: auto; max-width: none; filter: drop-shadow(0 28px 30px rgba(14, 11, 9, .3)); }
+.proc-fig.is-far img { height: calc(var(--k) * 58svh); opacity: .94; }
+.proc-fig.is-near img { height: calc(var(--k) * 86svh); }
+.proc-facts { width: min(36vw, 32rem); padding-left: 8vw; align-self: center; }
+.proc-facts .word-facts { grid-template-columns: 1fr; gap: 1.2rem; margin: 0; }
+.word-facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; list-style: none; padding: 0; }
+.word-facts li { border-top: 2px solid var(--ink); padding-top: 1rem; display: grid; gap: .5rem; }
+.word-facts strong { font-family: var(--f-display); font-weight: 650; font-size: clamp(1.2rem, 1.9vw, 1.9rem); line-height: 1.15; letter-spacing: -.015em; }
+.word-facts .mono { opacity: .75; }
+.proc-ground { position: absolute; left: 0; right: 0; bottom: 0; height: 6svh; background: var(--ink); z-index: 3; }
+.proc-ground .band { position: absolute; left: 0; bottom: 100%; transform: scaleY(-1); }
+.proc.is-static .proc-pin { height: auto; padding: calc(var(--bar-h) + 3rem) 0 4rem; }
+.proc.is-static .proc-track { position: relative; top: auto; bottom: auto; width: auto; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.proc.is-static .proc-fig { margin: 0; } .proc.is-static .proc-fig img { height: 34svh !important; }
+.proc.is-static .proc-intro { width: 100%; padding-top: 0; } .proc.is-static .proc-ground { display: none; }
+
+/* ═════════════ 03 · THE VILLAGE — footage ═════════════ */
+.film { --bg: #000; }
+.film-pin { position: relative; height: 100svh; overflow: clip; background: #000; }
+.film-stack { position: absolute; inset: 0; }
+.film-clip { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; will-change: transform, opacity; }
+.film-shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0, 0, 0, .72), transparent 46%), linear-gradient(180deg, rgba(0, 0, 0, .5), transparent 28%); pointer-events: none; }
+.film-kicker { position: absolute; z-index: 3; left: var(--gutter); top: calc(var(--bar-h) + 1.5vh); }
+.film-words { position: absolute; z-index: 3; left: var(--gutter); bottom: 4svh; margin: 0; display: grid; overflow: clip; padding: 0 .1em .1em 0; font-family: var(--f-display); font-weight: 880; font-size: clamp(5rem, 17vw, 18rem); line-height: .86; letter-spacing: -.05em; color: var(--bone); text-shadow: 0 6px 50px rgba(0, 0, 0, .55); font-variation-settings: 'opsz' 144, 'SOFT' 40, 'WONK' 1; }
+.film-words span { grid-area: 1 / 1; display: block; }
+.film-words span:nth-child(even) { font-style: italic; font-weight: 430; }
+.film-ticks { position: absolute; z-index: 3; right: var(--gutter); bottom: 5svh; display: flex; gap: .4rem; margin: 0; padding: 0; list-style: none; }
+.film-ticks li { width: clamp(1.2rem, 3vw, 2.6rem); height: 3px; background: rgba(239, 230, 212, .3); transition: background .3s, transform .5s var(--e-reveal); }
+.film-ticks li.is-on { background: var(--ochre); transform: scaleY(2); }
+.film-src { position: absolute; z-index: 3; right: var(--gutter); top: calc(var(--bar-h) + 1.5vh); opacity: .7; }
+@media (max-width: 700px) { .film-src { right: auto; left: var(--gutter); top: calc(var(--bar-h) + 1.5vh + 1.5rem); font-size: .62rem; } }
+.film.is-static .film-pin { height: auto; }
+.film.is-static .film-stack { position: static; display: grid; gap: .5rem; padding: calc(var(--bar-h) + 1rem) var(--gutter) 3rem; }
+.film.is-static .film-clip { position: relative; height: 54svh; border-radius: 1rem; }
+.film.is-static .film-words, .film.is-static .film-ticks, .film.is-static .film-shade { display: none; }
+.film.is-static .film-kicker, .film.is-static .film-src { position: static; padding: calc(var(--bar-h) + 1rem) var(--gutter) 0; }
+
+/* river: a small footage window under the steps */
+.where-window { margin: .4rem 0 0; width: min(22rem, 100%); aspect-ratio: 16 / 9; border-radius: .9rem; overflow: clip; border: 1px solid rgba(220, 229, 214, .25); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .6); }
+.where-window video { width: 100%; height: 100%; object-fit: cover; }
+
+/* ═════════════ 11 · NOW — photo rails ═════════════ */
+.prails { margin: clamp(3rem, 8vh, 6rem) 0 0; display: grid; gap: 1rem; overflow: clip; }
+.prail-track { display: flex; gap: 1rem; width: max-content; padding: 0 var(--gutter); will-change: transform; }
+.prail-item { flex: none; margin: 0; overflow: clip; border-radius: 1rem; clip-path: inset(0 round 1rem); transition: clip-path .7s var(--e-move); }
+.prail-item img { display: block; height: clamp(200px, 36vh, 400px); width: auto; max-width: none; transition: transform 1.2s var(--e-reveal); }
+.prail-item:hover { clip-path: inset(3% round 1rem); } .prail-item:hover img { transform: scale(1.05); }
+
+/* ═════════════ 12 · THE CARE — photo collage ═════════════ */
+.care-grid { grid-template-columns: .85fr 1.15fr; }
+.care-list li { font-size: clamp(1rem, 1.2vw, 1.25rem); padding: 1rem 0; }
+.care-collage { position: relative; min-height: clamp(34rem, 92vh, 58rem); }
+.cc { position: absolute; margin: 0; overflow: clip; border-radius: 1rem; box-shadow: 0 30px 60px -28px rgba(14, 11, 9, .5); }
+.cc img { display: block; width: 100%; height: auto; }
+.cc-a { left: 0; top: 0; width: 70%; } .cc-b { right: 0; top: 16%; width: 42%; } .cc-c { left: 10%; bottom: 0; width: 58%; }
+.care-rule { grid-column: 1 / -1; max-width: 48rem; }
+@media (max-width: 900px) {
+  .proc-fig img { height: calc(var(--k) * 46svh); } .proc-fig.is-far img { height: calc(var(--k) * 36svh); } .proc-fig.is-near img { height: calc(var(--k) * 54svh); }
+  .proc-intro { width: 84vw; } .proc-facts { width: 70vw; }
+  .where-window { display: none; }
+  .rail-item img { height: clamp(150px, 26vh, 260px); }
+  .care-grid { grid-template-columns: 1fr; } .care-collage { min-height: 38rem; }
+}
+
+/* ── Then: contact strips of the archive films */
+.strips { margin: clamp(2.5rem, 7vh, 5rem) calc(var(--gutter) * -1) 0; display: grid; gap: .8rem; overflow: clip; }
+.strip-track { display: flex; gap: .5rem; width: max-content; padding: 0 var(--gutter); will-change: transform; }
+.frame { flex: none; margin: 0; background: var(--film); padding: .9rem .5rem; position: relative; }
+.frame::before, .frame::after { content: ''; position: absolute; left: 0; right: 0; height: .5rem; background: radial-gradient(var(--paper) 38%, transparent 42%) 0 50% / 1.1rem 100% repeat-x; }
+.frame::before { top: .2rem; } .frame::after { bottom: .2rem; }
+.frame img { display: block; height: clamp(120px, 24vh, 240px); width: auto; filter: contrast(1.05); }

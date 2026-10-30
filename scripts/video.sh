@@ -21,3 +21,7 @@ doc parade   33 12
 doc aerial   107 7
 doc masks    166 10
 doc drone    237 7
+
+# "A day in the village" — short b-roll clips for the footage chapter (same source, same logo crop)
+cl() { enc "$SRC" "film-$1" "scale=1434:806,crop=1280:720:154:86,scale=1280:-2" 31 -ss "$2" -t "$3"; }
+cl river 18 7; cl march 52 5; cl hats 60 5; cl feet 73 5; cl carved 261 5; cl leaves 33 6; cl night 264 8

@@ -21,7 +21,7 @@ export function initNav(lenis) {
     menuList.appendChild(li);
   });
   const links = [...rail.querySelectorAll('a')];
-  const SCENES = { top: 'hero', what: 'word', where: 'river', why: 'rice', legend: 'legend', faces: 'dark', mask: 'lab', suit: 'lab', dance: 'beat', then: 'then', now: 'now', care: 'care' };
+  const SCENES = { top: 'hero', what: 'word', where: 'river', film: 'river', why: 'rice', legend: 'legend', faces: 'dark', mask: 'lab', suit: 'lab', dance: 'beat', then: 'then', now: 'now', care: 'care' };
   let sceneName = 'hero';
   audio.onChange((on) => { if (on) { audio._scene = null; audio.scene(sceneName); } });
 
